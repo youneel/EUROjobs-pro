@@ -66,3 +66,4 @@ All listings, companies, salaries, profiles and stories are illustrative. Visa r
 - Add a monitored contact and data-controller identity to `legal.html`.
 - Self-host fonts and pdf.js if third-party requests are not acceptable.
 - Re-test forms, print output, deep links and the official portal URLs.
+"# EUROjobs-pro" 
