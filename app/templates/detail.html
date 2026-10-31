@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block title %}{{ listing.title }} — {{ listing.company }} | {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section-tight page-head">
+  <div class="container">
+    <p class="breadcrumb">
+      <a href="{{ '/volunteer' if kind == 'volunteer' else '/jobs' }}">{{ t('nav.volunteer') if kind == 'volunteer' else t('nav.jobs') }}</a>
+      <span aria-hidden="true">›</span>
+      <bdi>{{ listing.company }}</bdi>
+    </p>
+    <div class="detail-head">
+      <img class="detail-logo" src="{{ card.logo }}" alt="" width="64" height="64" decoding="async">
+      <div class="detail-title">
+        <h1><bdi>{{ listing.title }}</bdi></h1>
+        <p class="muted"><bdi>{{ listing.company }}</bdi>
+          {% if listing.city or listing.country %} · {{ listing.city }}{% if listing.city and listing.country %}, {% endif %}{{ listing.country or (listing.country_code|lcountry) }}{% endif %}
+        </p>
+      </div>
+      <div class="detail-actions">
+        <a class="btn btn-primary" href="{{ card.apply_url }}" rel="nofollow noopener" target="_blank">{{ t('common.apply_now') }}</a>
+        {% if user %}
+        <form method="post" action="/saved/{{ listing.public_id }}">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button class="btn btn-ghost" type="submit" aria-pressed="{{ 'true' if saved else 'false' }}">
+            {{ t('common.saved') if saved else t('common.save') }}
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="badge-row">
+      <span class="badge {{ 'badge-verified' if listing.visa_tier == 1 else 'badge-mentioned' }}">
+        {% if kind == 'volunteer' %}
+          {{ t('volunteer.support_confirmed') if listing.visa_tier == 1 else t('volunteer.support_mentioned') }}
+        {% else %}
+          {{ t('visa.verified_sponsor') if listing.visa_tier == 1 else t('visa.sponsorship_mentioned') }}
+        {% endif %}
+      </span>
+      {% if listing.work_mode %}<span class="badge">{{ t('mode.' ~ listing.work_mode) }}</span>{% endif %}
+      {% if listing.employment_type %}<span class="badge">{{ t('employment.' ~ listing.employment_type) }}</span>{% endif %}
+      {% if listing.category %}<span class="badge">{{ t('category.' ~ listing.category) }}</span>{% endif %}
+      {% if listing.seniority %}<span class="badge">{{ t('seniority.' ~ listing.seniority) }}</span>{% endif %}
+      {% if listing.posted_at %}<span class="badge">{{ listing.posted_at|lrelative }}</span>{% endif %}
+      <span class="badge badge-source">{{ listing.source_name }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container detail-layout">
+    <article class="detail-main">
+      {% if kind == 'job' and (listing.salary_min or listing.salary_max) %}
+      <p class="salary-line">
+        <strong>
+          {% if listing.salary_min and listing.salary_max %}{{ listing.salary_min|lnumber }} – {{ listing.salary_max|lnumber }}
+          {% elif listing.salary_min %}{{ t('common.from') }} {{ listing.salary_min|lnumber }}
+          {% else %}{{ t('common.to') }} {{ listing.salary_max|lnumber }}{% endif %}
+        </strong>
+        {{ listing.currency or '' }}
+      </p>
+      {% endif %}
+
+      <div class="prose">
+        {{ description_html|safe }}
+      </div>
+
+      <section class="visa-box" aria-labelledby="visa-box-title">
+        <h2 id="visa-box-title">{{ t('visa.evidence') }}</h2>
+        {% if listing.visa_tier == 1 %}
+          <p><strong>{{ t('visa.verified_sponsor') }}</strong> — {{ t('visa.verified_explain') }}</p>
+        {% else %}
+          <p><strong>{{ t('visa.sponsorship_mentioned') }}</strong> — {{ t('visa.mentioned_explain') }}</p>
+        {% endif %}
+        {% if listing.visa_evidence %}
+          <blockquote class="evidence"><bdi>{{ listing.visa_evidence }}</bdi></blockquote>
+        {% endif %}
+        {% if listing.visa_type_hint %}<p class="muted">{{ listing.visa_type_hint }}</p>{% endif %}
+        <p class="legal-note">{{ t('visa.confirm') }}</p>
+      </section>
+
+      {% if volunteer %}
+      <section class="volunteer-box" aria-labelledby="volunteer-box-title">
+        <h2 id="volunteer-box-title">{{ t('volunteer.title') }}</h2>
+        <dl class="detail-list">
+          {% if volunteer.programme_name %}<div><dt>{{ t('volunteer.programme') }}</dt><dd>{{ volunteer.programme_name }}</dd></div>{% endif %}
+          {% if volunteer.cause_area %}<div><dt>{{ t('volunteer.cause') }}</dt><dd>{{ t('cause.' ~ volunteer.cause_area) }}</dd></div>{% endif %}
+          {% if volunteer.org_type %}<div><dt>{{ t('volunteer.org_type') }}</dt><dd>{{ t('org.' ~ volunteer.org_type) }}</dd></div>{% endif %}
+          {% if volunteer.duration %}<div><dt>{{ t('volunteer.duration') }}</dt><dd>{{ volunteer.duration }}</dd></div>{% endif %}
+          {% if volunteer.hours_per_week %}<div><dt>{{ t('volunteer.hours') }}</dt><dd>{{ volunteer.hours_per_week }}</dd></div>{% endif %}
+          {% if volunteer.start_date %}<div><dt>{{ t('volunteer.start') }}</dt><dd>{{ volunteer.start_date|ldate }}</dd></div>{% endif %}
+          {% if volunteer.min_age %}<div><dt>{{ t('volunteer.min_age') }}</dt><dd>{{ volunteer.min_age|lnumber }}</dd></div>{% endif %}
+          {% if volunteer.languages_required %}<div><dt>{{ t('volunteer.languages') }}</dt><dd>{{ volunteer.languages_required }}</dd></div>{% endif %}
+          {% if volunteer.visa_support_type %}<div><dt>{{ t('volunteer.visa_support') }}</dt><dd>{{ volunteer.visa_support_type }}</dd></div>{% endif %}
+          {% if volunteer.skills_required %}<div><dt>{{ t('volunteer.skills') }}</dt><dd>{{ volunteer.skills_required }}</dd></div>{% endif %}
+        </dl>
+        <ul class="support-list">
+          {% for label, value in [
+            (t('volunteer.accommodation'), volunteer.accommodation_provided),
+            (t('volunteer.meals'), volunteer.meals_provided),
+            (t('volunteer.stipend'), volunteer.stipend),
+            (t('volunteer.travel'), volunteer.travel_covered),
+            (t('volunteer.insurance'), volunteer.insurance_provided),
+            (t('volunteer.remote'), volunteer.remote_volunteering)
+          ] %}
+            {% if value %}<li class="yes">{{ label }}: {{ t('common.yes') }}{% if label == t('volunteer.stipend') and volunteer.stipend %} — {{ volunteer.stipend|lnumber }} {{ volunteer.stipend_currency or '' }}{% endif %}</li>{% endif %}
+          {% endfor %}
+        </ul>
+        {% if volunteer.fee_required %}
+          <p class="fee-warning">{{ t('volunteer.participation_fee') }}{% if volunteer.fee_amount %} — {{ volunteer.fee_amount|lnumber }} {{ volunteer.fee_currency or '' }}{% endif %}</p>
+        {% endif %}
+        <p class="legal-note">{{ t('volunteer.legal') }}</p>
+      </section>
+      {% endif %}
+    </article>
+
+    <aside class="detail-side">
+      <section class="side-card" aria-labelledby="ai-title">
+        <h2 id="ai-title">{{ t('docgen.cv_and_letter') }}</h2>
+        {% if not ai_enabled %}
+          <p class="muted">{{ t('ai.disabled') }}</p>
+        {% elif not user %}
+          <p class="muted">{{ t('ai.ack') }}</p>
+          <a class="btn btn-primary btn-sm" href="/auth/login?next={{ request.url.path }}">{{ t('nav.signin') }}</a>
+        {% elif not (user.profile and (user.profile.experience or user.profile.education or user.profile.skills)) %}
+          <p class="muted">{{ t('docgen.needs_profile') }}</p>
+          <a class="btn btn-primary btn-sm" href="/profile">{{ t('nav.profile') }}</a>
+        {% else %}
+          <form class="doc-form" method="post" action="/jobs/{{ listing.public_id }}/generate">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <div class="field">
+              <label for="doc-type">{{ t('common.generate_cv') }}</label>
+              <select id="doc-type" name="doc_type">
+                <option value="cv">{{ t('docgen.title_cv') }}</option>
+                <option value="letter">{{ t('docgen.title_letter') }}</option>
+                {% if kind == 'volunteer' %}<option value="motivation">{{ t('docgen.title_motivation') }}</option>{% endif %}
+              </select>
+            </div>
+            <div class="field">
+              <label for="doc-language">{{ t('docgen.language') }}</label>
+              <select id="doc-language" name="language">
+                <option value="en" {% if lang == 'en' %}selected{% endif %}>English</option>
+                <option value="fr" {% if lang == 'fr' %}selected{% endif %}>Français</option>
+                <option value="ar" {% if lang == 'ar' %}selected{% endif %}>العربية</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="doc-tone">{{ t('docgen.tone') }}</label>
+              <select id="doc-tone" name="tone">
+                {% for key in ['professional', 'friendly', 'confident', 'concise'] %}
+                  <option value="{{ key }}">{{ t('docgen.tone_' ~ key) }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="field">
+              <label for="doc-style">{{ t('docgen.country_style') }}</label>
+              <select id="doc-style" name="country_style">
+                {% for key in ['international', 'us', 'uk', 'de', 'fr', 'ar'] %}
+                  <option value="{{ key }}">{{ t('docgen.style_' ~ key) }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="field">
+              <label for="doc-note">{{ t('docgen.instruction') }}</label>
+              <textarea id="doc-note" name="instruction" rows="3" maxlength="800" placeholder="{{ t('docgen.instruction_hint') }}"></textarea>
+            </div>
+            <label class="check"><input type="checkbox" name="include_relocation" value="1" checked> {{ t('docgen.include_relocation') }}</label>
+            {% if not user.profile.ai_acknowledged_at %}
+              <label class="check"><input type="checkbox" name="ai_ack" value="1" required> {{ t('ai.ack') }}</label>
+            {% endif %}
+            <p class="quota-hint">{{ t('docgen.quota_cost') }}</p>
+            <button class="btn btn-primary btn-sm" type="submit">{{ t('docgen.generate') }}</button>
+          </form>
+          <p class="legal-note">{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>
+        {% endif %}
+      </section>
+
+      {% if documents %}
+      <section class="side-card" aria-labelledby="docs-title">
+        <h2 id="docs-title">{{ t('docs.title') }}</h2>
+        <ul class="doc-list">
+          {% for doc in documents %}
+            <li><a href="/documents/{{ doc.public_id }}">{{ doc.title }}</a><span class="muted">{{ doc.created_at|ldate }}</span></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <section class="side-card">
+        <h2>{{ t('nav.volunteer') if kind == 'job' else t('nav.jobs') }}</h2>
+        <p class="muted">{{ t('volunteer.subtitle') if kind == 'job' else t('jobs.subtitle') }}</p>
+        <a class="link link-arrow" href="{{ '/volunteer' if kind == 'job' else '/jobs' }}">{{ t('switch.volunteer') if kind == 'job' else t('switch.jobs') }} <span aria-hidden="true">›</span></a>
+      </section>
+    </aside>
+  </div>
+</section>
+
+{% if similar %}
+<section class="section" aria-labelledby="similar-title">
+  <div class="container">
+    <h2 id="similar-title">{{ t('errors.similar') }}</h2>
+    <div class="card-grid card-grid-4">
+      {% for card in similar %}{% include "_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

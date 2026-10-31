@@ -1,0 +1,9 @@
+{% for card in cards %}
+  {% include "_card.html" %}
+{% endfor %}
+{% if not cards %}
+  <div class="empty-state">
+    <p class="empty-title">{{ t('common.no_results') if kind == 'job' else t('volunteer.no_results') }}</p>
+    <p class="muted">{{ t('jobs.no_results_hint') if kind == 'job' else t('volunteer.no_results_hint') }}</p>
+  </div>
+{% endif %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ t('errors.404_title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section error-section">
+  <div class="container auth-card">
+    {% if code == 429 %}
+      <h1>{{ t('errors.429_title') }}</h1>
+      <p class="muted">{{ t('errors.429_body') }}</p>
+    {% elif code == 'dead' %}
+      <h1>{{ t('errors.dead_title') }}</h1>
+      <p class="muted">{{ t('errors.dead_body') }}</p>
+      {% if listing %}
+        <p class="muted">{{ listing.title }} — {{ listing.company }}</p>
+        {% if apply_url %}
+          <p><a class="link" href="{{ apply_url }}" rel="nofollow noopener" target="_blank">{{ t('common.apply_now') }}</a></p>
+        {% endif %}
+        <a class="btn btn-primary btn-sm" href="/jobs">{{ t('nav.jobs') }}</a>
+      {% endif %}
+    {% elif code == 500 %}
+      <h1>{{ t('errors.500_title') }}</h1>
+      <p class="muted">{{ t('errors.500_body') }}</p>
+    {% else %}
+      <h1>{{ t('errors.404_title') }}</h1>
+      <p class="muted">{{ t('errors.404_body') }}</p>
+    {% endif %}
+    <p><a class="btn btn-ghost btn-sm" href="/">{{ t('errors.back_home') }}</a></p>
+  </div>
+</section>
+{% endblock %}

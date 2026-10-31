@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ t('tools.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('tools.eyebrow') }}</p>
+    <h1>{{ t('tools.title') }}</h1>
+    <p class="muted">{{ t('tools.subtitle') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container tool-grid">
+    <article class="tool-card">
+      <h2>{{ t('docgen.title_cv') }}</h2>
+      <p class="muted">{{ t('home.tools_copy') }}</p>
+      <a class="btn btn-primary btn-sm" href="/jobs">{{ t('nav.jobs') }}</a>
+    </article>
+    <article class="tool-card">
+      <h2>{{ t('docgen.title_letter') }}</h2>
+      <p class="muted">{{ t('docgen.cv_and_letter') }}</p>
+      <a class="btn btn-ghost btn-sm" href="/documents">{{ t('nav.documents') }}</a>
+    </article>
+    <article class="tool-card">
+      <h2>{{ t('agent.title') }}</h2>
+      <p class="muted">{{ t('agent.welcome') }}</p>
+      {% if ai_enabled %}
+        <button type="button" class="btn btn-primary btn-sm" data-agent-open>{{ t('agent.open') }}</button>
+      {% else %}
+        <p class="legal-note">{{ t('ai.disabled') }}</p>
+      {% endif %}
+    </article>
+    <article class="tool-card">
+      <h2>{{ t('profile.parse_cv') }}</h2>
+      <p class="muted">{{ t('profile.upload_hint') }}</p>
+      <a class="btn btn-ghost btn-sm" href="/profile">{{ t('nav.profile') }}</a>
+    </article>
+    <article class="tool-card">
+      <h2>{{ t('nav.volunteer') }}</h2>
+      <p class="muted">{{ t('volunteer.subtitle') }}</p>
+      <a class="btn btn-ghost btn-sm" href="/volunteer">{{ t('switch.volunteer') }}</a>
+    </article>
+    <article class="tool-card">
+      <h2>{{ t('visa.verified_sponsor') }}</h2>
+      <p class="muted">{{ t('visa.verified_explain') }}</p>
+      <a class="btn btn-ghost btn-sm" href="/visa">{{ t('visa.evidence') }}</a>
+    </article>
+  </div>
+  <div class="container">
+    <p class="legal-note">{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>
+  </div>
+</section>
+{% endblock %}

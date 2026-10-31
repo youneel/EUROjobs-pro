@@ -1,0 +1,9 @@
+{
+  "name": "eurojobs-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Apple-inspired European jobs and visa mobility platform demo.",
+  "scripts": {
+    "start": "python -m http.server 4173 --bind 127.0.0.1"
+  }
+}

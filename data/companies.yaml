@@ -1,0 +1,349 @@
+# Employer ATS boards.
+#
+# Supported ats values: greenhouse, lever, ashby, workable, smartrecruiters.
+# Ingest validates every board against its public endpoint and silently drops
+# boards that 404 or are disabled, so this file is safe to extend.
+#
+# `country` is only a hint for the logo/flag fallback; the listing's own
+# location always wins. `type` is company or ngo.
+#
+# Add employers freely. Cross-sector coverage matters: health, hospitality,
+# logistics, construction, manufacturing, universities and NGOs as well as tech.
+companies:
+  # --- Technology / professional services -----------------------------------
+  - name: Stripe
+    domain: stripe.com
+    type: company
+    ats: greenhouse
+    slug: stripe
+    country: us
+  - name: Airbnb
+    domain: airbnb.com
+    type: company
+    ats: greenhouse
+    slug: airbnb
+    country: us
+  - name: Coinbase
+    domain: coinbase.com
+    type: company
+    ats: greenhouse
+    slug: coinbase
+    country: us
+  - name: DoorDash
+    domain: doordash.com
+    type: company
+    ats: greenhouse
+    slug: doordash
+    country: us
+  - name: Datadog
+    domain: datadoghq.com
+    type: company
+    ats: greenhouse
+    slug: datadog
+    country: us
+  - name: GitLab
+    domain: gitlab.com
+    type: company
+    ats: greenhouse
+    slug: gitlab
+    country: us
+  - name: Dropbox
+    domain: dropbox.com
+    type: company
+    ats: greenhouse
+    slug: dropbox
+    country: us
+  - name: Reddit
+    domain: reddit.com
+    type: company
+    ats: greenhouse
+    slug: reddit
+    country: us
+  - name: Discord
+    domain: discord.com
+    type: company
+    ats: greenhouse
+    slug: discord
+    country: us
+  - name: Robinhood
+    domain: robinhood.com
+    type: company
+    ats: greenhouse
+    slug: robinhood
+    country: us
+  - name: Instacart
+    domain: instacart.com
+    type: company
+    ats: greenhouse
+    slug: instacart
+    country: us
+  - name: Flexport
+    domain: flexport.com
+    type: company
+    ats: greenhouse
+    slug: flexport
+    country: us
+  - name: Samsara
+    domain: samsara.com
+    type: company
+    ats: greenhouse
+    slug: samsara
+    country: us
+  - name: Benchling
+    domain: benchling.com
+    type: company
+    ats: greenhouse
+    slug: benchling
+    country: us
+  - name: Asana
+    domain: asana.com
+    type: company
+    ats: greenhouse
+    slug: asana
+    country: us
+  - name: Brex
+    domain: brex.com
+    type: company
+    ats: greenhouse
+    slug: brex
+    country: us
+  - name: Figma
+    domain: figma.com
+    type: company
+    ats: greenhouse
+    slug: figma
+    country: us
+  - name: Notion
+    domain: notion.so
+    type: company
+    ats: greenhouse
+    slug: notion
+    country: us
+  - name: Duolingo
+    domain: duolingo.com
+    type: company
+    ats: greenhouse
+    slug: duolingo
+    country: us
+  - name: Pinterest
+    domain: pinterest.com
+    type: company
+    ats: greenhouse
+    slug: pinterest
+    country: us
+  - name: Lyft
+    domain: lyft.com
+    type: company
+    ats: greenhouse
+    slug: lyft
+    country: us
+  - name: Twilio
+    domain: twilio.com
+    type: company
+    ats: greenhouse
+    slug: twilio
+    country: us
+  - name: Procore
+    domain: procore.com
+    type: company
+    ats: greenhouse
+    slug: procore
+    country: us
+  - name: Toast
+    domain: toasttab.com
+    type: company
+    ats: greenhouse
+    slug: toast
+    country: us
+  - name: Oscar Health
+    domain: hioscar.com
+    type: company
+    ats: greenhouse
+    slug: oscar
+    country: us
+  - name: Headway
+    domain: headway.co
+    type: company
+    ats: greenhouse
+    slug: headway
+    country: us
+  - name: Spring Health
+    domain: springhealth.com
+    type: company
+    ats: greenhouse
+    slug: springhealth
+    country: us
+  - name: Cloudbeds
+    domain: cloudbeds.com
+    type: company
+    ats: greenhouse
+    slug: cloudbeds
+    country: us
+  - name: Plaid
+    domain: plaid.com
+    type: company
+    ats: lever
+    slug: plaid
+    country: us
+  - name: Palantir
+    domain: palantir.com
+    type: company
+    ats: lever
+    slug: palantir
+    country: us
+  - name: Spotify
+    domain: spotify.com
+    type: company
+    ats: lever
+    slug: spotify
+    country: se
+  - name: OpenAI
+    domain: openai.com
+    type: company
+    ats: ashby
+    slug: openai
+    country: us
+  - name: Linear
+    domain: linear.app
+    type: company
+    ats: ashby
+    slug: linear
+    country: us
+  - name: Ramp
+    domain: ramp.com
+    type: company
+    ats: ashby
+    slug: ramp
+    country: us
+  - name: Vanta
+    domain: vanta.com
+    type: company
+    ats: ashby
+    slug: vanta
+    country: us
+  - name: Mercury
+    domain: mercury.com
+    type: company
+    ats: ashby
+    slug: mercury
+    country: us
+  - name: ElevenLabs
+    domain: elevenlabs.io
+    type: company
+    ats: ashby
+    slug: elevenlabs
+    country: us
+  - name: Ubisoft
+    domain: ubisoft.com
+    type: company
+    ats: smartrecruiters
+    slug: Ubisoft
+    country: fr
+  - name: Publicis Groupe
+    domain: publicisgroupe.com
+    type: company
+    ats: smartrecruiters
+    slug: PublicisGroupe
+    country: fr
+  - name: Bosch
+    domain: bosch.com
+    type: company
+    ats: smartrecruiters
+    slug: Bosch
+    country: de
+  - name: Atos
+    domain: atos.net
+    type: company
+    ats: smartrecruiters
+    slug: Atos
+    country: fr
+
+  # --- Health, care and life sciences ---------------------------------------
+  - name: Ro
+    domain: ro.co
+    type: company
+    ats: greenhouse
+    slug: ro
+    country: us
+  - name: Included Health
+    domain: includedhealth.com
+    type: company
+    ats: greenhouse
+    slug: includedhealth
+    country: us
+  - name: Tempus
+    domain: tempus.com
+    type: company
+    ats: greenhouse
+    slug: tempus
+    country: us
+  - name: Ginkgo Bioworks
+    domain: ginkgobioworks.com
+    type: company
+    ats: greenhouse
+    slug: ginkgobioworks
+    country: us
+  - name: BenchSci
+    domain: benchsci.com
+    type: company
+    ats: greenhouse
+    slug: benchsci
+    country: ca
+
+  # --- Hospitality, retail, logistics and manufacturing ---------------------
+  - name: Delivery Hero
+    domain: deliveryhero.com
+    type: company
+    ats: smartrecruiters
+    slug: DeliveryHero
+    country: de
+  - name: HelloFresh
+    domain: hellofresh.com
+    type: company
+    ats: smartrecruiters
+    slug: HelloFresh
+    country: de
+  - name: Zalando
+    domain: zalando.com
+    type: company
+    ats: smartrecruiters
+    slug: Zalando
+    country: de
+  - name: Vodafone
+    domain: vodafone.com
+    type: company
+    ats: smartrecruiters
+    slug: Vodafone
+    country: gb
+
+  # --- NGOs (volunteer detection routes these to the volunteer section) -----
+  - name: Norwegian Refugee Council
+    domain: nrc.no
+    type: ngo
+    ats: smartrecruiters
+    slug: NorwegianRefugeeCouncil
+    country: no
+  - name: Save the Children
+    domain: savethechildren.net
+    type: ngo
+    ats: smartrecruiters
+    slug: SaveTheChildren
+    country: gb
+  - name: Oxfam
+    domain: oxfam.org
+    type: ngo
+    ats: smartrecruiters
+    slug: Oxfam
+    country: gb
+  - name: International Rescue Committee
+    domain: rescue.org
+    type: ngo
+    ats: greenhouse
+    slug: internationalrescuecommittee
+    country: us
+  - name: Mercy Corps
+    domain: mercycorps.org
+    type: ngo
+    ats: greenhouse
+    slug: mercycorps
+    country: us

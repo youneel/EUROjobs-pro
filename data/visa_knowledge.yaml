@@ -1,0 +1,147 @@
+# Curated visa knowledge used by the AI agent's get_visa_info tool.
+# This is general information, not legal advice. Update URLs and rules often.
+entries:
+  - key: uk-skilled-worker
+    country: gb
+    name: "UK Skilled Worker visa"
+    volunteer: false
+    duration: "Up to 5 years, renewable; settlement possible after 5 years"
+    sponsorship: "Requires a licensed sponsor and a Certificate of Sponsorship"
+    official_url: "https://www.gov.uk/skilled-worker-visa"
+    updated: "2026-01"
+    summary:
+      en: "A points-based work route for eligible occupations. The employer must be a licensed sponsor and issue a Certificate of Sponsorship. Salary and English-language thresholds apply."
+      fr: "Une voie de travail à points pour les métiers éligibles. L'employeur doit être un sponsor agréé et délivrer un certificat de parrainage. Des seuils de salaire et de langue anglaise s'appliquent."
+      ar: "مسار عمل قائم على النقاط للمهن المؤهلة. يجب أن يكون صاحب العمل كافلًا مرخصًا وأن يصدر شهادة كفالة. تنطبق حدود الراتب واللغة الإنجليزية."
+  - key: uk-health-care
+    country: gb
+    name: "UK Health and Care Worker visa"
+    volunteer: false
+    duration: "Up to 5 years, renewable"
+    sponsorship: "Requires a licensed sponsor in the health or social care sector"
+    official_url: "https://www.gov.uk/health-care-worker-visa"
+    updated: "2026-01"
+    summary:
+      en: "A cheaper, faster Skilled Worker route for eligible health and care roles. The employer must hold a sponsor licence and the role must be on the eligible list."
+      fr: "Une voie Skilled Worker plus rapide et moins chère pour les métiers de la santé et du soin éligibles. L'employeur doit détenir une licence de parrainage."
+      ar: "مسار أسرع وأقل تكلفة ضمن العمالة الماهرة لوظائف الصحة والرعاية المؤهلة. يجب أن يحمل صاحب العمل ترخيص كفالة."
+  - key: us-h1b
+    country: us
+    name: "US H-1B specialty occupation"
+    volunteer: false
+    duration: "Up to 3 years, extendable to 6 years"
+    sponsorship: "Employer petition required; annual cap and lottery for most employers"
+    official_url: "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations"
+    updated: "2026-01"
+    summary:
+      en: "For professional roles requiring at least a bachelor's degree in a specific field. The employer files the petition. Most cap-subject petitions are selected by lottery."
+      fr: "Pour les postes professionnels exigeant au moins une licence dans un domaine précis. L'employeur dépose la demande. La plupart des demandes soumises au quota sont tirées au sort."
+      ar: "للوظائف المهنية التي تتطلب على الأقل درجة بكالوريوس في تخصص محدد. يقدم صاحب العمل الطلب. تُختار معظم الطلبات الخاضعة للحصة بالقرعة."
+  - key: us-h2a
+    country: us
+    name: "US H-2A temporary agricultural work"
+    volunteer: false
+    duration: "Up to 1 year, renewable"
+    sponsorship: "Employer files a temporary labour certification"
+    official_url: "https://www.uscis.gov/working-in-the-united-states/temporary-workers/h-2a-agricultural-workers"
+    updated: "2026-01"
+    summary:
+      en: "Seasonal agricultural work. The employer must obtain a labour certification and provide housing and transport guarantees in many cases."
+      fr: "Travail agricole saisonnier. L'employeur doit obtenir une certification du travail et fournir des garanties de logement et de transport dans de nombreux cas."
+      ar: "عمل زراعي موسمي. يجب أن يحصل صاحب العمل على شهادة عمل وأن يوفر ضمانات السكن والنقل في كثير من الحالات."
+  - key: us-h2b
+    country: us
+    name: "US H-2B temporary non-agricultural work"
+    volunteer: false
+    duration: "Up to 1 year, renewable"
+    sponsorship: "Employer files a temporary labour certification; annual cap"
+    official_url: "https://www.uscis.gov/working-in-the-united-states/temporary-workers/h-2b-temporary-non-agricultural-workers"
+    updated: "2026-01"
+    summary:
+      en: "Seasonal hospitality, tourism, landscaping and similar work. There is a statutory cap and the employer must certify that no qualified US worker is available."
+      fr: "Travail saisonnier dans l'hôtellerie, le tourisme, les espaces verts et secteurs similaires. Un quota légal s'applique."
+      ar: "عمل موسمي في الضيافة والسياحة وتنسيق الحدائق وما شابه. توجد حصة قانونية ويجب أن يثبت صاحب العمل عدم توفر عامل أمريكي مؤهل."
+  - key: eu-blue-card
+    country: eu
+    name: "EU Blue Card"
+    volunteer: false
+    duration: "Usually 1–4 years, renewable"
+    sponsorship: "Requires a qualifying job offer and salary threshold in the EU country"
+    official_url: "https://immigration-portal.ec.europa.eu/eu-blue-card_en"
+    updated: "2026-01"
+    summary:
+      en: "A work and residence permit for highly qualified non-EU workers. Salary thresholds and recognition of qualifications are set by each EU country."
+      fr: "Un permis de travail et de séjour pour les travailleurs hautement qualifiés non-UE. Les seuils salariaux et la reconnaissance des diplômes varient par pays."
+      ar: "تصريح عمل وإقامة للعمال غير الأوروبيين ذوي المؤهلات العالية. تحدد كل دولة في الاتحاد حدود الراتب والاعتراف بالمؤهلات."
+  - key: ca-lmia
+    country: ca
+    name: "Canada LMIA-based work permit"
+    volunteer: false
+    duration: "Usually up to 2 years, renewable"
+    sponsorship: "Employer obtains a positive Labour Market Impact Assessment"
+    official_url: "https://www.canada.ca/en/employment-social-development/services/foreign-workers.html"
+    updated: "2026-01"
+    summary:
+      en: "The employer applies for an LMIA proving the need for a foreign worker. A positive LMIA supports a work permit application. Some roles are LMIA-exempt."
+      fr: "L'employeur demande une EIMT prouvant le besoin d'un travailleur étranger. Une EIMT positive appuie la demande de permis de travail. Certains postes en sont exemptés."
+      ar: "يتقدم صاحب العمل بطلب تقييم أثر سوق العمل لإثبات الحاجة إلى عامل أجنبي. التقييم الإيجابي يدعم طلب تصريح العمل. بعض الوظائف معفاة."
+  - key: ca-express-entry
+    country: ca
+    name: "Canada Express Entry"
+    volunteer: false
+    duration: "Permanent residence"
+    sponsorship: "Points-based; a job offer can add points but is not always required"
+    official_url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html"
+    updated: "2026-01"
+    summary:
+      en: "A points-based permanent residence pathway for skilled workers. Candidates create a profile and are invited in rounds. A qualifying job offer can add points."
+      fr: "Une voie de résidence permanente à points pour les travailleurs qualifiés. Les candidats créent un profil et sont invités lors de rondes."
+      ar: "مسار إقامة دائمة قائم على النقاط للعمال المهرة. ينشئ المرشحون ملفًا ويُدعون في جولات. قد يضيف عرض العمل المؤهل نقاطًا."
+  - key: au-482
+    country: au
+    name: "Australia Temporary Skill Shortage (subclass 482)"
+    volunteer: false
+    duration: "1–4 years depending on the stream"
+    sponsorship: "Requires an approved sponsoring employer and nominated occupation"
+    official_url: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-skill-shortage-482"
+    updated: "2026-01"
+    summary:
+      en: "An employer-sponsored temporary work visa. The occupation must be on the relevant list and the employer must be an approved sponsor."
+      fr: "Un visa de travail temporaire parrainé par un employeur. La profession doit figurer sur la liste pertinente et l'employeur doit être agréé."
+      ar: "تأشيرة عمل مؤقتة بكفالة صاحب العمل. يجب أن تكون المهنة على القائمة المعنية وأن يكون صاحب العمل كافلًا معتمدًا."
+  - key: de-blue-card
+    country: de
+    name: "Germany EU Blue Card"
+    volunteer: false
+    duration: "Up to 4 years"
+    sponsorship: "Requires a job offer meeting the salary threshold"
+    official_url: "https://www.make-it-in-germany.com/en/visa-residence/types/eu-blue-card"
+    updated: "2026-01"
+    summary:
+      en: "For university graduates with a qualifying job offer. Lower salary thresholds apply to shortage occupations such as IT, engineering and healthcare."
+      fr: "Pour les diplômés universitaires avec une offre d'emploi qualifiée. Des seuils réduits s'appliquent aux métiers en tension."
+      ar: "لخريجي الجامعات مع عرض عمل مؤهل. تنطبق حدود راتب أقل على المهن الناقصة مثل تقنية المعلومات والهندسة والرعاية الصحية."
+  - key: volunteer-general
+    country: worldwide
+    name: "Volunteering abroad and visas"
+    volunteer: true
+    duration: "Varies by programme, often 2 weeks to 12 months"
+    sponsorship: "Depends on the host organisation and the destination country"
+    official_url: "https://www.gov.uk/volunteering-abroad"
+    updated: "2026-01"
+    summary:
+      en: "Many countries require a specific volunteer, charity, religious or exchange visa. A tourist visa often does not permit volunteering. Ask the host organisation for an invitation letter and confirm the route with the embassy. Never pay a 'visa fee' to an individual."
+      fr: "De nombreux pays exigent un visa spécifique de bénévolat, de charité, religieux ou d'échange. Un visa touristique ne permet souvent pas le bénévolat. Demandez une lettre d'invitation à l'organisation et confirmez la voie auprès de l'ambassade. Ne payez jamais de « frais de visa » à une personne."
+      ar: "تشترط دول كثيرة تأشيرة تطوع أو عمل خيري أو ديني أو تبادل. غالبًا لا تسمح تأشيرة السياحة بالتطوع. اطلب خطاب دعوة من المنظمة وتأكد من المسار مع السفارة. لا تدفع أبدًا «رسوم تأشيرة» لشخص."
+  - key: schengen-short-stay
+    country: eu
+    name: "Schengen short-stay visa"
+    volunteer: false
+    duration: "Up to 90 days in any 180-day period"
+    sponsorship: "Self-applied; not a work or volunteer permit"
+    official_url: "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy_en"
+    updated: "2026-01"
+    summary:
+      en: "For tourism, family visits and short business trips. It does not generally authorise paid work or volunteering. A national long-stay visa is needed for work."
+      fr: "Pour le tourisme, les visites familiales et les courts déplacements d'affaires. Il n'autorise généralement ni le travail rémunéré ni le bénévolat. Un visa national de long séjour est requis pour travailler."
+      ar: "للسياحة وزيارة الأقارب ورحلات العمل القصيرة. لا يسمح عمومًا بالعمل المدفوع أو التطوع. يلزم تأشيرة وطنية طويلة الإقامة للعمل."

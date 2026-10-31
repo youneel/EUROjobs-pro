@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ document.title }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="breadcrumb"><a href="/documents">{{ t('docs.title') }}</a> <span aria-hidden="true">›</span> {{ document.title }}</p>
+    <div class="section-head">
+      <div>
+        <h1>{{ document.title }}</h1>
+        <p class="muted">
+          {{ document.created_at|ldate }} · {{ document.language|upper }}
+          {% if document.country_style %} · {{ t('docgen.style_' ~ document.country_style) }}{% endif %}
+        </p>
+      </div>
+      <div class="detail-actions">
+        <a class="btn btn-primary btn-sm" href="/documents/{{ document.public_id }}/export.pdf">{{ t('docgen.export_pdf') }}</a>
+        <a class="btn btn-ghost btn-sm" href="/documents/{{ document.public_id }}/export.docx">{{ t('docgen.export_docx') }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container doc-layout">
+    <div class="doc-paper" dir="{{ 'rtl' if document.language == 'ar' else 'ltr' }}">
+      <pre class="doc-text">{{ document.content_text }}</pre>
+    </div>
+
+    <aside class="detail-side">
+      {% if payload.match_score %}
+      <section class="side-card">
+        <h2>{{ t('docgen.match_score') }}</h2>
+        <p class="match-score">{{ payload.match_score|lnumber }}%</p>
+        {% if payload.matched_keywords %}
+          <p class="muted">{{ t('docgen.keywords') }}</p>
+          <div class="badge-row">{% for word in payload.matched_keywords %}<span class="badge">{{ word }}</span>{% endfor %}</div>
+        {% endif %}
+        {% if payload.gaps %}
+          <p class="muted">{{ t('docgen.gaps') }}</p>
+          <div class="badge-row">{% for word in payload.gaps %}<span class="badge badge-gap">{{ word }}</span>{% endfor %}</div>
+          <p class="hint">{{ t('docgen.gaps_hint') }}</p>
+        {% endif %}
+      </section>
+      {% endif %}
+
+      {% if payload.warnings %}
+      <section class="side-card warning-card">
+        <h2>{{ t('docgen.verify_warning') }}</h2>
+        <ul>{% for warning in payload.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
+      </section>
+      {% endif %}
+
+      <section class="side-card">
+        <h2>{{ t('common.edit') }}</h2>
+        <p class="muted">{{ t('docgen.edit_hint') }}</p>
+        <form method="post" action="/documents/{{ document.public_id }}/edit" class="stack">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <div class="field">
+            <label for="content_text" class="sr-only">{{ t('docgen.preview') }}</label>
+            <textarea id="content_text" name="content_text" rows="14" spellcheck="true">{{ document.content_text }}</textarea>
+          </div>
+          <button class="btn btn-primary btn-sm" type="submit">{{ t('common.save') }}</button>
+        </form>
+      </section>
+
+      {% if listing %}
+      <section class="side-card">
+        <h2>{{ t('docs.generate_for') }}</h2>
+        <p><a class="link" href="{{ '/volunteer' if listing.listing_type == 'volunteer' else '/jobs' }}/{{ listing.public_id }}">{{ listing.title }}</a></p>
+        <p class="muted">{{ listing.company }}</p>
+      </section>
+      {% endif %}
+
+      <section class="side-card">
+        <h2>{{ t('common.delete') }}</h2>
+        <form method="post" action="/documents/{{ document.public_id }}/delete" data-confirm="{{ t('common.confirm') }}">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button class="btn btn-danger btn-sm" type="submit">{{ t('common.delete') }}</button>
+        </form>
+      </section>
+      <p class="legal-note">{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

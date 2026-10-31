@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}{{ t('profile.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('profile.eyebrow') }}</p>
+    <h1>{{ t('profile.title') }}</h1>
+    <p class="muted">{{ t('profile.contact_note') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container profile-layout">
+    <form class="profile-form" method="post" action="/profile">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+
+      <fieldset>
+        <legend>{{ t('auth.display_name') }}</legend>
+        <div class="form-grid">
+          <div class="field"><label for="full_name">{{ t('profile.full_name') }}</label><input id="full_name" name="full_name" value="{{ profile.full_name or '' }}" maxlength="200" autocomplete="name"></div>
+          <div class="field"><label for="email">{{ t('auth.email') }}</label><input id="email" name="email" type="email" value="{{ profile.email or user.email }}" maxlength="320" autocomplete="email"></div>
+          <div class="field"><label for="phone">{{ t('profile.contact_note') }} — {{ t('common.optional') }}</label><input id="phone" name="phone" value="{{ profile.phone or '' }}" maxlength="60" autocomplete="tel"></div>
+          <div class="field"><label for="address">{{ t('profile.location') }}</label><input id="address" name="address" value="{{ profile.address or '' }}" maxlength="500" autocomplete="street-address"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ t('profile.summary') }}</legend>
+        <div class="field"><label for="headline">{{ t('profile.headline') }}</label><input id="headline" name="headline" value="{{ profile.headline or '' }}" maxlength="300"></div>
+        <div class="field"><label for="summary">{{ t('profile.summary') }}</label><textarea id="summary" name="summary" rows="4" maxlength="4000">{{ profile.summary or '' }}</textarea></div>
+        <div class="field"><label for="skills">{{ t('profile.skills') }}</label><input id="skills" name="skills" value="{{ (profile.skills or [])|join(', ') }}"><p class="hint">{{ t('profile.skills_hint') }}</p></div>
+        <div class="field"><label for="languages">{{ t('profile.languages') }}</label><input id="languages" name="languages" value="{{ (profile.languages or [])|join(', ') }}"><p class="hint">{{ t('profile.languages_hint') }}</p></div>
+        <div class="field"><label for="certifications">{{ t('profile.certifications') }}</label><input id="certifications" name="certifications" value="{{ (profile.certifications or [])|join(', ') }}"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ t('profile.experience') }}</legend>
+        <div class="field">
+          <label for="experience_text">{{ t('profile.experience') }}</label>
+          <textarea id="experience_text" name="experience_text" rows="5">{% for row in profile.experience or [] %}{{ row.title or '' }} | {{ row.company or '' }} | {{ row.start or '' }} | {{ row.end or '' }} | {{ row.description or '' }}
+{% endfor %}</textarea>
+          <p class="hint">{{ t('profile.experience_hint') }}</p>
+        </div>
+        <div class="field">
+          <label for="education_text">{{ t('profile.education') }}</label>
+          <textarea id="education_text" name="education_text" rows="3">{% for row in profile.education or [] %}{{ row.degree or '' }} | {{ row.institution or '' }} | {{ row.year or '' }} | {{ row.details or '' }}
+{% endfor %}</textarea>
+          <p class="hint">{{ t('profile.education_hint') }}</p>
+        </div>
+        <div class="field">
+          <label for="projects_text">{{ t('profile.projects') }}</label>
+          <textarea id="projects_text" name="projects_text" rows="3">{% for row in profile.projects or [] %}{{ row.name or '' }} | {{ row.description or '' }}
+{% endfor %}</textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ t('profile.target_countries') }}</legend>
+        <div class="form-grid">
+          <div class="field"><label for="nationality">{{ t('profile.nationality') }}</label><input id="nationality" name="nationality" value="{{ profile.nationality or '' }}" maxlength="120"></div>
+          <div class="field"><label for="current_location">{{ t('profile.location') }}</label><input id="current_location" name="current_location" value="{{ profile.current_location or '' }}" maxlength="200"></div>
+          <div class="field"><label for="target_countries">{{ t('profile.target_countries') }}</label><input id="target_countries" name="target_countries" value="{{ (profile.target_countries or [])|join(', ') }}" placeholder="DE, NL, CA"></div>
+          <div class="field"><label for="preferred_language">{{ t('profile.preferred_language') }}</label>
+            <select id="preferred_language" name="preferred_language">
+              {% for code in languages %}<option value="{{ code }}" {% if (profile.preferred_language or lang) == code %}selected{% endif %}>{{ t('lang.label') }} {{ code|upper }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" name="requires_sponsorship" value="1" {% if profile.requires_sponsorship %}checked{% endif %}> {{ t('profile.requires_sponsorship') }}</label>
+      </fieldset>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">{{ t('profile.save') }}</button>
+        <a class="btn btn-ghost" href="/documents">{{ t('nav.documents') }}</a>
+      </div>
+    </form>
+
+    <aside class="side-card">
+      <h2>{{ t('profile.upload_cv') }}</h2>
+      <p class="muted">{{ t('profile.upload_hint') }}</p>
+      <form method="post" action="/profile/cv" enctype="multipart/form-data" class="stack">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <div class="field">
+          <label for="cv_file" class="sr-only">{{ t('profile.upload_cv') }}</label>
+          <input id="cv_file" name="cv_file" type="file" accept=".txt,.md,.pdf,text/plain,application/pdf" required>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="submit">{{ t('profile.parse_cv') }}</button>
+      </form>
+      <p class="legal-note">{{ t('profile.contact_note') }}</p>
+
+      <h2 class="danger-title">{{ t('profile.delete_data') }}</h2>
+      <p class="muted">{{ t('profile.delete_warning') }}</p>
+      <form method="post" action="/profile/delete" data-confirm="{{ t('profile.delete_confirm') }}">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn btn-danger btn-sm" type="submit">{{ t('profile.delete_data') }}</button>
+      </form>
+    </aside>
+  </div>
+</section>
+{% endblock %}

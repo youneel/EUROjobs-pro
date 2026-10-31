@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ t('legal.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container container-narrow">
+    <p class="eyebrow">{{ t('footer.legal') }}</p>
+    <h1>{{ t('legal.title') }}</h1>
+    <p class="muted">{{ t('legal.updated') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container container-narrow legal-prose">
+    <h2>{{ t('legal.data_title') }}</h2>
+    <p>{{ t('legal.data_body') }}</p>
+
+    <h2>{{ t('legal.ai_title') }}</h2>
+    <p>{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>
+    <p>{{ t('legal.ai_body') }}</p>
+    <p class="legal-note">{{ t('ai.privacy_title') }}</p>
+
+    <h2>{{ t('legal.delete_title') }}</h2>
+    <p>{{ t('legal.delete_body') }}</p>
+
+    <h2>{{ t('legal.disclaimer_title') }}</h2>
+    <p>{{ t('legal.disclaimer_body') }}</p>
+
+    <h2>{{ t('legal.accessibility_title') }}</h2>
+    <p>{{ t('footer.accessibility') }}</p>
+
+    <h2>{{ t('legal.cookies') }}</h2>
+    <p>{{ t('legal.data_body') }}</p>
+
+    <h2>{{ t('footer.contact') }}</h2>
+    <p><a class="link" href="mailto:privacy@eurojobspro.example">privacy@eurojobspro.example</a></p>
+    <p class="legal-note">{{ t('footer.disclaimer') }}</p>
+  </div>
+</section>
+{% endblock %}

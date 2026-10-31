@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Countries — EuroJobs Pro</title>
+  <meta name="description" content="A directory of official European public employment portals, organised by country and region. Visa routes and language notes included.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="promo-bar">
+    Every portal here is a public employment service. No recruiters, no fees.
+    <a href="index.html#why">Why that matters ›</a>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="EuroJobs Pro home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <circle cx="12" cy="2.6" r="1.2"/><circle cx="16.7" cy="3.86" r="1.2"/>
+            <circle cx="20.14" cy="7.3" r="1.2"/><circle cx="21.4" cy="12" r="1.2"/>
+            <circle cx="20.14" cy="16.7" r="1.2"/><circle cx="16.7" cy="20.14" r="1.2"/>
+            <circle cx="12" cy="21.4" r="1.2"/><circle cx="7.3" cy="20.14" r="1.2"/>
+            <circle cx="3.86" cy="16.7" r="1.2"/><circle cx="2.6" cy="12" r="1.2"/>
+            <circle cx="3.86" cy="7.3" r="1.2"/><circle cx="7.3" cy="3.86" r="1.2"/>
+          </g>
+        </svg>
+        <span>EuroJobs Pro</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="jobs.html">Jobs</a>
+        <a href="countries.html">Countries</a>
+        <a href="tools.html">Tools</a>
+        <a href="index.html#why">Why EuroJobs</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-icon" href="jobs.html?saved=1" aria-label="Saved roles">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+          <span class="saved-count" data-saved-count>0</span>
+        </a>
+        <a class="nav-cta" href="jobs.html">Find a role</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="tools.html">Tools</a>
+      <a href="index.html#why">Why EuroJobs</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" style="justify-content:center">Official portals</p>
+        <h1>Europe,<br>at a glance.</h1>
+        <p class="lead">Start with a country. Go straight to the public employment service that actually hires — and see the visa route that fits.</p>
+
+        <form class="searchbar" id="portal-search-form" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/>
+          </svg>
+          <label class="sr-only" for="portal-search">Search countries and portals</label>
+          <input id="portal-search" type="search" placeholder="Country, city or portal" autocomplete="off">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+        <div class="region-tabs" id="region-tabs" role="group" aria-label="Filter by region"></div>
+      </div>
+    </section>
+
+    <section class="portal-main">
+      <div class="container">
+        <div class="results-head">
+          <h2>Country directory</h2>
+          <p id="portal-meta">31 official portals</p>
+        </div>
+        <div class="portal-grid" id="portal-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="info-strip">
+          <div>
+            <h3>Public, not pay-to-play</h3>
+            <p>These are national employment services and EU mobility programmes. No placement fees, no recruiter mark-ups.</p>
+          </div>
+          <div>
+            <h3>Verify before you apply</h3>
+            <p>Vacancies change daily. Confirm the role, salary and contract directly on the official portal.</p>
+          </div>
+          <div>
+            <h3>Routes change too</h3>
+            <p>Permit rules are updated often. Treat the visa notes here as a starting point, not legal advice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-note">
+        <strong>Official sources only.</strong> Every link opens a public employment service. Visa notes are general
+        summaries and may change — always confirm requirements with the relevant authority.
+      </p>
+      <div class="footer-grid">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="jobs.html">Find jobs</a></li>
+            <li><a href="jobs.html?visa=1">Visa-sponsored roles</a></li>
+            <li><a href="countries.html">Countries</a></li>
+            <li><a href="tools.html">Toolkit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Prepare</h3>
+          <ul>
+            <li><a href="tools.html#cv">CV Studio</a></li>
+            <li><a href="tools.html#letter">Cover letters</a></li>
+            <li><a href="tools.html#advisor">Visa advisor</a></li>
+            <li><a href="jobs.html?saved=1">Saved roles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            <li><a href="countries.html?q=Germany">Germany</a></li>
+            <li><a href="countries.html?q=Netherlands">Netherlands</a></li>
+            <li><a href="countries.html?q=Ireland">Ireland</a></li>
+            <li><a href="countries.html?q=Nordics">Nordics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>About</h3>
+          <ul>
+            <li><a href="index.html#why">Our principle</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="countries.html">Official sources</a></li>
+            <li><a href="tools.html#advisor">Guidance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="legal.html#privacy">Privacy</a></li>
+            <li><a href="legal.html#terms">Terms</a></li>
+            <li><a href="legal.html#cookies">Cookies</a></li>
+            <li><a href="legal.html#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p class="disclaimer">
+          © <span data-year>2026</span> EuroJobs Pro. General information only — not legal or immigration advice.
+        </p>
+        <div class="legal-links">
+          <span>Europe · English</span>
+          <a href="legal.html#privacy">Privacy</a>
+          <a href="legal.html#terms">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/site.js"></script>
+  <script src="assets/countries.js"></script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tools — EuroJobs Pro</title>
+  <meta name="description" content="Build a structured profile, generate a tailored cover letter, and get plain-language guidance on European work permits — all in your browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="promo-bar">
+    Your profile stays in your browser. No account, no upload, no noise.
+    <a href="index.html#why">How we handle data ›</a>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="EuroJobs Pro home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <circle cx="12" cy="2.6" r="1.2"/><circle cx="16.7" cy="3.86" r="1.2"/>
+            <circle cx="20.14" cy="7.3" r="1.2"/><circle cx="21.4" cy="12" r="1.2"/>
+            <circle cx="20.14" cy="16.7" r="1.2"/><circle cx="16.7" cy="20.14" r="1.2"/>
+            <circle cx="12" cy="21.4" r="1.2"/><circle cx="7.3" cy="20.14" r="1.2"/>
+            <circle cx="3.86" cy="16.7" r="1.2"/><circle cx="2.6" cy="12" r="1.2"/>
+            <circle cx="3.86" cy="7.3" r="1.2"/><circle cx="7.3" cy="3.86" r="1.2"/>
+          </g>
+        </svg>
+        <span>EuroJobs Pro</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="jobs.html">Jobs</a>
+        <a href="countries.html">Countries</a>
+        <a href="tools.html">Tools</a>
+        <a href="index.html#why">Why EuroJobs</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-icon" href="jobs.html?saved=1" aria-label="Saved roles">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+          <span class="saved-count" data-saved-count>0</span>
+        </a>
+        <a class="nav-cta" href="jobs.html">Find a role</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="tools.html">Tools</a>
+      <a href="index.html#why">Why EuroJobs</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="tools-hero">
+      <div class="container">
+        <p class="eyebrow" style="justify-content:center">The toolkit</p>
+        <h1>Everything before<br>the first day.</h1>
+        <p class="lead">Build your profile, draft the letter, and get your route straight — in one quiet place.</p>
+      </div>
+    </section>
+
+    <div class="tool-tabs-wrap">
+      <div class="tool-tabs" role="tablist" aria-label="Toolkit sections">
+        <button class="tool-tab active" type="button" role="tab" id="tab-cv" aria-selected="true" aria-controls="panel-cv" data-tool="cv" tabindex="0">CV Studio</button>
+        <button class="tool-tab" type="button" role="tab" id="tab-letter" aria-selected="false" aria-controls="panel-letter" data-tool="letter" tabindex="-1">Cover letter</button>
+        <button class="tool-tab" type="button" role="tab" id="tab-advisor" aria-selected="false" aria-controls="panel-advisor" data-tool="advisor" tabindex="-1">Visa advisor</button>
+      </div>
+    </div>
+
+    <div class="tools-wrap">
+      <div class="container">
+        <!-- CV Studio -->
+        <section class="tool-panel active" id="panel-cv" role="tabpanel" aria-labelledby="tab-cv" data-tool-panel="cv">
+          <div class="tool-grid">
+            <div class="panel">
+              <h2>Build your profile</h2>
+              <p class="panel-sub">Upload a CV or type it in. Everything stays in this browser — nothing is sent to a server.</p>
+
+              <label class="dropzone" id="dropzone" for="cv-file">
+                <span class="dz-icon">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/>
+                  </svg>
+                </span>
+                <strong>Drop your CV here, or choose a file</strong>
+                <span>PDF, TXT or Markdown · up to 5 MB</span>
+                <input class="sr-only" type="file" id="cv-file" accept=".pdf,.txt,.md,text/plain,application/pdf">
+              </label>
+              <p class="status-text" id="cv-status" role="status"></p>
+
+              <form class="form-grid" id="cv-form" autocomplete="on">
+                <div class="field">
+                  <label for="cv-name">Full name</label>
+                  <input id="cv-name" name="name" type="text" placeholder="Amara Okafor" autocomplete="name">
+                </div>
+                <div class="field">
+                  <label for="cv-headline">Headline</label>
+                  <input id="cv-headline" name="headline" type="text" placeholder="Senior Frontend Engineer">
+                </div>
+                <div class="field">
+                  <label for="cv-email">Email</label>
+                  <input id="cv-email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div class="field">
+                  <label for="cv-phone">Phone</label>
+                  <input id="cv-phone" name="phone" type="tel" placeholder="+49 151 000 0000" autocomplete="tel">
+                </div>
+                <div class="field">
+                  <label for="cv-location">Location</label>
+                  <input id="cv-location" name="location" type="text" placeholder="Berlin, Germany">
+                </div>
+                <div class="field">
+                  <label for="cv-years">Years of experience</label>
+                  <input id="cv-years" name="years" type="number" min="0" max="50" placeholder="6">
+                </div>
+                <div class="field span-2">
+                  <label for="cv-skills">Key skills</label>
+                  <input id="cv-skills" name="skills" type="text" placeholder="TypeScript, React, design systems, accessibility">
+                </div>
+                <div class="field span-2">
+                  <label for="cv-languages">Languages</label>
+                  <input id="cv-languages" name="languages" type="text" placeholder="English (fluent), German (B1)">
+                </div>
+                <div class="field span-2">
+                  <label for="cv-summary">Short summary</label>
+                  <textarea id="cv-summary" name="summary" placeholder="Two or three lines about what you do, what you care about, and the kind of team you want to join."></textarea>
+                </div>
+              </form>
+
+              <div class="actions">
+                <button class="btn btn-primary" type="button" id="cv-save">Save profile</button>
+                <button class="btn btn-outline" type="button" id="cv-clear">Clear</button>
+                <a class="link link-arrow" href="#letter" data-goto="letter" style="align-self:center">Use in a letter</a>
+              </div>
+            </div>
+
+            <aside class="profile-side">
+              <div class="panel completeness">
+                <div class="completeness-head">
+                  <h3>Profile strength</h3>
+                  <span class="pct" id="cv-pct">0%</span>
+                </div>
+                <div class="meter" aria-hidden="true"><span class="meter-fill" id="cv-meter"></span></div>
+                <ul class="checklist" id="cv-checklist">
+                  <li class="check" data-check="identity"><span class="check-dot">✓</span>Name and headline</li>
+                  <li class="check" data-check="contact"><span class="check-dot">✓</span>Email or phone</li>
+                  <li class="check" data-check="location"><span class="check-dot">✓</span>Current location</li>
+                  <li class="check" data-check="skills"><span class="check-dot">✓</span>Key skills</li>
+                  <li class="check" data-check="summary"><span class="check-dot">✓</span>Short summary</li>
+                </ul>
+                <p class="panel-sub" style="margin-top:16px">Saved quietly to this device. You can clear it at any time.</p>
+              </div>
+
+              <div class="profile-card" aria-hidden="true">
+                <div class="pc-kicker">Candidate profile</div>
+                <div class="pc-name" id="pc-name">Your name</div>
+                <div class="pc-role" id="pc-role">Your headline</div>
+                <div class="pc-meta" id="pc-meta"><span class="pc-chip">Add skills</span></div>
+                <div class="pc-foot"><span>EuroJobs Pro</span><span>Local only</span></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Cover letter -->
+        <section class="tool-panel" id="panel-letter" role="tabpanel" aria-labelledby="tab-letter" data-tool-panel="letter" hidden>
+          <div class="letter-layout">
+            <div class="panel">
+              <h2>Write less. Say more.</h2>
+              <p class="panel-sub">Generate a tailored first draft from your profile. Read it, edit it, make it sound like you — then send it.</p>
+
+              <form class="form-grid" id="letter-form">
+                <div class="field">
+                  <label for="lt-name">Your name</label>
+                  <input id="lt-name" type="text" placeholder="Amara Okafor" autocomplete="name">
+                </div>
+                <div class="field">
+                  <label for="lt-email">Email</label>
+                  <input id="lt-email" type="email" placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div class="field">
+                  <label for="lt-phone">Phone</label>
+                  <input id="lt-phone" type="tel" placeholder="+49 151 000 0000" autocomplete="tel">
+                </div>
+                <div class="field">
+                  <label for="lt-role">Role</label>
+                  <input id="lt-role" type="text" placeholder="Senior Frontend Engineer">
+                </div>
+                <div class="field">
+                  <label for="lt-company">Company</label>
+                  <input id="lt-company" type="text" placeholder="Nordwind Systems">
+                </div>
+                <div class="field">
+                  <label for="lt-country">Country</label>
+                  <select id="lt-country"></select>
+                </div>
+                <div class="field">
+                  <label for="lt-city">City</label>
+                  <input id="lt-city" type="text" placeholder="Berlin">
+                </div>
+                <div class="field">
+                  <label for="lt-years">Years of experience</label>
+                  <input id="lt-years" type="number" min="0" max="50" placeholder="6">
+                </div>
+                <div class="field">
+                  <label for="lt-tone">Tone</label>
+                  <select id="lt-tone">
+                    <option value="warm">Warm and direct</option>
+                    <option value="formal">Formal</option>
+                    <option value="concise">Concise</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="lt-skills">Skills to mention</label>
+                  <input id="lt-skills" type="text" placeholder="TypeScript, React, design systems">
+                </div>
+                <div class="field span-2">
+                  <label for="lt-highlight">One thing worth highlighting</label>
+                  <textarea id="lt-highlight" placeholder="A project, a result, or the reason this role fits you. One or two sentences is plenty."></textarea>
+                </div>
+              </form>
+
+              <div class="actions">
+                <button class="btn btn-primary" type="button" id="letter-generate">Generate draft</button>
+                <button class="btn btn-outline" type="button" id="letter-profile">Use my profile</button>
+              </div>
+              <p class="hint">Generated on your device. Always read and personalise before sending.</p>
+            </div>
+
+            <div>
+              <div class="letter-paper" id="letter-paper">
+                <div class="letter-brand">
+                  <span class="lb-name" id="letter-brand-name">Your Name</span>
+                  <span class="lb-tag">Motivation letter</span>
+                </div>
+                <div class="letter-contact" id="letter-contact"><span>email · phone</span></div>
+                <div class="letter-body" id="letter-body">Choose a role and generate a first draft.</div>
+                <textarea class="letter-edit" id="letter-edit" aria-label="Edit your cover letter"></textarea>
+                <div class="letter-foot">
+                  <span id="letter-date">2026</span>
+                  <span>Draft · edit before sending</span>
+                </div>
+              </div>
+
+              <div class="actions letter-actions">
+                <button class="btn btn-dark btn-sm" type="button" id="letter-copy">Copy text</button>
+                <button class="btn btn-outline btn-sm" type="button" id="letter-download">Download .txt</button>
+                <button class="btn btn-outline btn-sm" type="button" id="letter-print">Print / PDF</button>
+                <button class="btn btn-outline btn-sm" type="button" id="letter-edit-toggle">Edit text</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Advisor -->
+        <section class="tool-panel" id="panel-advisor" role="tabpanel" aria-labelledby="tab-advisor" data-tool-panel="advisor" hidden>
+          <div class="chat-shell">
+            <aside class="panel advisor-side">
+              <p class="eyebrow">Visa advisor</p>
+              <h2 style="margin-top:14px">Ask the question you're actually asking.</h2>
+              <p>Plain-language guidance on routes, documents, salaries and timing — grounded in public information, with links to the official source.</p>
+
+              <div class="suggestions">
+                <button class="suggest-btn" type="button" data-prompt="How does the EU Blue Card work?">How does the EU Blue Card work?</button>
+                <button class="suggest-btn" type="button" data-prompt="Tell me about moving to Germany">Tell me about moving to Germany</button>
+                <button class="suggest-btn" type="button" data-prompt="What is the Netherlands highly skilled migrant route?">The Netherlands: highly skilled migrant</button>
+                <button class="suggest-btn" type="button" data-prompt="How do I bring my family?">Can I bring my family?</button>
+                <button class="suggest-btn" type="button" data-prompt="How long does the visa process take?">How long does it take?</button>
+                <button class="suggest-btn" type="button" data-prompt="How do I spot a job scam?">How do I spot a scam?</button>
+              </div>
+
+              <p class="advisor-note">
+                General guidance, not legal or immigration advice. Rules and salary thresholds change annually —
+                confirm details with the official authority before you apply or pay anything.
+              </p>
+            </aside>
+
+            <div class="chat-card">
+              <div class="chat-head">
+                <div class="ch-title"><span class="ch-dot" aria-hidden="true"></span>Visa advisor</div>
+                <span class="ch-status">On this device · instant</span>
+              </div>
+              <div class="chat-log" id="chat-log" aria-live="polite">
+                <div class="msg bot">
+                  Hi — I'm the EuroJobs visa advisor. I can walk you through the main European work routes,
+                  the documents people usually need, and the questions worth asking an employer.
+                  <br><br>Where are you thinking of moving?
+                </div>
+              </div>
+              <form class="chat-form" id="chat-form">
+                <label class="sr-only" for="chat-input">Your question</label>
+                <input id="chat-input" type="text" placeholder="Ask about permits, documents, timing…" autocomplete="off">
+                <button class="chat-send" type="submit" aria-label="Send question">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 12h15M13 6l6 6-6 6"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-note">
+        <strong>Local by design.</strong> Your profile and drafts live in your browser's storage.
+        Nothing is uploaded, and the advisor runs from a built-in knowledge base rather than a remote AI service.
+      </p>
+      <div class="footer-grid">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="jobs.html">Find jobs</a></li>
+            <li><a href="jobs.html?visa=1">Visa-sponsored roles</a></li>
+            <li><a href="countries.html">Countries</a></li>
+            <li><a href="tools.html">Toolkit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Prepare</h3>
+          <ul>
+            <li><a href="tools.html#cv">CV Studio</a></li>
+            <li><a href="tools.html#letter">Cover letters</a></li>
+            <li><a href="tools.html#advisor">Visa advisor</a></li>
+            <li><a href="jobs.html?saved=1">Saved roles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            <li><a href="countries.html?q=Germany">Germany</a></li>
+            <li><a href="countries.html?q=Netherlands">Netherlands</a></li>
+            <li><a href="countries.html?q=Ireland">Ireland</a></li>
+            <li><a href="countries.html?q=Nordics">Nordics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>About</h3>
+          <ul>
+            <li><a href="index.html#why">Our principle</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="countries.html">Official sources</a></li>
+            <li><a href="tools.html#advisor">Guidance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="legal.html#privacy">Privacy</a></li>
+            <li><a href="legal.html#terms">Terms</a></li>
+            <li><a href="legal.html#cookies">Cookies</a></li>
+            <li><a href="legal.html#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p class="disclaimer">
+          © <span data-year>2026</span> EuroJobs Pro. General information only — not legal or immigration advice.
+        </p>
+        <div class="legal-links">
+          <span>Europe · English</span>
+          <a href="legal.html#privacy">Privacy</a>
+          <a href="legal.html#terms">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/site.js"></script>
+  <script src="assets/tools.js"></script>
+</body>
+</html>

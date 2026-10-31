@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ t('auth.signin_title') if mode == 'login' else t('auth.signup_title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section auth-section">
+  <div class="container auth-card">
+    <p class="eyebrow">{{ t('nav.account') }}</p>
+    <h1>{{ t('auth.signin_title') if mode == 'login' else t('auth.signup_title') }}</h1>
+    {% if error %}<p class="form-error" role="alert">{{ t(error) }}</p>{% endif %}
+
+    <form method="post" action="{{ '/auth/login' if mode == 'login' else '/auth/register' }}" class="stack">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="hidden" name="next" value="{{ next or '' }}">
+
+      {% if mode == 'register' %}
+      <div class="field">
+        <label for="display_name">{{ t('auth.display_name') }}</label>
+        <input id="display_name" name="display_name" type="text" value="{{ display_name or '' }}" maxlength="120" autocomplete="name">
+      </div>
+      {% endif %}
+
+      <div class="field">
+        <label for="email">{{ t('auth.email') }}</label>
+        <input id="email" name="email" type="email" value="{{ email or '' }}" required autocomplete="email" inputmode="email">
+      </div>
+      <div class="field">
+        <label for="password">{{ t('auth.password') }}</label>
+        <input id="password" name="password" type="password" required minlength="8" autocomplete="{{ 'current-password' if mode == 'login' else 'new-password' }}">
+        {% if mode == 'register' %}<p class="hint">{{ t('auth.password_short') }}</p>{% endif %}
+      </div>
+
+      <button class="btn btn-primary" type="submit">{{ t('auth.signin') if mode == 'login' else t('auth.signup') }}</button>
+    </form>
+
+    <p class="auth-switch">
+      {% if mode == 'login' %}
+        {{ t('auth.no_account') }} <a class="link" href="/auth/register">{{ t('auth.signup') }}</a>
+      {% else %}
+        {{ t('auth.have_account') }} <a class="link" href="/auth/login">{{ t('auth.signin') }}</a>
+      {% endif %}
+    </p>
+    <p class="legal-note">{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>
+  </div>
+</section>
+{% endblock %}

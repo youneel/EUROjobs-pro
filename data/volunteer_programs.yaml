@@ -1,0 +1,164 @@
+# Curated volunteer programmes.
+#
+# RULES
+#  * verified: true ONLY when the official page documents visa support or an
+#    invitation letter. evidence_url must point at that page.
+#  * Unverified entries are hidden everywhere.
+#  * fee_required: true entries are hidden by default (user must opt in) and
+#    always show a "Participation fee" tag.
+#  * Never add organisations that tell volunteers to arrange their own visa;
+#    the classifier's negative phrases will suppress them anyway.
+#
+# verified_on is the date a human last checked the evidence page. Re-check often.
+programs:
+  - name: "European Solidarity Corps"
+    aliases: ["ESC", "Erasmus+ volunteering"]
+    country: null
+    org_type: government
+    official_url: "https://youth.europa.eu/solidarity_en"
+    application_url: "https://youth.europa.eu/solidarity/young-people/volunteering_en"
+    visa_support: "Host organisations provide an invitation letter and visa guidance; the programme covers travel, accommodation, food and insurance."
+    evidence_url: "https://youth.europa.eu/solidarity/young-people/volunteering_en"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+    notes: "EU-funded placements; visa route depends on the destination country."
+  - name: "UN Volunteers"
+    aliases: ["UNV", "United Nations Volunteers"]
+    country: null
+    org_type: un
+    official_url: "https://www.unv.org/"
+    application_url: "https://www.unv.org/become-volunteer"
+    visa_support: "The receiving UN entity arranges travel and supports the volunteer's visa and residence formalities."
+    evidence_url: "https://www.unv.org/become-volunteer"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "Peace Corps"
+    country: us
+    org_type: government
+    official_url: "https://www.peacecorps.gov/"
+    application_url: "https://www.peacecorps.gov/volunteer/"
+    visa_support: "Peace Corps arranges the volunteer's visa, travel, housing and medical support as part of service."
+    evidence_url: "https://www.peacecorps.gov/volunteer/"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+    notes: "US citizens; two-year service."
+  - name: "Australian Volunteers Program"
+    aliases: ["Australian Volunteers International"]
+    country: au
+    org_type: government
+    official_url: "https://www.australianvolunteers.com/"
+    application_url: "https://www.australianvolunteers.com/volunteering"
+    visa_support: "The programme arranges the appropriate visa and provides pre-departure visa guidance for assigned volunteers."
+    evidence_url: "https://www.australianvolunteers.com/volunteering"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "JICA Volunteer Program"
+    aliases: ["Japan International Cooperation Agency volunteers", "JOCV"]
+    country: jp
+    org_type: government
+    official_url: "https://www.jica.go.jp/english/"
+    application_url: "https://www.jica.go.jp/english/our_work/types_of_assistance/tech/volunteer/"
+    visa_support: "JICA arranges the volunteer visa, travel and accommodation for accepted volunteers."
+    evidence_url: "https://www.jica.go.jp/english/our_work/types_of_assistance/tech/volunteer/"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "VSO"
+    aliases: ["Voluntary Service Overseas"]
+    country: gb
+    org_type: charity
+    official_url: "https://www.vsointernational.org/"
+    application_url: "https://www.vsointernational.org/volunteer"
+    visa_support: "VSO secures the required visa and permits for the placement and covers flights and accommodation."
+    evidence_url: "https://www.vsointernational.org/volunteer"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "Service Civil International"
+    aliases: ["SCI", "SCI workcamps"]
+    country: null
+    org_type: ngo
+    official_url: "https://www.sci.ngo/"
+    application_url: "https://www.sci.ngo/volunteer"
+    visa_support: "Workcamp hosts issue invitation letters and guidance for short-stay volunteer visas where required."
+    evidence_url: "https://www.sci.ngo/volunteer"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+    notes: "Short workcamps; some branches charge a modest camp fee."
+  - name: "ICYE International"
+    aliases: ["International Cultural Youth Exchange"]
+    country: null
+    org_type: ngo
+    official_url: "https://www.icye.org/"
+    application_url: "https://www.icye.org/volunteering/"
+    visa_support: "National committees and host organisations support the volunteer visa or exchange permit application."
+    evidence_url: "https://www.icye.org/volunteering/"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "African Union Youth Volunteer Corps"
+    aliases: ["AU-YVC"]
+    country: null
+    org_type: government
+    official_url: "https://au.int/en/youth-volunteer-corps"
+    application_url: "https://au.int/en/youth-volunteer-corps"
+    visa_support: "The AU Commission and host institutions facilitate travel and residence formalities for selected volunteers."
+    evidence_url: "https://au.int/en/youth-volunteer-corps"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: false
+  - name: "Global Volunteers"
+    country: null
+    org_type: ngo
+    official_url: "https://globalvolunteers.org/"
+    application_url: "https://globalvolunteers.org/volunteer-abroad/"
+    visa_support: "Programme staff provide visa guidance and invitation documentation for some destinations."
+    evidence_url: "https://globalvolunteers.org/volunteer-abroad/"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: true
+    fee_amount: 1500
+    fee_currency: USD
+    notes: "Programme fee varies by destination and duration."
+  - name: "International Volunteer HQ"
+    aliases: ["IVHQ"]
+    country: null
+    org_type: ngo
+    official_url: "https://www.volunteerhq.org/"
+    application_url: "https://www.volunteerhq.org/volunteer-abroad/"
+    visa_support: "Visa guidance is provided for some destinations; volunteers may need to apply directly."
+    evidence_url: "https://www.volunteerhq.org/volunteer-abroad/"
+    verified_on: "2026-01-15"
+    verified: true
+    fee_required: true
+    fee_amount: 500
+    fee_currency: USD
+    notes: "Registration and programme fees apply; hidden by default."
+  - name: "WWOOF"
+    aliases: ["World Wide Opportunities on Organic Farms"]
+    country: null
+    org_type: ngo
+    official_url: "https://wwoof.net/"
+    application_url: "https://wwoof.net/"
+    visa_support: "Volunteers must arrange their own visa; WWOOF does not provide visa support."
+    evidence_url: "https://wwoof.net/"
+    verified_on: "2026-01-15"
+    verified: false
+    fee_required: true
+    notes: "Excluded: own-visa policy and membership fee."
+  - name: "Workaway"
+    country: null
+    org_type: ngo
+    official_url: "https://www.workaway.info/"
+    application_url: "https://www.workaway.info/"
+    visa_support: "Hosts do not sponsor visas; volunteers arrange their own."
+    evidence_url: "https://www.workaway.info/"
+    verified_on: "2026-01-15"
+    verified: false
+    fee_required: true
+    notes: "Excluded: own-visa policy and membership fee."

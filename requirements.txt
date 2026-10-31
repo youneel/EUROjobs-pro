@@ -1,0 +1,39 @@
+# Core web stack
+fastapi>=0.115
+uvicorn[standard]>=0.30
+jinja2>=3.1
+python-multipart>=0.0.9
+itsdangerous>=2.2
+pydantic>=2.8
+pydantic-settings>=2.4
+
+# Database
+SQLAlchemy>=2.0
+
+# Ingestion / HTTP
+httpx>=0.27
+PyYAML>=6.0; python_version < "3.15"
+ruamel.yaml>=0.18; python_version >= "3.15"
+APScheduler>=3.10
+
+# Visa register matching
+rapidfuzz>=3.9
+
+# Logos / images
+Pillow>=10.4
+
+# AI (official Gemini SDK) and tokenisation helpers
+google-genai>=1.0
+
+# Documents
+reportlab>=4.2
+python-docx>=1.1
+pdfplumber>=0.11
+arabic-reshaper>=3.0
+python-bidi>=0.5
+nh3>=0.2
+
+# Locale / tests
+Babel>=2.15
+pytest>=8.0
+pytest-asyncio>=0.24

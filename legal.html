@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legal — EuroJobs Pro</title>
+  <meta name="description" content="How this EuroJobs Pro demo handles local data, what the terms of use are, which storage it relies on, and its accessibility commitments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="promo-bar">
+    A demo built with local-only tools. Your profile never leaves this browser.
+    <a href="tools.html#cv">See how it works ›</a>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="EuroJobs Pro home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <circle cx="12" cy="2.6" r="1.2"/><circle cx="16.7" cy="3.86" r="1.2"/>
+            <circle cx="20.14" cy="7.3" r="1.2"/><circle cx="21.4" cy="12" r="1.2"/>
+            <circle cx="20.14" cy="16.7" r="1.2"/><circle cx="16.7" cy="20.14" r="1.2"/>
+            <circle cx="12" cy="21.4" r="1.2"/><circle cx="7.3" cy="20.14" r="1.2"/>
+            <circle cx="3.86" cy="16.7" r="1.2"/><circle cx="2.6" cy="12" r="1.2"/>
+            <circle cx="3.86" cy="7.3" r="1.2"/><circle cx="7.3" cy="3.86" r="1.2"/>
+          </g>
+        </svg>
+        <span>EuroJobs Pro</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="jobs.html">Jobs</a>
+        <a href="countries.html">Countries</a>
+        <a href="tools.html">Tools</a>
+        <a href="index.html#why">Why EuroJobs</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-icon" href="jobs.html?saved=1" aria-label="Saved roles">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+          <span class="saved-count" data-saved-count>0</span>
+        </a>
+        <a class="nav-cta" href="jobs.html">Find a role</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="tools.html">Tools</a>
+      <a href="index.html#why">Why EuroJobs</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="legal-hero">
+      <div class="container">
+        <p class="eyebrow" style="justify-content:center">The fine print</p>
+        <h1>Clear, like the rest.</h1>
+        <p class="lead">This page explains what the demo stores, what it promises, and how it aims to stay usable for everyone.</p>
+      </div>
+    </section>
+
+    <div class="container legal-layout">
+      <nav class="legal-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ul>
+          <li><a href="#privacy">Privacy</a></li>
+          <li><a href="#terms">Terms of use</a></li>
+          <li><a href="#cookies">Cookies and storage</a></li>
+          <li><a href="#accessibility">Accessibility</a></li>
+        </ul>
+      </nav>
+
+      <div class="legal-body">
+        <section class="legal-section" id="privacy">
+          <h2>Privacy</h2>
+          <p><strong>EuroJobs Pro is an independent demo project.</strong> It does not have accounts, a database, or a server-side profile. The CV details you type, the cover letters you generate and the roles you save stay in your browser's local storage on this device.</p>
+
+          <h3>What stays on your device</h3>
+          <ul>
+            <li>Your profile fields: name, headline, contact details, location, experience, skills, languages and summary.</li>
+            <li>Your saved roles and any cover-letter context passed through the page URL.</li>
+            <li>Draft text you type into the cover-letter editor. It is held in the page until you leave or refresh.</li>
+          </ul>
+
+          <h3>What leaves the browser</h3>
+          <p>Nothing is sent to us. There is no analytics, advertising or remote AI service behind the toolkit. The page does request two public resources from third-party content networks:</p>
+          <ul>
+            <li>Google Fonts, for the optional Inter typeface.</li>
+            <li>pdf.js from cdnjs, only if you choose a PDF CV; the file is read in the browser, not uploaded to us.</li>
+          </ul>
+          <p>Those networks can see your IP address and browser request, as any website request would. If you prefer to avoid them, use the system font fallback and a TXT or Markdown CV. A production deployment should self-host these assets.</p>
+
+          <h3>Clearing your data</h3>
+          <p>Use <strong>Clear</strong> in CV Studio, or clear site data in your browser settings. Saved roles can be removed one at a time from the jobs page. External employment portals linked from this site have their own privacy policies.</p>
+
+          <div class="legal-callout">
+            <p>This demo has no operator contact or data controller details. Add a monitored contact and a lawful basis before publishing it as a real service.</p>
+          </div>
+          <p class="legal-updated">Last reviewed: 30 October 2026.</p>
+        </section>
+
+        <section class="legal-section" id="terms">
+          <h2>Terms of use</h2>
+          <p>By using this demo, you accept the following practical limits. They are deliberately plain:</p>
+          <ul>
+            <li><strong>Demonstration content.</strong> Jobs, companies, salaries, profiles, stories and statistics are illustrative, even where they resemble real organisations.</li>
+            <li><strong>No legal advice.</strong> Visa notes and advisor answers are general information, not legal or immigration advice. Rules, salary thresholds and shortage lists change. Confirm every requirement with the relevant official authority.</li>
+            <li><strong>No placement service.</strong> This site does not recruit, apply, or guarantee an interview, offer or permit. Applications happen on official portals under their terms.</li>
+            <li><strong>External links.</strong> We do not control third-party portals and are not responsible for their content, availability or handling of your data.</li>
+            <li><strong>Your responsibility.</strong> Read and personalise generated text before sending it. Check facts, translation requirements and deadlines yourself.</li>
+          </ul>
+
+          <h3>Availability and liability</h3>
+          <p>The demo is provided “as is”, without warranties of accuracy, fitness for a particular purpose or uninterrupted availability. To the extent permitted by law, the project is not liable for losses arising from reliance on illustrative content, generated drafts or external links. Nothing here excludes rights that cannot lawfully be excluded.</p>
+
+          <h3>Acceptable use</h3>
+          <p>Do not use the site to misrepresent qualifications, submit fraudulent applications, scrape personal data, or interfere with the site or the public portals it links to.</p>
+
+          <h3>Changes</h3>
+          <p>Content and these terms may change as the demo develops. The review date above shows when this page last changed.</p>
+        </section>
+
+        <section class="legal-section" id="cookies">
+          <h2>Cookies and storage</h2>
+          <p><strong>This site sets no cookies of its own.</strong> It uses browser local storage, which is not a cookie and is not sent with every request.</p>
+
+          <h3>Keys used</h3>
+          <ul>
+            <li><code>ejp_saved_v1</code> — the roles you save, so the heart count survives a refresh.</li>
+            <li><code>ejp_profile_v1</code> — the CV profile you choose to save on this device.</li>
+          </ul>
+          <p>Both keys are readable only by pages on the same origin. You can delete them through your browser's site-data controls at any time. The cover-letter editor and advisor conversation are not persisted unless you copy or download the result.</p>
+
+          <h3>Third-party requests</h3>
+          <p>Google Fonts and the optional pdf.js download are ordinary HTTP requests. They may receive technical request data under their own policies. No tracking pixels or advertising scripts are included in this demo.</p>
+
+          <div class="legal-callout">
+            <p>If you add analytics, embeds, or a real authentication service later, update this page and add a consent mechanism where the law requires one.</p>
+          </div>
+        </section>
+
+        <section class="legal-section" id="accessibility">
+          <h2>Accessibility</h2>
+          <p>The site aims to meet <strong>WCAG 2.2 AA</strong> and to work with a keyboard, a screen reader, browser zoom and reduced-motion preferences.</p>
+
+          <h3>What is in place</h3>
+          <ul>
+            <li>A skip link, visible focus styles, labelled form fields and landmark navigation.</li>
+            <li>Proper tab semantics for the toolkit, with arrow-key navigation and panel state announced.</li>
+            <li>Dialog semantics and focus return for the job-detail drawer; Escape closes menus and dialogs.</li>
+            <li>Reduced-motion support that disables decorative animation and smooth scrolling.</li>
+            <li>Live regions for search results, status messages and the visa advisor conversation.</li>
+            <li>Print styles that leave only the cover letter on the page.</li>
+          </ul>
+
+          <h3>Known limitations</h3>
+          <ul>
+            <li>Country flags are emoji, so their appearance depends on your operating system and font.</li>
+            <li>PDF CV reading depends on a third-party script; TXT and Markdown work without it.</li>
+            <li>Linked public employment portals are outside this project and may have their own accessibility gaps.</li>
+            <li>Very long generated letters may need manual trimming before printing or downloading.</li>
+          </ul>
+
+          <div class="legal-callout">
+            <p>This demo does not yet provide a monitored accessibility feedback channel. Add one before publishing it as a public service.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-note">
+        <strong>EuroJobs Pro</strong> is an independent demo project. Listings, salaries, profiles and
+        stories are illustrative. Always verify visa requirements, deadlines and fees with official authorities.
+      </p>
+      <div class="footer-grid">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="jobs.html">Find jobs</a></li>
+            <li><a href="jobs.html?visa=1">Visa-sponsored roles</a></li>
+            <li><a href="countries.html">Countries</a></li>
+            <li><a href="tools.html">Toolkit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Prepare</h3>
+          <ul>
+            <li><a href="tools.html#cv">CV Studio</a></li>
+            <li><a href="tools.html#letter">Cover letters</a></li>
+            <li><a href="tools.html#advisor">Visa advisor</a></li>
+            <li><a href="jobs.html?saved=1">Saved roles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            <li><a href="countries.html?q=Germany">Germany</a></li>
+            <li><a href="countries.html?q=Netherlands">Netherlands</a></li>
+            <li><a href="countries.html?q=Ireland">Ireland</a></li>
+            <li><a href="countries.html?q=Nordics">Nordics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>About</h3>
+          <ul>
+            <li><a href="index.html#why">Our principle</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="countries.html">Official sources</a></li>
+            <li><a href="tools.html#advisor">Guidance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#privacy">Privacy</a></li>
+            <li><a href="#terms">Terms</a></li>
+            <li><a href="#cookies">Cookies</a></li>
+            <li><a href="#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p class="disclaimer">
+          © <span data-year>2026</span> EuroJobs Pro. General information only — not legal or immigration advice.
+        </p>
+        <div class="legal-links">
+          <span>Europe · English</span>
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/site.js"></script>
+</body>
+</html>

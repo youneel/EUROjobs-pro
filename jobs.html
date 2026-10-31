@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jobs — EuroJobs Pro</title>
+  <meta name="description" content="Browse curated roles across Europe. Filter by profession, country and visa support, save favourites, and apply through official portals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="promo-bar">
+    Every listing links to an official public portal. No middlemen.
+    <a href="countries.html">Browse the directory ›</a>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="EuroJobs Pro home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <circle cx="12" cy="2.6" r="1.2"/><circle cx="16.7" cy="3.86" r="1.2"/>
+            <circle cx="20.14" cy="7.3" r="1.2"/><circle cx="21.4" cy="12" r="1.2"/>
+            <circle cx="20.14" cy="16.7" r="1.2"/><circle cx="16.7" cy="20.14" r="1.2"/>
+            <circle cx="12" cy="21.4" r="1.2"/><circle cx="7.3" cy="20.14" r="1.2"/>
+            <circle cx="3.86" cy="16.7" r="1.2"/><circle cx="2.6" cy="12" r="1.2"/>
+            <circle cx="3.86" cy="7.3" r="1.2"/><circle cx="7.3" cy="3.86" r="1.2"/>
+          </g>
+        </svg>
+        <span>EuroJobs Pro</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="jobs.html">Jobs</a>
+        <a href="countries.html">Countries</a>
+        <a href="tools.html">Tools</a>
+        <a href="index.html#why">Why EuroJobs</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-icon" href="jobs.html?saved=1" aria-label="Saved roles">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+          <span class="saved-count" data-saved-count>0</span>
+        </a>
+        <a class="nav-cta" href="jobs.html">Find a role</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="tools.html">Tools</a>
+      <a href="index.html#why">Why EuroJobs</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" style="justify-content:center">Careers across Europe</p>
+        <h1>Find your place<br>in Europe.</h1>
+        <p class="lead">Visa-supported roles, official portals, and a clear route from offer to arrival.</p>
+
+        <form class="searchbar" id="search-form" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/>
+          </svg>
+          <label class="sr-only" for="job-search">Search roles</label>
+          <input id="job-search" type="search" placeholder="Role, company or city" autocomplete="off">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+        <div class="quick-searches">
+          <span>Popular:</span>
+          <button type="button" data-quick-role="software">Software</button>
+          <button type="button" data-quick-role="healthcare">Healthcare</button>
+          <button type="button" data-quick-role="engineering">Engineering</button>
+          <button type="button" data-quick-role="driving">Driving</button>
+          <button type="button" data-quick-visa="1">Visa-sponsored</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="jobs-toolbar" aria-label="Job filters">
+      <div class="toolbar-inner">
+        <label class="sr-only" for="filter-country">Country</label>
+        <select class="pill-select" id="filter-country">
+          <option value="all">All countries</option>
+        </select>
+
+        <label class="sr-only" for="filter-role">Profession</label>
+        <select class="pill-select" id="filter-role">
+          <option value="all">All professions</option>
+        </select>
+
+        <button class="toggle-pill" type="button" id="filter-visa" aria-pressed="false">
+          <span class="dot" aria-hidden="true"></span> Visa supported
+        </button>
+
+        <button class="toggle-pill" type="button" id="filter-saved" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+          Saved <span class="count" data-saved-count>0</span>
+        </button>
+
+        <span class="toolbar-spacer"></span>
+
+        <label class="sr-only" for="filter-sort">Sort</label>
+        <select class="pill-select" id="filter-sort">
+          <option value="relevance">Most relevant</option>
+          <option value="newest">Newest first</option>
+          <option value="salary">Highest salary</option>
+          <option value="company">Company A–Z</option>
+        </select>
+
+        <span class="toolbar-count" id="toolbar-count">34 roles</span>
+      </div>
+    </section>
+
+    <section class="jobs-main">
+      <div class="container">
+        <div class="results-head">
+          <h2 id="results-title">Open roles</h2>
+          <p id="results-meta">Showing 34 roles across Europe</p>
+        </div>
+        <div class="job-grid" id="job-grid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-note">
+        <strong>Demo listings.</strong> Roles, companies and salaries here are illustrative. Each role links to a
+        real national employment portal, where you should verify the vacancy and visa requirements yourself.
+      </p>
+      <div class="footer-grid">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="jobs.html">Find jobs</a></li>
+            <li><a href="jobs.html?visa=1">Visa-sponsored roles</a></li>
+            <li><a href="countries.html">Countries</a></li>
+            <li><a href="tools.html">Toolkit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Prepare</h3>
+          <ul>
+            <li><a href="tools.html#cv">CV Studio</a></li>
+            <li><a href="tools.html#letter">Cover letters</a></li>
+            <li><a href="tools.html#advisor">Visa advisor</a></li>
+            <li><a href="jobs.html?saved=1">Saved roles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            <li><a href="countries.html?q=Germany">Germany</a></li>
+            <li><a href="countries.html?q=Netherlands">Netherlands</a></li>
+            <li><a href="countries.html?q=Ireland">Ireland</a></li>
+            <li><a href="countries.html?q=Nordics">Nordics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>About</h3>
+          <ul>
+            <li><a href="index.html#why">Our principle</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="countries.html">Official sources</a></li>
+            <li><a href="tools.html#advisor">Guidance</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="legal.html#privacy">Privacy</a></li>
+            <li><a href="legal.html#terms">Terms</a></li>
+            <li><a href="legal.html#cookies">Cookies</a></li>
+            <li><a href="legal.html#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p class="disclaimer">
+          © <span data-year>2026</span> EuroJobs Pro. General information only — not legal or immigration advice.
+        </p>
+        <div class="legal-links">
+          <span>Europe · English</span>
+          <a href="legal.html#privacy">Privacy</a>
+          <a href="legal.html#terms">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true" inert>
+    <div class="drawer-head">
+      <div>
+        <p class="kicker" id="drawer-kicker">Role</p>
+        <h2 class="drawer-title" id="drawer-title">Role title</h2>
+        <p class="drawer-company" id="drawer-company">Company</p>
+      </div>
+      <button class="drawer-close" type="button" id="drawer-close" aria-label="Close role details">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="drawer-body"></div>
+    <div class="drawer-foot">
+      <a class="btn btn-primary" id="drawer-apply" href="#" target="_blank" rel="noopener noreferrer">Open official portal</a>
+      <button class="btn btn-outline save-drawer" type="button" id="drawer-save" aria-pressed="false" aria-label="Save role">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/site.js"></script>
+  <script src="assets/jobs.js"></script>
+</body>
+</html>

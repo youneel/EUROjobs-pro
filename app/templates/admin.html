@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.admin') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('nav.admin') }}</p>
+    <h1>{{ t('app.name') }}</h1>
+    <p class="muted">{{ totals.jobs|lnumber }} {{ t('nav.jobs') }} · {{ totals.volunteers|lnumber }} {{ t('nav.volunteer') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    {% if quotas %}
+    <div class="section-head"><h2>{{ t('agent.quota_left') }}</h2></div>
+    <div class="stat-row">
+      {% for slot, q in quotas.items() %}
+      <div class="stat">
+        <dt>{{ slot }} — {{ t('agent.reset_at') }} {{ q.resets_at|ldate }}</dt>
+        <dd>{{ q.remaining|lnumber }} / {{ q.limit|lnumber }}</dd>
+        <p class="muted">{{ q.used|lnumber }} {{ t('common.details') }} · 429: {{ q.failures_429|lnumber }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="section-head"><h2>{{ t('jobs.source') }}</h2></div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>{{ t('jobs.source') }}</th><th>{{ t('common.details') }}</th><th>{{ t('common.from') }}</th><th>{{ t('common.to') }}</th><th>{{ t('common.results') }}</th><th>{{ t('common.error') }}</th></tr>
+        </thead>
+        <tbody>
+          {% for run in runs %}
+          <tr>
+            <td>{{ run.source_name }}</td>
+            <td>{{ run.status }}</td>
+            <td>{{ run.started_at|ldate }}</td>
+            <td>{{ run.finished_at|ldate if run.finished_at else '—' }}</td>
+            <td>{{ run.fetched|lnumber }} / {{ run.accepted|lnumber }}</td>
+            <td class="muted">{{ (run.error or '')[:120] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

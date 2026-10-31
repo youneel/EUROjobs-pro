@@ -1,0 +1,60 @@
+<article class="job-card{% if card.volunteer and card.volunteer.fee_required %} has-fee{% endif %}">
+  <div class="card-top">
+    <img class="card-logo" src="{{ card.logo }}" alt="" width="44" height="44" loading="lazy" decoding="async">
+    <div class="card-heading">
+      <h3><a href="{{ card.detail_url }}">{{ card.title }}</a></h3>
+      <p class="card-company">{{ card.company }}</p>
+    </div>
+    {% if user %}
+      <form class="save-form" method="post" action="/saved/{{ card.id }}" data-save>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button type="submit" class="save-btn" aria-pressed="{{ 'true' if card.id in (saved_ids or []) else 'false' }}"
+                aria-label="{{ t('common.save') }}" title="{{ t('common.save') }}">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="{{ 'currentColor' if card.id in (saved_ids or []) else 'none' }}" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 20.5s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7.5 3.5c0 5.3-7.5 10-7.5 10Z"/>
+          </svg>
+        </button>
+      </form>
+    {% endif %}
+  </div>
+
+  <p class="card-meta">
+    {% if card.city or card.country %}<span>{{ card.city }}{% if card.city and card.country %} · {% endif %}{{ card.country or (card.country_code|lcountry) }}</span>{% endif %}
+    {% if card.work_mode %}<span>{{ t('mode.' ~ card.work_mode) }}</span>{% endif %}
+    {% if card.employment_type %}<span>{{ t('employment.' ~ card.employment_type) }}</span>{% endif %}
+  </p>
+
+  {% if card.description %}<p class="card-desc">{{ card.description }}</p>{% endif %}
+
+  <div class="card-badges">
+    <span class="badge {{ 'badge-verified' if card.visa_tier == 1 else 'badge-mentioned' }}">
+      {% if card.type == 'volunteer' %}
+        {{ t('volunteer.support_confirmed') if card.visa_tier == 1 else t('volunteer.support_mentioned') }}
+      {% else %}
+        {{ t('visa.verified_sponsor') if card.visa_tier == 1 else t('visa.sponsorship_mentioned') }}
+      {% endif %}
+    </span>
+    {% if card.volunteer %}
+      {% if card.volunteer.cause_area %}<span class="badge">{{ t('cause.' ~ card.volunteer.cause_area) }}</span>{% endif %}
+      {% if card.volunteer.duration %}<span class="badge">{{ card.volunteer.duration }}</span>{% endif %}
+      {% if card.volunteer.fee_required %}
+        <span class="badge badge-fee">{{ t('volunteer.participation_fee') }}{% if card.volunteer.fee_amount %} {{ card.volunteer.fee_amount|lnumber }} {{ card.volunteer.fee_currency or '' }}{% endif %}</span>
+      {% endif %}
+    {% else %}
+      {% if card.salary_min or card.salary_max %}
+        <span class="badge badge-salary">
+          {% if card.salary_min and card.salary_max %}{{ card.salary_min|lnumber }}–{{ card.salary_max|lnumber }}
+          {% elif card.salary_min %}{{ t('common.from') }} {{ card.salary_min|lnumber }}
+          {% else %}{{ t('common.to') }} {{ card.salary_max|lnumber }}{% endif %}
+          {{ card.currency or '' }}
+        </span>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="card-actions">
+    <a class="btn btn-primary btn-sm" href="{{ card.apply_url }}" rel="nofollow noopener" target="_blank">{{ t('common.apply_now') }}</a>
+    <a class="link link-arrow" href="{{ card.detail_url }}">{{ t('common.details') }} <span aria-hidden="true">›</span></a>
+    {% if card.posted_at %}<span class="card-age">{{ card.posted_at|lrelative }}</span>{% endif %}
+  </div>
+</article>

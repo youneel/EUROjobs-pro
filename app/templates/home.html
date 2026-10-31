@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}{{ t('app.name') }} — {{ t('app.tagline') }}{% endblock %}
+{% block content %}
+<section class="hero hero-compact">
+  <div class="container hero-inner">
+    <p class="eyebrow">{{ t('hero.eyebrow') }}</p>
+    <h1>{{ t('hero.title_a') }}<br><span class="soft">{{ t('hero.title_b') }}</span></h1>
+    <p class="hero-copy">{{ t('hero.copy') }}</p>
+
+    <form class="hero-search" method="get" action="/jobs" role="search">
+      <label class="sr-only" for="home-q">{{ t('jobs.search_label') }}</label>
+      <input id="home-q" name="q" type="search" placeholder="{{ t('common.search_placeholder') }}" autocomplete="off">
+      <button class="btn btn-primary" type="submit">{{ t('common.search') }}</button>
+    </form>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="/jobs">{{ t('hero.cta') }}</a>
+      <a class="btn btn-ghost btn-lg" href="/volunteer">{{ t('switch.volunteer') }}</a>
+    </div>
+    <p class="hero-note">{{ t('hero.note') }}</p>
+  </div>
+</section>
+
+<section class="section-tight" aria-labelledby="stats-title">
+  <div class="container">
+    <h2 id="stats-title" class="sr-only">{{ t('home.stats_jobs') }}</h2>
+    <dl class="stat-row">
+      <div class="stat"><dt>{{ t('home.stats_jobs') }}</dt><dd>{{ job_counts.count|lnumber }}</dd></div>
+      <div class="stat"><dt>{{ t('home.stats_countries') }}</dt><dd>{{ (country_count or job_counts.countries)|lnumber }}</dd></div>
+      <div class="stat"><dt>{{ t('home.stats_volunteer') }}</dt><dd>{{ volunteer_counts.count|lnumber }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="latest-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 id="latest-title">{{ t('home.latest') }}</h2>
+        <p class="muted">{{ t('home.latest_copy') }}</p>
+      </div>
+      <a class="link link-arrow" href="/jobs">{{ t('common.show_more') }} <span aria-hidden="true">›</span></a>
+    </div>
+    <div class="card-grid">
+      {% for card in jobs %}{% include "_card.html" %}{% endfor %}
+      {% if not jobs %}
+        <div class="empty-state">
+          <p class="empty-title">{{ t('common.no_results') }}</p>
+          <p class="muted">{{ t('jobs.no_results_hint') }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section volunteer-teaser" aria-labelledby="volunteer-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 id="volunteer-title">{{ t('volunteer.title') }}</h2>
+        <p class="muted">{{ t('home.volunteer_copy') }}</p>
+      </div>
+      <a class="link link-arrow" href="/volunteer">{{ t('switch.volunteer') }} <span aria-hidden="true">›</span></a>
+    </div>
+    <div class="card-grid card-grid-3">
+      {% for card in volunteers %}{% include "_card.html" %}{% endfor %}
+      {% if not volunteers %}
+        <div class="empty-state">
+          <p class="empty-title">{{ t('volunteer.no_results') }}</p>
+          <p class="muted">{{ t('volunteer.no_results_hint') }}</p>
+        </div>
+      {% endif %}
+    </div>
+    <p class="legal-note">{{ t('volunteer.legal') }}</p>
+  </div>
+</section>
+
+<section class="section" id="why" aria-labelledby="trust-title">
+  <div class="container trust-grid">
+    <div>
+      <h2 id="trust-title">{{ t('home.trust_title') }}</h2>
+      <p class="muted">{{ t('home.trust_copy') }}</p>
+    </div>
+    <ul class="trust-list">
+      <li><strong>{{ t('visa.verified_sponsor') }}</strong><span>{{ t('visa.verified_explain') }}</span></li>
+      <li><strong>{{ t('visa.sponsorship_mentioned') }}</strong><span>{{ t('visa.mentioned_explain') }}</span></li>
+      <li><strong>{{ t('home.tools_title') }}</strong><span>{{ t('home.tools_copy') }}</span></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

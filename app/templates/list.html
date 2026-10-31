@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}{{ t('volunteer.title') if kind == 'volunteer' else t('jobs.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('volunteer.eyebrow') if kind == 'volunteer' else t('jobs.eyebrow') }}</p>
+    <h1>{{ t('volunteer.title') if kind == 'volunteer' else t('jobs.title') }}</h1>
+    <p class="muted page-sub">{{ t('volunteer.subtitle') if kind == 'volunteer' else t('jobs.subtitle') }}</p>
+    <p class="counter-line">
+      {{ t('volunteer.counter') if kind == 'volunteer' else t('jobs.counter') }}:
+      <strong>{{ counts.count|lnumber }}</strong>
+      <span class="muted">· {{ counts.countries|lnumber }} {{ t('home.stats_countries')|lower }}</span>
+    </p>
+    {% if kind == 'volunteer' %}
+      <p class="legal-note">{{ t('volunteer.fee_notice') }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container listing-layout">
+    <form class="filter-panel" method="get" action="{{ '/volunteer' if kind == 'volunteer' else '/jobs' }}" id="filter-form">
+      <div class="filter-row">
+        <div class="field field-grow">
+          <label for="f-q">{{ t('jobs.keyword') }}</label>
+          <input id="f-q" name="q" type="search" value="{{ filters.q }}" placeholder="{{ t('common.search_placeholder') }}" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="f-country">{{ t('jobs.country') }}</label>
+          <select id="f-country" name="country">
+            <option value="">{{ t('common.all') }}</option>
+            {% for c in facets.countries %}
+              <option value="{{ c.code }}" {% if filters.country == c.code %}selected{% endif %}>{{ c.code|lcountry }} ({{ c.count|lnumber }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-category">{{ t('jobs.category') }}</label>
+          <select id="f-category" name="category">
+            <option value="">{{ t('common.all') }}</option>
+            {% for key in categories %}
+              <option value="{{ key }}" {% if filters.category == key %}selected{% endif %}>{{ t('category.' ~ key) }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-mode">{{ t('jobs.work_mode') }}</label>
+          <select id="f-mode" name="work_mode">
+            <option value="">{{ t('common.all') }}</option>
+            {% for mode in ['remote', 'hybrid', 'onsite'] %}
+              <option value="{{ mode }}" {% if filters.work_mode == mode %}selected{% endif %}>{{ t('mode.' ~ mode) }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-employment">{{ t('jobs.employment') }}</label>
+          <select id="f-employment" name="employment_type">
+            <option value="">{{ t('common.all') }}</option>
+            {% for key in ['full_time', 'part_time', 'contract', 'temporary', 'internship', 'apprenticeship'] %}
+              <option value="{{ key }}" {% if filters.employment_type == key %}selected{% endif %}>{{ t('employment.' ~ key) }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-tier">{{ t('jobs.visa_tier') }}</label>
+          <select id="f-tier" name="visa_tier">
+            <option value="">{{ t('visa.tier_all') }}</option>
+            <option value="1" {% if filters.visa_tier == 1 %}selected{% endif %}>{{ t('visa.tier_verified') }}</option>
+            <option value="2" {% if filters.visa_tier == 2 %}selected{% endif %}>{{ t('visa.tier_mentioned') }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-posted">{{ t('jobs.posted') }}</label>
+          <select id="f-posted" name="posted_days">
+            <option value="">{{ t('date.any') }}</option>
+            <option value="1" {% if filters.posted_days == 1 %}selected{% endif %}>{{ t('date.today') }}</option>
+            <option value="7" {% if filters.posted_days == 7 %}selected{% endif %}>{{ t('date.last_7') }}</option>
+            <option value="30" {% if filters.posted_days == 30 %}selected{% endif %}>{{ t('date.last_30') }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-sort">{{ t('jobs.sort') }}</label>
+          <select id="f-sort" name="sort">
+            <option value="newest" {% if filters.sort == 'newest' %}selected{% endif %}>{{ t('common.newest') }}</option>
+            <option value="relevance" {% if filters.sort == 'relevance' %}selected{% endif %}>{{ t('common.relevance') }}</option>
+          </select>
+        </div>
+      </div>
+
+      {% if kind == 'volunteer' %}
+      <fieldset class="filter-fieldset">
+        <legend>{{ t('common.filters') }}</legend>
+        <div class="filter-row">
+          <div class="field">
+            <label for="f-cause">{{ t('volunteer.cause') }}</label>
+            <select id="f-cause" name="cause">
+              <option value="">{{ t('common.all') }}</option>
+              {% for key in cause_areas %}
+                <option value="{{ key }}" {% if filters.cause == key %}selected{% endif %}>{{ t('cause.' ~ key) }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-org">{{ t('volunteer.org_type') }}</label>
+            <select id="f-org" name="org_type">
+              <option value="">{{ t('common.all') }}</option>
+              {% for key in org_types %}
+                <option value="{{ key }}" {% if filters.org_type == key %}selected{% endif %}>{{ t('org.' ~ key) }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-min-age">{{ t('volunteer.min_age') }}</label>
+            <input id="f-min-age" name="min_age" type="number" min="16" max="99" value="{{ filters.min_age or '' }}">
+          </div>
+          <div class="check-row">
+            <label class="check"><input type="checkbox" name="remote_volunteering" value="1" {% if filters.remote_volunteering %}checked{% endif %}> {{ t('volunteer.remote') }}</label>
+            <label class="check"><input type="checkbox" name="accommodation" value="1" {% if filters.accommodation %}checked{% endif %}> {{ t('volunteer.accommodation') }}</label>
+            <label class="check"><input type="checkbox" name="meals" value="1" {% if filters.meals %}checked{% endif %}> {{ t('volunteer.meals') }}</label>
+            <label class="check"><input type="checkbox" name="stipend" value="1" {% if filters.stipend %}checked{% endif %}> {{ t('volunteer.stipend') }}</label>
+            <label class="check"><input type="checkbox" name="travel" value="1" {% if filters.travel %}checked{% endif %}> {{ t('volunteer.travel') }}</label>
+            <label class="check"><input type="checkbox" name="insurance" value="1" {% if filters.insurance %}checked{% endif %}> {{ t('volunteer.insurance') }}</label>
+            <label class="check check-warn"><input type="checkbox" name="include_fee" value="1" {% if filters.include_fee %}checked{% endif %}> {{ t('volunteer.fee_toggle') }}</label>
+          </div>
+        </div>
+      </fieldset>
+      {% endif %}
+
+      <div class="filter-actions">
+        <button class="btn btn-primary btn-sm" type="submit">{{ t('common.search') }}</button>
+        <a class="link" href="{{ '/volunteer' if kind == 'volunteer' else '/jobs' }}">{{ t('common.reset') }}</a>
+      </div>
+    </form>
+
+    <div class="results-panel">
+      <div class="results-head">
+        <p class="muted">{{ total|lnumber }} {{ t('common.results') }}</p>
+        {% if filters.q %}
+          <p class="muted query-note">{{ t('jobs.keyword') }}: <bdi>{{ filters.q }}</bdi></p>
+        {% endif %}
+      </div>
+
+      {% if kind == 'job' and filters.q %}
+      <section class="live-panel" id="live-results" data-query="{{ filters.q }}" hidden aria-live="polite">
+        <h2>{{ t('jobs.live_new') }}</h2>
+        <div class="card-grid" id="live-cards"></div>
+      </section>
+      {% endif %}
+
+      <div class="card-grid" id="results">
+        {% include "_cards.html" %}
+      </div>
+
+      {% if next_url %}
+      <div class="load-more-wrap">
+        <button class="btn btn-ghost" type="button" id="load-more"
+                data-next="{{ next_url }}"
+                data-total="{{ total }}"
+                data-loaded="{{ cards|length }}">{{ t('common.show_more') }}</button>
+        <noscript><a class="btn btn-ghost" href="{{ next_url }}">{{ t('pagination.next') }}</a></noscript>
+      </div>
+      {% endif %}
+
+      {% if total > filters.page_size %}
+      <nav class="pager" aria-label="{{ t('pagination.page') }}">
+        {% if prev_url %}<a class="btn btn-ghost btn-sm" href="{{ prev_url }}">‹ {{ t('pagination.prev') }}</a>{% endif %}
+        <span class="muted">{{ t('pagination.page') }} {{ filters.page|lnumber }} — {{ t('pagination.of') }} {{ ((total + filters.page_size - 1) // filters.page_size)|lnumber }}</span>
+        {% if next_url %}<a class="btn btn-ghost btn-sm" href="{{ next_url }}">{{ t('pagination.next') }} ›</a>{% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ t('docs.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('docs.eyebrow') }}</p>
+    <h1>{{ t('docs.title') }}</h1>
+    <p class="muted">{{ t('docgen.edit_hint') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    {% if documents %}
+    <div class="doc-grid">
+      {% for doc in documents %}
+      <article class="doc-card">
+        <p class="doc-kind">{{ t('common.cover_letter') if doc.doc_type == 'letter' else t('common.generate_cv') }}</p>
+        <h2><a href="/documents/{{ doc.public_id }}">{{ doc.title }}</a></h2>
+        <p class="muted">{{ doc.created_at|ldate }} · {{ doc.language|upper }}{% if doc.country_style %} · {{ t('docgen.style_' ~ doc.country_style) }}{% endif %}</p>
+        <div class="card-actions">
+          <a class="btn btn-ghost btn-sm" href="/documents/{{ doc.public_id }}">{{ t('docs.view') }}</a>
+          <a class="link" href="/documents/{{ doc.public_id }}/export.pdf">{{ t('docgen.export_pdf') }}</a>
+          <a class="link" href="/documents/{{ doc.public_id }}/export.docx">{{ t('docgen.export_docx') }}</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+      <div class="empty-state">
+        <p class="empty-title">{{ t('docs.none') }}</p>
+        <p class="muted">{{ t('docgen.needs_profile') }}</p>
+        <a class="btn btn-primary btn-sm" href="/jobs">{{ t('nav.jobs') }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

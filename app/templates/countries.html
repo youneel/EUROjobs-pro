@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ t('countries.title') }} — {{ t('app.name') }}{% endblock %}
+{% block content %}
+<section class="section page-head">
+  <div class="container">
+    <p class="eyebrow">{{ t('countries.eyebrow') }}</p>
+    <h1>{{ t('countries.title') }}</h1>
+    <p class="muted">{{ t('countries.subtitle') }}</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="section-head">
+      <h2>{{ t('nav.jobs') }}</h2>
+      <a class="link" href="/jobs">{{ t('common.show_more') }} ›</a>
+    </div>
+    <ul class="country-grid">
+      {% for c in job_facets %}
+      <li>
+        <a href="/jobs?country={{ c.code }}">
+          <img src="{{ c.code|flag }}" alt="" width="28" height="20" loading="lazy">
+          <span>{{ c.code|lcountry }}</span>
+          <span class="muted">{{ c.count|lnumber }}</span>
+        </a>
+      </li>
+      {% endfor %}
+      {% if not job_facets %}<li class="muted">{{ t('common.no_results') }}</li>{% endif %}
+    </ul>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="section-head">
+      <h2>{{ t('nav.volunteer') }}</h2>
+      <a class="link" href="/volunteer">{{ t('common.show_more') }} ›</a>
+    </div>
+    <ul class="country-grid">
+      {% for c in volunteer_facets %}
+      <li>
+        <a href="/volunteer?country={{ c.code }}">
+          <img src="{{ c.code|flag }}" alt="" width="28" height="20" loading="lazy">
+          <span>{{ c.code|lcountry }}</span>
+          <span class="muted">{{ c.count|lnumber }}</span>
+        </a>
+      </li>
+      {% endfor %}
+      {% if not volunteer_facets %}<li class="muted">{{ t('volunteer.no_results') }}</li>{% endif %}
+    </ul>
+  </div>
+</section>
+{% endblock %}
