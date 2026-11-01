@@ -3,11 +3,12 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any, Iterator
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from fastapi import Body, Depends, FastAPI, Form, HTTPException, Request, Response
 from fastapi.responses import (
     HTMLResponse,
     JSONResponse,
@@ -34,11 +35,13 @@ from app.models import (
     ClickLog,
     Document,
     Listing,
+    PushDevice,
     SavedListing,
     SourceRun,
     User,
     UserProfile,
     VolunteerDetails,
+    utcnow,
 )
 from app.search import SearchFilters, card_dict, counter, facets, search_listings, similar_listings
 from app.security import (
@@ -251,6 +254,8 @@ def create_app() -> FastAPI:
 
         response = await call_next(request)
 
+        forwarded_proto = request.headers.get("x-forwarded-proto", "").split(",")[0].strip()
+        secure_cookie = (forwarded_proto or request.url.scheme) == "https"
         if fresh or session.get("locale") != lang:
             session["locale"] = lang
             response.set_cookie(
@@ -259,7 +264,7 @@ def create_app() -> FastAPI:
                 max_age=SESSION_MAX_AGE,
                 httponly=True,
                 samesite="lax",
-                secure=request.url.scheme == "https",
+                secure=secure_cookie,
             )
         if query_lang:
             response.set_cookie(
@@ -403,6 +408,92 @@ def register_routes(app: FastAPI) -> None:
             "quota": _quota_snapshot(),
         }
 
+    @app.get("/api/app/config")
+    def app_config(request: Request):
+        """Feature flags and links consumed by the iOS shell only."""
+        base = settings.public_url or str(request.base_url).rstrip("/")
+        return {
+            "app": "EuroJobs Pro",
+            "latest_version": settings.app_latest_version,
+            "min_supported_version": settings.app_min_version,
+            "store_url": settings.app_store_url,
+            "support_email": settings.support_email,
+            "privacy_url": f"{base}/legal",
+            "support_url": f"{base}/support",
+            "push_enabled": settings.push_enabled,
+            "features": {
+                "biometric_lock": True,
+                "native_share": True,
+                "document_export": True,
+                "offline_notice": True,
+            },
+        }
+
+    @app.post("/api/push/register")
+    def push_register(
+        request: Request,
+        payload: dict = Body(...),
+        db: Session = Depends(get_db),
+        user: User = Depends(require_user),
+    ):
+        check_csrf(request, str(payload.get("csrf") or ""))
+        if not settings.push_enabled:
+            raise HTTPException(status_code=404, detail="Push notifications are not configured")
+        token = str(payload.get("token") or "").strip()
+        if not re.fullmatch(r"[A-Fa-f0-9]{32,400}", token):
+            raise HTTPException(status_code=400, detail="Invalid device token")
+        locale = normalize_lang(str(payload.get("locale") or request.state.lang))
+        row = db.scalar(select(PushDevice).where(PushDevice.token == token))
+        if row is None:
+            row = PushDevice(token=token, user_id=user.id, platform="ios", locale=locale)
+            db.add(row)
+        else:
+            row.user_id = user.id
+            row.locale = locale
+            row.enabled = True
+            row.last_seen_at = utcnow()
+        db.commit()
+        return {"ok": True}
+
+    @app.post("/api/push/unregister")
+    def push_unregister(
+        request: Request,
+        payload: dict = Body(...),
+        db: Session = Depends(get_db),
+        user: User = Depends(require_user),
+    ):
+        check_csrf(request, str(payload.get("csrf") or ""))
+        token = str(payload.get("token") or "").strip()
+        row = db.scalar(
+            select(PushDevice).where(
+                PushDevice.user_id == user.id, PushDevice.token == token
+            )
+        )
+        if row is not None:
+            db.delete(row)
+            db.commit()
+        return {"ok": True}
+
+    @app.get("/.well-known/apple-app-site-association")
+    def apple_app_site_association():
+        if not settings.apple_team_id:
+            raise HTTPException(status_code=404)
+        app_id = f"{settings.apple_team_id}.{settings.ios_bundle_id}"
+        return JSONResponse(
+            {
+                "applinks": {
+                    "apps": [],
+                    "details": [
+                        {
+                            "appID": app_id,
+                            "paths": ["/jobs/*", "/volunteer/*", "/documents/*", "/tools"],
+                        }
+                    ],
+                },
+                "webcredentials": {"apps": [app_id]},
+            }
+        )
+
     @app.get("/jobs/{public_id}", response_class=HTMLResponse)
     def job_detail(
         request: Request,
@@ -502,7 +593,7 @@ def register_routes(app: FastAPI) -> None:
     def toggle_saved(
         public_id: str,
         request: Request,
-        csrf: str = "",
+        csrf: str = Form(""),
         db: Session = Depends(get_db),
         user: User | None = Depends(current_user),
     ):
@@ -562,6 +653,10 @@ def register_routes(app: FastAPI) -> None:
     def legal_page(request: Request, user: User | None = Depends(current_user)):
         return render(request, "legal.html", user)
 
+    @app.get("/support", response_class=HTMLResponse)
+    def support_page(request: Request, user: User | None = Depends(current_user)):
+        return render(request, "support.html", user)
+
     @app.get("/tools", response_class=HTMLResponse)
     def tools_page(request: Request, user: User | None = Depends(current_user)):
         return render(request, "tools.html", user)
@@ -576,10 +671,10 @@ def register_routes(app: FastAPI) -> None:
     @app.post("/auth/login")
     def login_submit(
         request: Request,
-        email: str = "",
-        password: str = "",
-        csrf: str = "",
-        next: str = "",
+        email: str = Form(""),
+        password: str = Form(""),
+        csrf: str = Form(""),
+        next: str = Form(""),
         db: Session = Depends(get_db),
     ):
         check_csrf(request, csrf)
@@ -619,10 +714,10 @@ def register_routes(app: FastAPI) -> None:
     @app.post("/auth/register")
     def register_submit(
         request: Request,
-        email: str = "",
-        password: str = "",
-        display_name: str = "",
-        csrf: str = "",
+        email: str = Form(""),
+        password: str = Form(""),
+        display_name: str = Form(""),
+        csrf: str = Form(""),
         db: Session = Depends(get_db),
     ):
         check_csrf(request, csrf)
@@ -672,7 +767,7 @@ def register_routes(app: FastAPI) -> None:
         return response
 
     @app.post("/auth/logout")
-    def logout(request: Request, csrf: str = ""):
+    def logout(request: Request, csrf: str = Form("")):
         check_csrf(request, csrf)
         response = RedirectResponse("/", status_code=303)
         response.delete_cookie(SESSION_COOKIE)
@@ -686,24 +781,24 @@ def register_routes(app: FastAPI) -> None:
     @app.post("/profile")
     def profile_save(
         request: Request,
-        csrf: str = "",
-        full_name: str = "",
-        email: str = "",
-        phone: str = "",
-        address: str = "",
-        headline: str = "",
-        summary: str = "",
-        skills: str = "",
-        languages: str = "",
-        certifications: str = "",
-        nationality: str = "",
-        current_location: str = "",
-        target_countries: str = "",
-        experience_text: str = "",
-        education_text: str = "",
-        projects_text: str = "",
-        requires_sponsorship: str = "",
-        preferred_language: str = "",
+        csrf: str = Form(""),
+        full_name: str = Form(""),
+        email: str = Form(""),
+        phone: str = Form(""),
+        address: str = Form(""),
+        headline: str = Form(""),
+        summary: str = Form(""),
+        skills: str = Form(""),
+        languages: str = Form(""),
+        certifications: str = Form(""),
+        nationality: str = Form(""),
+        current_location: str = Form(""),
+        target_countries: str = Form(""),
+        experience_text: str = Form(""),
+        education_text: str = Form(""),
+        projects_text: str = Form(""),
+        requires_sponsorship: str = Form(""),
+        preferred_language: str = Form(""),
         db: Session = Depends(get_db),
         user: User = Depends(require_user),
     ):
@@ -736,7 +831,7 @@ def register_routes(app: FastAPI) -> None:
     @app.post("/profile/cv")
     async def profile_cv_upload(
         request: Request,
-        csrf: str = "",
+        csrf: str = Form(""),
         db: Session = Depends(get_db),
         user: User = Depends(require_user),
     ):
@@ -760,7 +855,7 @@ def register_routes(app: FastAPI) -> None:
 
     @app.post("/profile/delete")
     def profile_delete(
-        request: Request, csrf: str = "", db: Session = Depends(get_db), user: User = Depends(require_user)
+        request: Request, csrf: str = Form(""), db: Session = Depends(get_db), user: User = Depends(require_user)
     ):
         check_csrf(request, csrf)
         db.delete(user)
@@ -800,8 +895,8 @@ def register_routes(app: FastAPI) -> None:
     def document_edit(
         request: Request,
         public_id: str,
-        content_text: str = "",
-        csrf: str = "",
+        content_text: str = Form(""),
+        csrf: str = Form(""),
         db: Session = Depends(get_db),
         user: User = Depends(require_user),
     ):
@@ -822,7 +917,7 @@ def register_routes(app: FastAPI) -> None:
     def document_delete(
         request: Request,
         public_id: str,
-        csrf: str = "",
+        csrf: str = Form(""),
         db: Session = Depends(get_db),
         user: User = Depends(require_user),
     ):
@@ -867,16 +962,16 @@ def register_routes(app: FastAPI) -> None:
     def generate_for_listing(
         request: Request,
         public_id: str,
-        csrf: str = "",
-        doc_type: str = "cv",
-        language: str = "",
-        tone: str = "professional",
-        length: str = "standard",
-        country_style: str = "international",
-        instruction: str = "",
-        hiring_manager: str = "",
-        include_relocation: str = "1",
-        ai_ack: str = "",
+        csrf: str = Form(""),
+        doc_type: str = Form("cv"),
+        language: str = Form(""),
+        tone: str = Form("professional"),
+        length: str = Form("standard"),
+        country_style: str = Form("international"),
+        instruction: str = Form(""),
+        hiring_manager: str = Form(""),
+        include_relocation: str = Form("1"),
+        ai_ack: str = Form(""),
         db: Session = Depends(get_db),
         user: User = Depends(require_user),
     ):

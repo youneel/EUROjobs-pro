@@ -20,8 +20,8 @@
         <p class="muted">{{ doc.created_at|ldate }} · {{ doc.language|upper }}{% if doc.country_style %} · {{ t('docgen.style_' ~ doc.country_style) }}{% endif %}</p>
         <div class="card-actions">
           <a class="btn btn-ghost btn-sm" href="/documents/{{ doc.public_id }}">{{ t('docs.view') }}</a>
-          <a class="link" href="/documents/{{ doc.public_id }}/export.pdf">{{ t('docgen.export_pdf') }}</a>
-          <a class="link" href="/documents/{{ doc.public_id }}/export.docx">{{ t('docgen.export_docx') }}</a>
+          <a class="link" href="/documents/{{ doc.public_id }}/export.pdf" data-native-download>{{ t('docgen.export_pdf') }}</a>
+          <a class="link" href="/documents/{{ doc.public_id }}/export.docx" data-native-download>{{ t('docgen.export_docx') }}</a>
         </div>
       </article>
       {% endfor %}

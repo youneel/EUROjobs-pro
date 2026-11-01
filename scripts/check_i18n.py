@@ -52,13 +52,21 @@ def main() -> int:
         print("MISSING static keys:")
         for key in missing:
             print("  ", key)
+    failures = bool(missing)
     for lang in ("fr", "ar"):
         gaps = sorted(k for k in en if k not in catalogues[lang])
+        extras = sorted(k for k in catalogues[lang] if k not in en)
         if gaps:
+            failures = True
             print(f"MISSING in {lang}: {len(gaps)}")
             for key in gaps[:20]:
                 print("  ", key)
-    return 1 if missing else 0
+        if extras:
+            failures = True
+            print(f"UNEXPECTED in {lang}: {len(extras)}")
+            for key in extras[:20]:
+                print("  ", key)
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

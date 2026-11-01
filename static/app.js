@@ -391,7 +391,7 @@
           return;
         }
         if (typeof data.remaining === "number") {
-          quotaLine.textContent = t("agent.quota_left") + ": " + formatNumber(data.remaining);
+          quotaLine.textContent = formatNumber(data.remaining) + " " + t("agent.quota_left_label");
         }
       })
       .catch(function () {
@@ -428,7 +428,7 @@
         var names = (meta.dataset.names || "").split(",").filter(Boolean);
         if (names.indexOf(data.name) === -1) names.push(data.name);
         meta.dataset.names = names.join(",");
-        meta.textContent = t("agent.tools_used") + ": " + names.join(", ");
+        meta.textContent = t("agent.tools_used").replace("{tools}", names.join(", "));
       }
       return;
     }
@@ -452,14 +452,15 @@
     }
     if (event === "quota") {
       bubble.classList.add("error");
-      renderInto(bubble, t("agent.quota_exhausted"));
+      var quotaText = t("agent.quota_exhausted");
       if (data && data.reset_at) {
         try {
-          bubble.appendChild(doc.createTextNode(" " + new Date(data.reset_at).toLocaleString()));
+          quotaText = quotaText.replace("{when}", new Date(data.reset_at).toLocaleString());
         } catch (error) {
           /* ignore */
         }
       }
+      renderInto(bubble, quotaText.replace("{when}", ""));
       setPending(false);
       return;
     }

@@ -26,6 +26,11 @@
           </button>
         </form>
         {% endif %}
+        <button class="btn btn-ghost native-only" type="button"
+                data-native-share
+                data-share-title="{{ listing.title }}"
+                data-share-text="{{ listing.company }} — {{ t('app.name') }}"
+                data-share-url="{{ request.url }}">{{ t('native.share') }}</button>
       </div>
     </div>
 
@@ -168,7 +173,7 @@
             {% if not user.profile.ai_acknowledged_at %}
               <label class="check"><input type="checkbox" name="ai_ack" value="1" required> {{ t('ai.ack') }}</label>
             {% endif %}
-            <p class="quota-hint">{{ t('docgen.quota_cost') }}</p>
+            <p class="quota-hint">{{ t('docgen.quota_cost', count=1) }}</p>
             <button class="btn btn-primary btn-sm" type="submit">{{ t('docgen.generate') }}</button>
           </form>
           <p class="legal-note">{{ t('ai.privacy_free') if settings.gemini_free_tier else t('ai.privacy_paid') }}</p>

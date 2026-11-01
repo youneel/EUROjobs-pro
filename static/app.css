@@ -699,6 +699,42 @@ bdi {
   padding: 20px;
 }
 
+.filter-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.filter-summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-inline-start: auto;
+  transition: transform 0.18s ease;
+}
+
+.filter-advanced[open] .filter-summary {
+  margin-bottom: 4px;
+}
+
+.filter-advanced[open] .filter-summary::after {
+  transform: rotate(-135deg);
+}
+
 .filter-row {
   display: flex;
   flex-wrap: wrap;

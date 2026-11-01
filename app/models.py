@@ -315,3 +315,25 @@ class ClickLog(Base):
     user_id: Mapped[int | None] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     referrer: Mapped[str | None] = mapped_column(String(500))
+
+
+class PushDevice(Base):
+    """APNs device token for the iOS app.
+
+    Tokens are only stored when the mobile API is enabled. The token is a
+    per-install identifier, never a contact detail, and is deleted with the
+    user's account.
+    """
+
+    __tablename__ = "push_device"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"), index=True)
+    token: Mapped[str] = mapped_column(String(400), unique=True, index=True)
+    platform: Mapped[str] = mapped_column(String(16), default="ios")
+    locale: Mapped[str | None] = mapped_column(String(8))
+    enabled: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    last_seen_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, onupdate=utcnow
+    )

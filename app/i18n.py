@@ -9,6 +9,7 @@ Dates, numbers and plurals use Babel/CLDR. Digits are always Western (0-9).
 from __future__ import annotations
 
 import json
+from datetime import date, datetime, time, timezone
 from functools import lru_cache
 from pathlib import Path
 
@@ -51,6 +52,26 @@ def load_catalog(lang: str) -> dict[str, str]:
         path = I18N_DIR / f"{settings.default_language}.json"
     with path.open("r", encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def _as_datetime(value) -> datetime | None:
+    """Coerce API ISO strings, dates and naive datetimes to an aware datetime."""
+    if value is None or value == "":
+        return None
+    if isinstance(value, datetime):
+        result = value
+    elif isinstance(value, date):
+        result = datetime.combine(value, time.min)
+    elif isinstance(value, str):
+        try:
+            result = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    else:
+        return None
+    if result.tzinfo is None:
+        result = result.replace(tzinfo=timezone.utc)
+    return result
 
 
 class Translator:
@@ -110,17 +131,14 @@ class Translator:
             return ""
 
     def relative(self, value) -> str:
-        if not value:
+        parsed = _as_datetime(value)
+        if parsed is None:
             return ""
-        from datetime import datetime, timezone
-
-        if value.tzinfo is None:
-            value = value.replace(tzinfo=timezone.utc)
-        delta = value - datetime.now(timezone.utc)
+        delta = parsed - datetime.now(timezone.utc)
         try:
             return western_digits(format_timedelta(delta, add_direction=True, locale=self.locale))
         except Exception:
-            return self.date(value)
+            return self.date(parsed)
 
     def number(self, value, decimals: int = 0) -> str:
         if value is None:

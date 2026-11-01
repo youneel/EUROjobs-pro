@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from datetime import datetime, timedelta, timezone
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -47,6 +48,17 @@ def _links_job() -> None:
     log.info("Link check finished: %s", result)
 
 
+def _initial_data_job() -> None:
+    """Populate an empty installation and refresh the official UK register."""
+    try:
+        from app.visa.registers import refresh_uk_register_if_stale
+
+        log.info("Sponsor register refresh: %s", refresh_uk_register_if_stale())
+    except Exception:
+        log.exception("UK Home Office sponsor register refresh failed")
+    _ingest_job()
+
+
 def start_scheduler() -> BackgroundScheduler:
     """Create and start the singleton scheduler (idempotent)."""
     global _scheduler
@@ -74,6 +86,25 @@ def start_scheduler() -> BackgroundScheduler:
         coalesce=True,
         misfire_grace_time=900,
     )
+    scheduler.add_job(
+        _initial_data_job,
+        trigger="date",
+        run_date=datetime.now(timezone.utc) + timedelta(seconds=1),
+        id="initial-data-load",
+        name="Load current public listings and sponsor register",
+        replace_existing=True,
+        misfire_grace_time=300,
+    )
+    scheduler.add_job(
+        _refresh_register_job,
+        trigger=IntervalTrigger(days=7),
+        id="sponsor-register",
+        name="Refresh the UK sponsor register",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=3600,
+    )
     scheduler.start()
     _scheduler = scheduler
     log.info(
@@ -82,6 +113,15 @@ def start_scheduler() -> BackgroundScheduler:
         settings.link_check_interval_hours,
     )
     return scheduler
+
+
+def _refresh_register_job() -> None:
+    try:
+        from app.visa.registers import refresh_uk_register_if_stale
+
+        log.info("Sponsor register refresh: %s", refresh_uk_register_if_stale())
+    except Exception:
+        log.exception("UK Home Office sponsor register refresh failed")
 
 
 def stop_scheduler() -> None:

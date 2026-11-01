@@ -1,0 +1,21 @@
+{
+  "locale": "en-US",
+  "app_name": "EuroJobs Pro",
+  "subtitle": "Visa-sponsored jobs in Europe",
+  "promotional_text": "Search jobs and volunteer placements with evidence of visa sponsorship. Build a CV and cover letter in English, French or Arabic, then export and share them.",
+  "description": "EuroJobs Pro is a job board built around one question: will this employer actually support a work visa?\n\nEvery listing is classified into one of two evidence tiers:\n\n• Tier 1 — the employer matches an official government sponsor register for that country.\n• Tier 2 — the posting itself explicitly mentions visa sponsorship or relocation support.\n\nListings with no evidence, or with phrases such as \u201cno sponsorship\u201d, do not appear in sponsored results.\n\nWHAT YOU CAN DO\n\n• Search jobs and volunteer placements separately, so paid roles and unpaid programmes are never mixed.\n• Filter by country, city, category, remote work, salary and visa tier.\n• Save listings and return to them later.\n• Create a profile once, then generate a CV, a cover letter or a volunteer motivation letter in English, French or Arabic.\n• Export documents as PDF or DOCX and share them with the iOS share sheet.\n• Ask the career assistant for help with search, applications and relocation.\n• Use the whole app in English, French or Arabic, with full right-to-left layout for Arabic and light, dark or system themes.\n• Lock the app with Face ID or Touch ID so saved jobs and your CV stay private on a shared phone.\n\nHONEST BY DESIGN\n\n• Listings come from official APIs and public employer career pages. We do not scrape LinkedIn, Indeed or Glassdoor.\n• AI-generated documents use only the experience, education and skills you enter. Each draft is checked against your profile and regenerated once if anything cannot be verified.\n• Contact details, ID numbers and your exact date of birth are never sent to the AI model.\n• No ads, no tracking, and no sale of personal data.\n\nIMPORTANT\n\nA sponsorship badge is evidence, not a guarantee. A register match shows that the employer holds a sponsor licence; it does not prove that a specific vacancy is eligible. Always confirm visa support with the employer and the relevant immigration authority. Nothing in the app is legal or immigration advice.\n\nVolunteer placements are separated from paid jobs, and fee-charging programmes are hidden by default.\n\nEuroJobs Pro is free to browse. An account is only required to save jobs, create documents and use the assistant.",
+  "keywords": "visa sponsorship,jobs abroad,work visa,relocation,jobs in europe,volunteer,cover letter,cv builder",
+  "support_url": "https://app.eurojobs.pro/support",
+  "marketing_url": "https://app.eurojobs.pro/",
+  "privacy_url": "https://app.eurojobs.pro/legal",
+  "category": "Business",
+  "secondary_category": "Productivity",
+  "copyright": "2026 EuroJobs Pro",
+  "whats_new": "First release.\n\n• Separate job and volunteer search with evidence-based visa tiers\n• CV, cover letter and motivation letter generation in English, French and Arabic\n• PDF and DOCX export with the iOS share sheet\n• Face ID / Touch ID app lock\n• Offline notice and native deep links",
+  "age_rating": "4+",
+  "made_for_kids": false,
+  "in_app_purchases": false,
+  "login_required": false,
+  "review_demo_account": "Create a dedicated reviewer account in App Store Connect > App Review Information. Do not commit the password.",
+  "notes": "Screenshots must be recaptured from the production build after EJP_APP_URL and the listing sources are configured."
+}

@@ -1,0 +1,39 @@
+# Render blueprint: public HTTPS backend for the iOS shell.
+# 1. Push this repository to GitHub.
+# 2. In Render, choose New > Blueprint and select the repository.
+# 3. Replace app.eurojobs.pro with the hostname Render gives you, then rebuild
+#    the iOS app with EJP_APP_URL set to the same origin.
+services:
+  - type: web
+    name: eurojobs-pro
+    runtime: docker
+    plan: starter
+    healthCheckPath: /healthz
+    autoDeploy: true
+    disk:
+      name: eurojobs-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:////app/data/eurojobs.db
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: SUPPORT_EMAIL
+        sync: false
+      - key: IOS_BUNDLE_ID
+        value: com.eurojobspro.app
+      - key: APPLE_TEAM_ID
+        sync: false
+      - key: ENABLE_SCHEDULER
+        value: "true"
+      - key: DEFAULT_LANGUAGE
+        value: en
+      - key: SUPPORTED_LANGUAGES
+        value: ar,fr,en
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false

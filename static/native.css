@@ -1,0 +1,184 @@
+/* ==========================================================================
+   EuroJobs Pro — iOS shell layer
+   Loaded on the web too, but every rule is scoped to html.native-app or to
+   elements that only exist inside the Capacitor build.
+   ========================================================================== */
+
+html:not(.native-app) .native-only {
+  display: none !important;
+}
+
+html.native-app {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+html.native-app body {
+  -webkit-touch-callout: none;
+  overscroll-behavior-y: none;
+}
+
+/* Keep controls at 16px so iOS does not zoom the page on focus. */
+html.native-app input,
+html.native-app select,
+html.native-app textarea {
+  font-size: 16px;
+}
+
+/* The WebView draws under the status bar (overlaysWebView). Reserve the notch
+   and home-indicator areas without disturbing the sticky navigation. */
+@supports (padding: env(safe-area-inset-top)) {
+  html.native-app .nav {
+    padding-top: env(safe-area-inset-top);
+  }
+  html.native-app .mobile-menu {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
+  }
+  html.native-app .footer {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 18px);
+  }
+  html.native-app .agent-panel {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
+  }
+  html.native-app .detail-layout,
+  html.native-app .profile-layout,
+  html.native-app .doc-layout {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+.native-device-card {
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  padding: 18px;
+  margin-block: 22px;
+  background: var(--surface-2);
+}
+
+.native-device-card h2 {
+  font-size: 17px;
+  margin: 0 0 6px;
+}
+
+.native-device-card h2 + .muted {
+  margin-top: 0;
+}
+
+.native-device-card .check {
+  margin-block: 12px 6px;
+}
+
+.native-device-card [data-push-block] {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.native-banner {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+  border-radius: 14px;
+  background: rgba(29, 29, 31, 0.94);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.35;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.native-banner[hidden] {
+  display: none;
+}
+
+.native-banner .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffb340;
+  flex: none;
+}
+
+.native-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%) translateY(8px);
+  z-index: 800;
+  max-width: min(320px, calc(100% - 32px));
+  padding: 11px 16px;
+  border-radius: 14px;
+  background: rgba(29, 29, 31, 0.95);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+}
+
+.native-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.native-lock {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.native-lock[hidden] {
+  display: none;
+}
+
+.native-lock-inner {
+  max-width: 320px;
+  text-align: center;
+}
+
+.native-lock-mark {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 18px;
+  display: block;
+}
+
+.native-lock h2 {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.native-lock p {
+  color: var(--muted);
+  margin: 0 0 22px;
+  font-size: 15px;
+}
+
+.native-lock .btn {
+  min-width: 150px;
+  min-height: 48px;
+}
+
+/* Slightly larger tap targets in the shell. */
+html.native-app .btn,
+html.native-app .nav-cta,
+html.native-app .link-btn {
+  min-height: 42px;
+}

@@ -75,7 +75,7 @@ def sanitize_html(value: str | None) -> str:
             "h3", "h4", "h5", "h6", "blockquote", "a", "hr", "table", "thead",
             "tbody", "tr", "th", "td", "span", "div", "code", "pre",
         },
-        attributes={"a": {"href", "title", "rel", "target"}, "span": {"dir"}, "div": {"dir"}},
+        attributes={"a": {"href", "title", "target"}, "span": {"dir"}, "div": {"dir"}},
         url_schemes={"http", "https", "mailto"},
         link_rel="noopener noreferrer nofollow",
     )

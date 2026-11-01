@@ -88,6 +88,22 @@
       </form>
       <p class="legal-note">{{ t('profile.contact_note') }}</p>
 
+      <section class="native-device-card native-only" id="native-device-card" hidden>
+        <h2>{{ t('native.device_title') }}</h2>
+        <p class="muted">{{ t('native.device_body') }}</p>
+        <label class="check">
+          <input type="checkbox" data-biometric-toggle>
+          {{ t('native.biometric_enable') }}
+        </label>
+        <p class="hint" data-biometric-note></p>
+        <div data-push-block hidden>
+          <h2>{{ t('native.push_title') }}</h2>
+          <p class="muted">{{ t('native.push_body') }}</p>
+          <button class="btn btn-ghost btn-sm" type="button" data-push-enable>{{ t('native.push_enable') }}</button>
+          <p class="hint" data-push-note></p>
+        </div>
+      </section>
+
       <h2 class="danger-title">{{ t('profile.delete_data') }}</h2>
       <p class="muted">{{ t('profile.delete_warning') }}</p>
       <form method="post" action="/profile/delete" data-confirm="{{ t('profile.delete_confirm') }}">

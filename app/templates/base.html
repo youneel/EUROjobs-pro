@@ -2,10 +2,16 @@
 <html lang="{{ lang }}" dir="{{ 'rtl' if rtl else 'ltr' }}" data-theme="{{ theme }}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}{{ t('app.name') }} — {{ t('app.tagline') }}{% endblock %}</title>
   <meta name="description" content="{{ t('hero.copy') }}">
   <meta name="color-scheme" content="light dark">
+  <meta name="csrf-token" content="{{ csrf }}">
+  <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <link rel="manifest" href="/static/site.webmanifest">
   <script>
     (function () {
       try {
@@ -16,9 +22,10 @@
   </script>
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/static/app.css">
+  <link rel="stylesheet" href="/static/native.css">
   {% block head %}{% endblock %}
 </head>
-<body>
+<body data-authenticated="{{ 'true' if user else 'false' }}" data-lang="{{ lang }}">
   <a class="skip-link" href="#main">{{ t('footer.accessibility') }}</a>
 
   <header class="nav">
@@ -125,6 +132,8 @@
         <a href="/volunteer">{{ t('nav.volunteer') }}</a>
         <a href="/visa">{{ t('footer.legal') }}</a>
         <a href="/legal">{{ t('footer.privacy') }}</a>
+        <a href="/support">{{ t('footer.support') }}</a>
+        {% if settings.app_store_url %}<a href="{{ settings.app_store_url }}" rel="noopener">{{ t('footer.ios_app') }}</a>{% endif %}
       </nav>
       <p class="footer-disclaimer">{{ t('footer.disclaimer') }}</p>
       <p class="footer-note">{{ t('footer.attribution') }}</p>
@@ -166,6 +175,7 @@
 
   <script src="/i18n/{{ lang }}.js"></script>
   <script src="/static/app.js" defer></script>
+  <script src="/static/native.js" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

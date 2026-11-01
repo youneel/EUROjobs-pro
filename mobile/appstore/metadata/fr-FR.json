@@ -1,0 +1,21 @@
+{
+  "locale": "fr-FR",
+  "app_name": "EuroJobs Pro",
+  "subtitle": "Emplois avec visa en Europe",
+  "promotional_text": "Recherchez des emplois et du bénévolat avec preuve de parrainage de visa. Créez un CV et une lettre de motivation en français, anglais ou arabe, puis exportez-les.",
+  "description": "EuroJobs Pro est un site d'emploi construit autour d'une question : cet employeur va-t-il réellement soutenir un visa de travail ?\n\nChaque offre est classée selon deux niveaux de preuve :\n\n• Niveau 1 — l'employeur figure sur un registre officiel de parrainage du pays concerné.\n• Niveau 2 — l'annonce mentionne explicitement le parrainage de visa ou l'aide à la relocalisation.\n\nLes offres sans preuve, ou contenant des formules comme « pas de parrainage », n'apparaissent pas dans les résultats parrainés.\n\nCE QUE VOUS POUVEZ FAIRE\n\n• Rechercher séparément les emplois et les missions bénévoles, sans jamais mélanger postes rémunérés et programmes non rémunérés.\n• Filtrer par pays, ville, catégorie, télétravail, salaire et niveau de visa.\n• Enregistrer des offres et les retrouver plus tard.\n• Créer un profil une seule fois, puis générer un CV, une lettre de motivation ou une lettre de motivation bénévole en français, anglais ou arabe.\n• Exporter les documents en PDF ou DOCX et les partager avec la feuille de partage iOS.\n• Demander de l'aide à l'assistant carrière pour la recherche, les candidatures et la relocalisation.\n• Utiliser toute l'application en français, anglais ou arabe, avec une mise en page de droite à gauche complète pour l'arabe et des thèmes clair, sombre ou système.\n• Verrouiller l'application avec Face ID ou Touch ID pour garder vos offres et votre CV privés sur un téléphone partagé.\n\nHONNÊTE PAR CONCEPTION\n\n• Les offres proviennent d'API officielles et de pages carrière publiques d'employeurs. Nous ne scrapons pas LinkedIn, Indeed ni Glassdoor.\n• Les documents générés par IA utilisent uniquement l'expérience, la formation et les compétences que vous saisissez. Chaque brouillon est vérifié par rapport à votre profil et régénéré une fois si un élément ne peut pas être confirmé.\n• Les coordonnées, numéros d'identité et votre date de naissance exacte ne sont jamais envoyés au modèle d'IA.\n• Aucune publicité, aucun suivi, aucune vente de données personnelles.\n\nIMPORTANT\n\nUn badge de parrainage est une preuve, pas une garantie. Une correspondance avec un registre indique que l'employeur détient une licence de parrainage ; cela ne prouve pas qu'un poste précis est éligible. Confirmez toujours le soutien au visa avec l'employeur et l'autorité d'immigration compétente. Rien dans l'application ne constitue un conseil juridique ou migratoire.\n\nLes missions bénévoles sont séparées des emplois rémunérés, et les programmes payants sont masqués par défaut.\n\nEuroJobs Pro est gratuit à consulter. Un compte est nécessaire uniquement pour enregistrer des offres, créer des documents et utiliser l'assistant.",
+  "keywords": "parrainage visa,visa travail,relocalisation,emploi europe,bénévolat,lettre motivation,cv",
+  "support_url": "https://app.eurojobs.pro/support",
+  "marketing_url": "https://app.eurojobs.pro/",
+  "privacy_url": "https://app.eurojobs.pro/legal",
+  "category": "Business",
+  "secondary_category": "Productivity",
+  "copyright": "2026 EuroJobs Pro",
+  "whats_new": "Première version.\n\n• Recherche séparée emplois et bénévolat avec niveaux de visa fondés sur des preuves\n• Génération de CV, lettres de motivation et lettres bénévoles en français, anglais et arabe\n• Export PDF et DOCX avec la feuille de partage iOS\n• Verrouillage Face ID / Touch ID\n• Mode hors ligne et liens profonds natifs",
+  "age_rating": "4+",
+  "made_for_kids": false,
+  "in_app_purchases": false,
+  "login_required": false,
+  "review_demo_account": "Créez un compte test dédié dans App Store Connect > Informations pour l'examen. Ne validez jamais le mot de passe dans le dépôt.",
+  "notes": "Les captures d'écran doivent être refaites depuis la version de production après configuration de EJP_APP_URL et des sources d'offres."
+}

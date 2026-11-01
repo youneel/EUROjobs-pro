@@ -7,9 +7,7 @@
     <h1>{{ t('volunteer.title') if kind == 'volunteer' else t('jobs.title') }}</h1>
     <p class="muted page-sub">{{ t('volunteer.subtitle') if kind == 'volunteer' else t('jobs.subtitle') }}</p>
     <p class="counter-line">
-      {{ t('volunteer.counter') if kind == 'volunteer' else t('jobs.counter') }}:
-      <strong>{{ counts.count|lnumber }}</strong>
-      <span class="muted">· {{ counts.countries|lnumber }} {{ t('home.stats_countries')|lower }}</span>
+      {{ t('volunteer.counter' if kind == 'volunteer' else 'jobs.counter', count=counts.count|lnumber, countries=counts.countries|lnumber) }}
     </p>
     {% if kind == 'volunteer' %}
       <p class="legal-note">{{ t('volunteer.fee_notice') }}</p>
@@ -25,7 +23,12 @@
           <label for="f-q">{{ t('jobs.keyword') }}</label>
           <input id="f-q" name="q" type="search" value="{{ filters.q }}" placeholder="{{ t('common.search_placeholder') }}" autocomplete="off">
         </div>
-        <div class="field">
+      </div>
+
+      <details class="filter-advanced"{% if filters.country or filters.category or filters.work_mode or filters.employment_type or filters.visa_tier or filters.posted_days or (filters.sort and filters.sort != 'newest') or (kind == 'volunteer' and (filters.cause or filters.org_type or filters.min_age or filters.remote_volunteering or filters.accommodation or filters.meals or filters.stipend or filters.travel or filters.insurance or filters.include_fee)) %} open{% endif %}>
+        <summary class="filter-summary">{{ t('common.filters') }}</summary>
+        <div class="filter-row">
+          <div class="field">
           <label for="f-country">{{ t('jobs.country') }}</label>
           <select id="f-country" name="country">
             <option value="">{{ t('common.all') }}</option>
@@ -125,6 +128,7 @@
         </div>
       </fieldset>
       {% endif %}
+      </details>
 
       <div class="filter-actions">
         <button class="btn btn-primary btn-sm" type="submit">{{ t('common.search') }}</button>

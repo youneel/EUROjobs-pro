@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>EuroJobs Pro</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #141d31;
+      --ink: #f5f5f7;
+      --muted: #a1a1a6;
+      --blue: #0a84ff;
+      --line: #2b3a57;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --ink: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #0071e3;
+        --line: #e3e3e8;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+    }
+    .wrap { max-width: 340px; }
+    .mark { width: 84px; height: 84px; margin: 0 auto 20px; display: block; }
+    h1 { font-size: 26px; letter-spacing: -0.02em; margin: 0 0 8px; }
+    p { color: var(--muted); margin: 0 0 24px; }
+    .retry {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 26px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .hint { margin-top: 18px; font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <svg class="mark" viewBox="0 0 96 96" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0a84ff"/>
+          <stop offset="1" stop-color="#5ac8fa"/>
+        </linearGradient>
+      </defs>
+      <rect width="96" height="96" rx="22" fill="#0b1220"/>
+      <g fill="url(#g)">
+        <circle cx="48" cy="18" r="3.4"/><circle cx="61" cy="21.5" r="3.4"/>
+        <circle cx="70.5" cy="31" r="3.4"/><circle cx="74" cy="44" r="3.4"/>
+        <circle cx="70.5" cy="57" r="3.4"/><circle cx="61" cy="66.5" r="3.4"/>
+        <circle cx="48" cy="70" r="3.4"/><circle cx="35" cy="66.5" r="3.4"/>
+        <circle cx="25.5" cy="57" r="3.4"/><circle cx="22" cy="44" r="3.4"/>
+        <circle cx="25.5" cy="31" r="3.4"/><circle cx="35" cy="21.5" r="3.4"/>
+      </g>
+      <path d="M38 48h20M38 40h14M38 56h14" stroke="#f5f5f7" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <h1>EuroJobs Pro</h1>
+    <p>Connecting to your job board…</p>
+    <a class="retry" href="#" id="retry">Open app</a>
+    <p class="hint">If this screen stays visible, check your connection.</p>
+  </main>
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      var target = (window.EJP_APP_URL || "https://app.eurojobs.pro").replace(/\/+$/, "");
+      var button = document.getElementById("retry");
+      button.href = target;
+      if (location.protocol === "http:" || location.protocol === "https:") {
+        location.replace(target + "/");
+      }
+    })();
+  </script>
+</body>
+</html>

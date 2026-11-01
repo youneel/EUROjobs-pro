@@ -31,9 +31,15 @@ data/*.db-shm
 data/*.db-wal
 data/*.sqlite
 data/*.sqlite3
+data/registers/uk_home_office.json
 *.log
 logs/
 static/logos/
+
+# Node / Capacitor
+node_modules/
+mobile/node_modules/
+mobile/www/config.js
 
 # Build artefacts
 *.zip

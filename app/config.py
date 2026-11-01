@@ -60,11 +60,40 @@ class Settings(BaseSettings):
     enable_scheduler: bool = True
     admin_emails: str = ""
 
+    # Public deployment and mobile app metadata. PUBLIC_BASE_URL is the HTTPS
+    # origin used in App Store links, push payloads and the AASA file.
+    public_base_url: str = ""
+    support_email: str = "support@eurojobspro.example"
+    ios_bundle_id: str = "com.eurojobspro.app"
+    apple_team_id: str = ""
+    app_min_version: str = "1.0.0"
+    app_latest_version: str = "1.0.0"
+    app_store_url: str = ""
+
+    # APNs is optional. Notification prompts stay hidden until these are set.
+    apns_key_id: str = ""
+    apns_team_id: str = ""
+    apns_private_key: str = ""
+    apns_topic: str = ""
+
     max_upload_mb: int = 5
 
     @property
     def admin_email_list(self) -> list[str]:
         return [e.strip().lower() for e in self.admin_emails.split(",") if e.strip()]
+
+    @property
+    def public_url(self) -> str:
+        return self.public_base_url.rstrip("/")
+
+    @property
+    def push_enabled(self) -> bool:
+        return bool(
+            self.apns_key_id
+            and self.apns_team_id
+            and self.apns_private_key
+            and (self.apns_topic or self.ios_bundle_id)
+        )
 
     @property
     def languages(self) -> list[str]:

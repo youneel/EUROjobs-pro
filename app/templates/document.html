@@ -13,8 +13,8 @@
         </p>
       </div>
       <div class="detail-actions">
-        <a class="btn btn-primary btn-sm" href="/documents/{{ document.public_id }}/export.pdf">{{ t('docgen.export_pdf') }}</a>
-        <a class="btn btn-ghost btn-sm" href="/documents/{{ document.public_id }}/export.docx">{{ t('docgen.export_docx') }}</a>
+        <a class="btn btn-primary btn-sm" href="/documents/{{ document.public_id }}/export.pdf" data-native-download>{{ t('docgen.export_pdf') }}</a>
+        <a class="btn btn-ghost btn-sm" href="/documents/{{ document.public_id }}/export.docx" data-native-download>{{ t('docgen.export_docx') }}</a>
       </div>
     </div>
   </div>
