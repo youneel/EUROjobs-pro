@@ -17,6 +17,15 @@ python manage.py serve --reload
 
 Open <http://127.0.0.1:8000>. The `--reload` option is for local development. Without it, use `python manage.py serve`.
 
+### Run from VS Code
+
+Open this folder in VS Code and install the **Python** extension. The included `.vscode/settings.json` points at `C:\Python315\python.exe` (change it if your Python lives elsewhere). Then either:
+
+- Press **F5** and pick **EuroJobs Pro (uvicorn)** for a normal debug session, or **EuroJobs Pro (uvicorn --reload)** while editing templates and Python.
+- Or open **Terminal > New Terminal** and run `python manage.py serve --reload`.
+
+The debug configurations load `.env` automatically, enable Jinja template debugging, and serve the same site at <http://127.0.0.1:8000>. Stop any other server on port 8000 first. `Ctrl+C` in the terminal stops it.
+
 The app starts without third-party keys. Search, pages, profiles, and saved data work locally; sources that need an API key are skipped until configured. With `ENABLE_SCHEDULER=true`, the app performs an initial listing ingestion and checks links in the background. It refreshes the official UK Home Office sponsor register on startup when the cached file is older than seven days, then checks weekly. You can refresh it manually with `python scripts/refresh_registers.py` or force a download with `python scripts/refresh_registers.py --force`.
 
 ## Configuration and API keys
