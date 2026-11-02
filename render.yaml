@@ -1,30 +1,30 @@
 # Render blueprint: public HTTPS backend for the iOS shell.
 # 1. Push this repository to GitHub.
 # 2. In Render, choose New > Blueprint and select the repository.
-# 3. Replace app.eurojobs.pro with the hostname Render gives you, then rebuild
+# 3. Replace app.workatlas.pro with the hostname Render gives you, then rebuild
 #    the iOS app with EJP_APP_URL set to the same origin.
 services:
   - type: web
-    name: eurojobs-pro
+    name: workatlas
     runtime: docker
     plan: starter
     healthCheckPath: /healthz
     autoDeploy: true
     disk:
-      name: eurojobs-data
+      name: workatlas-data
       mountPath: /app/data
       sizeGB: 1
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        value: sqlite:////app/data/eurojobs.db
+        value: sqlite:////app/data/workatlas.db
       - key: PUBLIC_BASE_URL
         sync: false
       - key: SUPPORT_EMAIL
         sync: false
       - key: IOS_BUNDLE_ID
-        value: com.eurojobspro.app
+        value: com.workatlas.app
       - key: APPLE_TEAM_ID
         sync: false
       - key: ENABLE_SCHEDULER

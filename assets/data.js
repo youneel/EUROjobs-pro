@@ -1,4 +1,4 @@
-/* EuroJobs Pro — demo data. Listings, salaries and profiles are illustrative. */
+/* WorkAtlas — demo data. Listings, salaries and profiles are illustrative. */
 window.EJP = (() => {
   const REGIONS = [
     { id: "all", label: "All Europe" },

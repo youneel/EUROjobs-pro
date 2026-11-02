@@ -43,7 +43,7 @@ mobile/www/config.js
 
 # Build artefacts
 *.zip
-EuroJobs-Pro/
+WorkAtlas-Pro/
 
 # OS and editor files
 .DS_Store

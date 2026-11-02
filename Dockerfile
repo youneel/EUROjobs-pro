@@ -1,4 +1,4 @@
-# EuroJobs Pro — production image for the HTTPS backend behind the iOS app.
+# WorkAtlas — production image for the HTTPS backend behind the iOS app.
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

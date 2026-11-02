@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "EuroJobs Pro (uvicorn)",
+      "name": "WorkAtlas (uvicorn)",
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
@@ -17,7 +17,7 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "EuroJobs Pro (uvicorn --reload)",
+      "name": "WorkAtlas (uvicorn --reload)",
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
@@ -33,7 +33,7 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "EuroJobs Pro (manage.py serve)",
+      "name": "WorkAtlas (manage.py serve)",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",

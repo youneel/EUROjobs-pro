@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ t('volunteer.title') if kind == 'volunteer' else t('jobs.title') }} — {{ t('app.name') }}{% endblock %}
 {% block content %}
-<section class="section page-head">
+<section class="list-hero">
   <div class="container">
     <p class="eyebrow">{{ t('volunteer.eyebrow') if kind == 'volunteer' else t('jobs.eyebrow') }}</p>
     <h1>{{ t('volunteer.title') if kind == 'volunteer' else t('jobs.title') }}</h1>
@@ -15,7 +15,7 @@
   </div>
 </section>
 
-<section class="section-tight">
+<section class="section-tight list-section">
   <div class="container listing-layout">
     <form class="filter-panel" method="get" action="{{ '/volunteer' if kind == 'volunteer' else '/jobs' }}" id="filter-form">
       <div class="filter-row">
@@ -138,6 +138,7 @@
 
     <div class="results-panel">
       <div class="results-head">
+        <h2 class="sr-only">{{ t('common.results') }}</h2>
         <p class="muted">{{ total|lnumber }} {{ t('common.results') }}</p>
         {% if filters.q %}
           <p class="muted query-note">{{ t('jobs.keyword') }}: <bdi>{{ filters.q }}</bdi></p>

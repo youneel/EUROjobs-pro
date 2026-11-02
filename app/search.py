@@ -267,14 +267,14 @@ def counter(db: Session, listing_type: str) -> dict:
 
 def facets(db: Session, listing_type: str) -> dict:
     countries = db.execute(
-        select(Listing.country_code, Listing.country, func.count())
+        select(Listing.country_code, func.max(Listing.country), func.count())
         .where(
             Listing.listing_type == listing_type,
             Listing.is_active.is_(True),
             Listing.visa_tier.in_([1, 2]),
             Listing.country_code.is_not(None),
         )
-        .group_by(Listing.country_code, Listing.country)
+        .group_by(Listing.country_code)
         .order_by(func.count().desc())
         .limit(80)
     ).all()
@@ -339,7 +339,7 @@ def card_dict(listing: Listing) -> dict:
         "source": listing.source_name,
         "apply_url": f"/go/{listing.public_id}",
         "detail_url": f"/{'volunteer' if listing.listing_type == 'volunteer' else 'jobs'}/{listing.public_id}",
-        "description": excerpt(listing.description_text, 220),
+        "description": excerpt(listing.description_html or listing.description_text, 220),
         "language": listing.language,
         "volunteer": (
             {
@@ -376,7 +376,7 @@ def compact_for_agent(listing: Listing) -> dict:
         "employment_type": listing.employment_type,
         "url": f"/{'volunteer' if listing.listing_type == 'volunteer' else 'jobs'}/{listing.public_id}",
         "apply_url": f"/go/{listing.public_id}",
-        "summary": excerpt(listing.description_text, 260),
+        "summary": excerpt(listing.description_html or listing.description_text, 260),
     }
 
 

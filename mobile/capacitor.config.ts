@@ -1,21 +1,21 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 /**
- * The iOS app is a Capacitor shell around the hosted EuroJobs Pro site.
+ * The iOS app is a Capacitor shell around the hosted WorkAtlas site.
  *
  * EJP_APP_URL must be a public HTTPS deployment of this repository. The shell
- * cannot run the FastAPI server on the device, so `app.eurojobs.pro` below is
+ * cannot run the FastAPI server on the device, so `app.workatlas.pro` below is
  * only a placeholder. Set the real domain before building for TestFlight:
  *
  *   PowerShell:  $env:EJP_APP_URL = "https://jobs.example.com"
  *   macOS shell: export EJP_APP_URL="https://jobs.example.com"
  */
-const appUrl = (process.env.EJP_APP_URL || "https://app.eurojobs.pro").replace(/\/+$/, "");
+const appUrl = (process.env.EJP_APP_URL || "https://app.workatlas.pro").replace(/\/+$/, "");
 const host = new URL(appUrl).hostname;
 
 const config: CapacitorConfig = {
-  appId: "com.eurojobspro.app",
-  appName: "EuroJobs Pro",
+  appId: "com.workatlas.app",
+  appName: "WorkAtlas",
   webDir: "www",
   backgroundColor: "#0b1220",
   server: {

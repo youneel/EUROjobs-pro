@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% block title %}{{ t('app.name') }} — {{ t('app.tagline') }}{% endblock %}</title>
+  <title>{% block title %}{{ t('app.name') }} â€” {{ t('app.tagline') }}{% endblock %}</title>
   <meta name="description" content="{{ t('hero.copy') }}">
   <meta name="color-scheme" content="light dark">
   <meta name="csrf-token" content="{{ csrf }}">
@@ -14,15 +14,17 @@
   <link rel="manifest" href="/static/site.webmanifest">
   <script>
     (function () {
+      document.documentElement.classList.add("js");
       try {
         var t = localStorage.getItem("ejp-theme");
         if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="/assets/styles.css">
-  <link rel="stylesheet" href="/static/app.css">
-  <link rel="stylesheet" href="/static/native.css">
+  <link rel="stylesheet" href="/assets/styles.css?v=20261102b">
+  <link rel="stylesheet" href="/static/app.css?v=20261102b">
+  <link rel="stylesheet" href="/static/redesign.css?v=20261102b">
+  <link rel="stylesheet" href="/static/native.css?v=20261102b">
   {% block head %}{% endblock %}
 </head>
 <body data-authenticated="{{ 'true' if user else 'false' }}" data-lang="{{ lang }}">
@@ -31,15 +33,11 @@
   <header class="nav">
     <div class="nav-inner">
       <a class="brand" href="/" aria-label="{{ t('app.name') }}">
-        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <g fill="currentColor">
-            <circle cx="12" cy="2.6" r="1.2"/><circle cx="16.7" cy="3.86" r="1.2"/>
-            <circle cx="20.14" cy="7.3" r="1.2"/><circle cx="21.4" cy="12" r="1.2"/>
-            <circle cx="20.14" cy="16.7" r="1.2"/><circle cx="16.7" cy="20.14" r="1.2"/>
-            <circle cx="12" cy="21.4" r="1.2"/><circle cx="7.3" cy="20.14" r="1.2"/>
-            <circle cx="3.86" cy="16.7" r="1.2"/><circle cx="2.6" cy="12" r="1.2"/>
-            <circle cx="3.86" cy="7.3" r="1.2"/><circle cx="7.3" cy="3.86" r="1.2"/>
-          </g>
+        <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3.2 12h17.6"/>
+          <path d="M12 3c2.5 2.45 3.9 5.6 3.9 9S14.5 18.55 12 21c-2.5-2.45-3.9-5.6-3.9-9S9.5 5.45 12 3Z"/>
+          <path d="M5.4 6.6c1.7 1 4.1 1.6 6.6 1.6s4.9-.6 6.6-1.6M5.4 17.4c1.7-1 4.1-1.6 6.6-1.6s4.9.6 6.6 1.6"/>
         </svg>
         <span>{{ t('app.name') }}</span>
       </a>
@@ -53,11 +51,11 @@
 
       <div class="nav-actions">
         <details class="lang-switch">
-          <summary aria-label="{{ t('lang.choose') }}">{{ lang|upper }}</summary>
+          <summary aria-label="{{ t('lang.choose') }} â€” {{ lang|upper }}">{{ lang|upper }}</summary>
           <div class="lang-menu" role="menu">
             <a role="menuitem" href="{{ request.url.include_query_params(lang='en') }}" {% if lang == 'en' %}aria-current="true"{% endif %}>English</a>
-            <a role="menuitem" href="{{ request.url.include_query_params(lang='fr') }}" {% if lang == 'fr' %}aria-current="true"{% endif %} lang="fr" dir="ltr">Français</a>
-            <a role="menuitem" href="{{ request.url.include_query_params(lang='ar') }}" {% if lang == 'ar' %}aria-current="true"{% endif %} lang="ar" dir="rtl">العربية</a>
+            <a role="menuitem" href="{{ request.url.include_query_params(lang='fr') }}" {% if lang == 'fr' %}aria-current="true"{% endif %} lang="fr" dir="ltr">FranÃ§ais</a>
+            <a role="menuitem" href="{{ request.url.include_query_params(lang='ar') }}" {% if lang == 'ar' %}aria-current="true"{% endif %} lang="ar" dir="rtl">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a>
           </div>
         </details>
 
@@ -103,8 +101,8 @@
       {% endif %}
       <div class="mobile-lang">
         <a href="{{ request.url.include_query_params(lang='en') }}">English</a>
-        <a href="{{ request.url.include_query_params(lang='fr') }}" lang="fr" dir="ltr">Français</a>
-        <a href="{{ request.url.include_query_params(lang='ar') }}" lang="ar" dir="rtl">العربية</a>
+        <a href="{{ request.url.include_query_params(lang='fr') }}" lang="fr" dir="ltr">FranÃ§ais</a>
+        <a href="{{ request.url.include_query_params(lang='ar') }}" lang="ar" dir="rtl">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a>
       </div>
     </div>
   </header>
@@ -122,22 +120,81 @@
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div>
-        <a class="brand footer-brand" href="/">{{ t('app.name') }}</a>
-        <p class="footer-tagline">{{ t('footer.tagline') }}</p>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <a class="brand footer-brand" href="/" aria-label="{{ t('app.name') }}">
+            <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3.2 12h17.6"/>
+              <path d="M12 3c2.5 2.45 3.9 5.6 3.9 9S14.5 18.55 12 21c-2.5-2.45-3.9-5.6-3.9-9S9.5 5.45 12 3Z"/>
+              <path d="M5.4 6.6c1.7 1 4.1 1.6 6.6 1.6s4.9-.6 6.6-1.6M5.4 17.4c1.7-1 4.1-1.6 6.6-1.6s4.9.6 6.6 1.6"/>
+            </svg>
+            <span>{{ t('app.name') }}</span>
+          </a>
+          <p class="footer-tagline">{{ t('footer.tagline') }}</p>
+        </div>
+        <p class="footer-top-note">{{ t('hero.note') }}</p>
       </div>
-      <nav class="footer-links" aria-label="{{ t('footer.product') }}">
-        <a href="/jobs">{{ t('nav.jobs') }}</a>
-        <a href="/volunteer">{{ t('nav.volunteer') }}</a>
-        <a href="/visa">{{ t('footer.legal') }}</a>
-        <a href="/legal">{{ t('footer.privacy') }}</a>
-        <a href="/support">{{ t('footer.support') }}</a>
-        {% if settings.app_store_url %}<a href="{{ settings.app_store_url }}" rel="noopener">{{ t('footer.ios_app') }}</a>{% endif %}
-      </nav>
+
+      <div class="footer-grid">
+        <div>
+          <h3>{{ t('footer.product') }}</h3>
+          <ul>
+            <li><a href="/jobs">{{ t('nav.jobs') }}</a></li>
+            <li><a href="/volunteer">{{ t('nav.volunteer') }}</a></li>
+            <li><a href="/visa">{{ t('nav.countries') }}</a></li>
+            <li><a href="/tools">{{ t('nav.tools') }}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>{{ t('footer.company') }}</h3>
+          <ul>
+            <li><a href="/#why">{{ t('nav.why') }}</a></li>
+            <li><a href="/support">{{ t('footer.support') }}</a></li>
+            <li><a href="/legal">{{ t('footer.legal') }}</a></li>
+            {% if settings.app_store_url %}<li><a href="{{ settings.app_store_url }}" rel="noopener">{{ t('footer.ios_app') }}</a></li>{% endif %}
+          </ul>
+        </div>
+        <div>
+          <h3>{{ t('nav.account') }}</h3>
+          <ul>
+            {% if user %}
+              <li><a href="/profile">{{ t('nav.profile') }}</a></li>
+              <li><a href="/documents">{{ t('nav.documents') }}</a></li>
+            {% else %}
+              <li><a href="/auth/login">{{ t('nav.signin') }}</a></li>
+              <li><a href="/auth/register">{{ t('auth.signup') }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div>
+          <h3>{{ t('footer.legal') }}</h3>
+          <ul>
+            <li><a href="/legal">{{ t('legal.privacy') }}</a></li>
+            <li><a href="/legal">{{ t('legal.terms') }}</a></li>
+            <li><a href="/legal">{{ t('legal.accessibility_title') }}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>{{ t('footer.contact') }}</h3>
+          <ul>
+            <li><a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a></li>
+            <li><a href="/support">{{ t('footer.support') }}</a></li>
+          </ul>
+        </div>
+      </div>
+
       <p class="footer-disclaimer">{{ t('footer.disclaimer') }}</p>
       <p class="footer-note">{{ t('footer.attribution') }}</p>
-      <p class="footer-note">© {{ 2026 }} {{ t('app.name') }} — {{ t('footer.rights') }}</p>
+      <div class="footer-legal">
+        <p>Â© 2026 {{ t('app.name') }} â€” {{ t('footer.rights') }}</p>
+        <div class="legal-links">
+          <a href="/legal">{{ t('footer.privacy') }}</a>
+          <a href="/legal">{{ t('legal.terms') }}</a>
+          <a href="/support">{{ t('footer.support') }}</a>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -155,7 +212,7 @@
           <h2 id="agent-title">{{ t('agent.title') }}</h2>
           <p class="agent-sub">{{ t('agent.assistant') }}</p>
         </div>
-        <button type="button" class="agent-close" id="agent-close" aria-label="{{ t('agent.close') }}">×</button>
+        <button type="button" class="agent-close" id="agent-close" aria-label="{{ t('agent.close') }}">Ã—</button>
       </header>
       <div class="agent-log" id="agent-log" aria-live="polite" aria-relevant="additions"></div>
       <p class="agent-quota" id="agent-quota" data-remaining="{{ quota.remaining if quota else '' }}"></p>
@@ -174,8 +231,8 @@
   {% endif %}
 
   <script src="/i18n/{{ lang }}.js"></script>
-  <script src="/static/app.js" defer></script>
-  <script src="/static/native.js" defer></script>
+  <script src="/static/app.js?v=20261102b" defer></script>
+  <script src="/static/native.js?v=20261102b" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

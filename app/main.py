@@ -56,7 +56,13 @@ from app.security import (
     valid_csrf,
     verify_password,
 )
-from app.utils import detect_country, flag_url, region_icon, sanitize_html
+from app.utils import (
+    detect_country,
+    flag_url,
+    html_to_text,
+    prepare_description,
+    region_icon,
+)
 from app.visa.knowledge import load_knowledge
 
 log = logging.getLogger(__name__)
@@ -225,7 +231,7 @@ async def lifespan(app: FastAPI):
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="EuroJobs Pro", version="2.0.0", lifespan=lifespan)
+    app = FastAPI(title="WorkAtlas", version="2.0.0", lifespan=lifespan)
     app.mount("/assets", StaticFiles(directory=str(BASE_DIR / "assets")), name="assets")
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
@@ -308,6 +314,7 @@ def register_routes(app: FastAPI) -> None:
             jobs=[card_dict(row) for row in latest_jobs],
             volunteers=[card_dict(row) for row in latest_volunteers],
             country_count=len(facets(db, "job")["countries"]),
+            top_countries=facets(db, "job")["countries"][:8],
         )
 
     @app.get("/jobs", response_class=HTMLResponse)
@@ -413,7 +420,7 @@ def register_routes(app: FastAPI) -> None:
         """Feature flags and links consumed by the iOS shell only."""
         base = settings.public_url or str(request.base_url).rstrip("/")
         return {
-            "app": "EuroJobs Pro",
+            "app": "WorkAtlas",
             "latest_version": settings.app_latest_version,
             "min_supported_version": settings.app_min_version,
             "store_url": settings.app_store_url,
@@ -536,6 +543,9 @@ def register_routes(app: FastAPI) -> None:
                 ).all()
             )
         similar = [card_dict(row) for row in similar_listings(db, listing, 4)]
+        description_html = prepare_description(listing.description_html or "")
+        description_text = html_to_text(description_html or listing.description_text or "")
+        reading_minutes = max(1, round(len(description_text.split()) / 220)) if description_text else 0
         return render(
             request,
             "detail.html",
@@ -547,7 +557,8 @@ def register_routes(app: FastAPI) -> None:
             similar=similar,
             documents=docs,
             kind=kind,
-            description_html=sanitize_html(listing.description_html or ""),
+            description_html=description_html,
+            reading_minutes=reading_minutes,
         )
 
     @app.get("/go/{public_id}")

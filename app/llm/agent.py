@@ -43,7 +43,7 @@ LANGUAGE_INSTRUCTIONS = {
 
 def system_prompt(locale: str) -> str:
     lang = LANGUAGE_INSTRUCTIONS.get(locale, LANGUAGE_INSTRUCTIONS["en"])
-    return f"""You are the EuroJobs Pro career assistant. Today is {date.today().isoformat()}.
+    return f"""You are the WorkAtlas career assistant. Today is {date.today().isoformat()}.
 
 {lang}
 

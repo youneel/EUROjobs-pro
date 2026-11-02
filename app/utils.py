@@ -57,19 +57,112 @@ def normalize_query(value: str | None) -> str:
     return fold_text(value)
 
 
-def html_to_text(value: str | None) -> str:
+_BLOCK_MARKUP = re.compile(
+    r"<\s*/?\s*(?:address|article|aside|blockquote|br|dd|div|dl|dt|fieldset|"
+    r"figcaption|figure|footer|form|h[1-6]|header|hr|li|main|nav|ol|p|pre|"
+    r"section|table|tbody|td|tfoot|th|thead|tr|ul)\b[^>]*>",
+    re.IGNORECASE,
+)
+_ESCAPED_MARKUP = re.compile(
+    r"&lt;\s*/?\s*(?:p|div|h[1-6]|ul|ol|li|br|strong|b|em|i|a|span|table|tr|td)\b",
+    re.IGNORECASE,
+)
+
+
+# Feeds occasionally decode UTF-8 bytes as Latin-1 or Windows-1252, which turns
+# "—" into "â€”" and "™" into "â„¢". Repair the common sequences so employer
+# copy reads cleanly instead of showing mojibake punctuation.
+_CP1252_MOJIBAKE = {
+    "â€š": "‚",
+    "â€ž": "„",
+    "â€“": "–",
+    "â€”": "—",
+    "â€˜": "‘",
+    "â€™": "’",
+    "â€œ": "“",
+    "â€\x9d": "”",
+    "â€\x9c": "“",
+    "â„¢": "™",
+    "â‚¬": "€",
+    "â€°": "‰",
+    "â€¹": "‹",
+    "â€º": "›",
+    "â€¦": "…",
+    "Â&nbsp;": " ",
+}
+_MOJIBAKE_MARKERS = ("â", "Â", "Ã", "ð", "Ð")
+_LATIN1_RUN = re.compile(r"[\u0080-\u00ff]+")
+
+
+def _repair_mojibake_run(match: re.Match[str]) -> str:
+    chunk = match.group(0)
+    if not any(marker in chunk for marker in _MOJIBAKE_MARKERS):
+        return chunk
+    try:
+        repaired = chunk.encode("latin-1").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return chunk
+    return repaired or chunk
+
+
+def repair_text_encoding(value: str | None) -> str:
+    """Undo double-encoded UTF-8 punctuation and accents where it is safe."""
     if not value:
         return ""
-    text = nh3.clean(value, tags=set())
+    text = value
+    for broken, fixed in _CP1252_MOJIBAKE.items():
+        if broken in text:
+            text = text.replace(broken, fixed)
+    # A stray "Â" before a space or punctuation is a leftover non-breaking space.
+    text = re.sub(r"Â(?=\s|[.,;:!?)\]])", "", text)
+    return _LATIN1_RUN.sub(_repair_mojibake_run, text)
+
+
+def _unescape_markup(value: str) -> str:
+    """Some feeds double-escape employer HTML (``&lt;p&gt;``); decode one layer."""
+    return html.unescape(value) if _ESCAPED_MARKUP.search(value) else value
+
+
+def html_to_text(value: str | None) -> str:
+    """Turn listing HTML into readable text without gluing block elements together.
+
+    Stripping tags alone joins adjacent paragraphs (for example
+    ``<h2>About</h2><p>We build...</p>`` became ``AboutWe build``). Inserting a
+    space for block-level tags keeps excerpts, search snippets and card copy
+    readable while inline tags such as ``<strong>`` stay attached to their word.
+    """
+    if not value:
+        return ""
+    text = _BLOCK_MARKUP.sub(" ", _unescape_markup(repair_text_encoding(value)))
+    text = nh3.clean(text, tags=set())
     text = html.unescape(text)
     return _WS.sub(" ", text).strip()
+
+
+def prepare_description(value: str | None) -> str:
+    """Sanitise employer HTML and give plain-text descriptions real paragraphs."""
+    if not value:
+        return ""
+    content = sanitize_html(value)
+    if not content.strip():
+        return ""
+    if not re.search(r"<(?:p|div|h[1-6]|ul|ol|li|table|blockquote)\b", content, re.IGNORECASE):
+        paragraphs = [part.strip() for part in re.split(r"\n\s*\n", content) if part.strip()]
+        if not paragraphs:
+            return ""
+        return "".join(
+            f"<p>{paragraph.replace(chr(10), '<br>')}</p>" for paragraph in paragraphs
+        )
+    # Sources often leave empty paragraphs and repeated line breaks behind.
+    content = re.sub(r"<p>(?:\s|&nbsp;|<br\s*/?>)*</p>", "", content, flags=re.IGNORECASE)
+    return content
 
 
 def sanitize_html(value: str | None) -> str:
     if not value:
         return ""
     return nh3.clean(
-        value,
+        _unescape_markup(repair_text_encoding(value)),
         tags={
             "p", "br", "ul", "ol", "li", "strong", "b", "em", "i", "u", "h1", "h2",
             "h3", "h4", "h5", "h6", "blockquote", "a", "hr", "table", "thead",

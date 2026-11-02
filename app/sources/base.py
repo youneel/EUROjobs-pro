@@ -33,7 +33,7 @@ AGGREGATOR_DOMAINS = {
     "jobs.lever.co", "boards.greenhouse.io", "apply.workable.com",
 }
 
-USER_AGENT = "EuroJobsPro/2.0 (+https://example.invalid/about; job aggregation; contact via site)"
+USER_AGENT = "WorkAtlasPro/2.0 (+https://example.invalid/about; job aggregation; contact via site)"
 
 
 @dataclass

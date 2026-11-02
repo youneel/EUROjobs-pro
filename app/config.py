@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     )
 
     secret_key: str = "dev-only-change-me"
-    database_url: str = f"sqlite:///{(DATA_DIR / 'eurojobs.db').as_posix()}"
+    database_url: str = f"sqlite:///{(DATA_DIR / 'workatlas.db').as_posix()}"
     redis_url: str = ""
 
     llm_provider: str = "gemini"
@@ -63,8 +63,8 @@ class Settings(BaseSettings):
     # Public deployment and mobile app metadata. PUBLIC_BASE_URL is the HTTPS
     # origin used in App Store links, push payloads and the AASA file.
     public_base_url: str = ""
-    support_email: str = "support@eurojobspro.example"
-    ios_bundle_id: str = "com.eurojobspro.app"
+    support_email: str = "support@workatlas.example"
+    ios_bundle_id: str = "com.workatlas.app"
     apple_team_id: str = ""
     app_min_version: str = "1.0.0"
     app_latest_version: str = "1.0.0"

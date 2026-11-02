@@ -1,4 +1,4 @@
-<article class="job-card{% if card.volunteer and card.volunteer.fee_required %} has-fee{% endif %}">
+<article class="job-card{% if card.volunteer and card.volunteer.fee_required %} has-fee{% endif %}" data-reveal>
   <div class="card-top">
     <img class="card-logo" src="{{ card.logo }}" alt="" width="44" height="44" loading="lazy" decoding="async">
     <div class="card-heading">
@@ -54,7 +54,7 @@
 
   <div class="card-actions">
     <a class="btn btn-primary btn-sm" href="{{ card.apply_url }}" rel="nofollow noopener" target="_blank">{{ t('common.apply_now') }}</a>
-    <a class="link link-arrow" href="{{ card.detail_url }}">{{ t('common.details') }} <span aria-hidden="true">›</span></a>
+    <a class="link link-arrow" href="{{ card.detail_url }}">{{ t('common.details') }}</a>
     {% if card.posted_at %}<span class="card-age">{{ card.posted_at|lrelative }}</span>{% endif %}
   </div>
 </article>

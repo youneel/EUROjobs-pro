@@ -86,7 +86,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="manage.py", description="EuroJobs Pro maintenance CLI")
+    parser = argparse.ArgumentParser(prog="manage.py", description="WorkAtlas maintenance CLI")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("init-db", help="create missing database tables").set_defaults(func=cmd_init_db)

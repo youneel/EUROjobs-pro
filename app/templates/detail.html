@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ listing.title }} — {{ listing.company }} | {{ t('app.name') }}{% endblock %}
 {% block content %}
-<section class="section-tight page-head">
+<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
+
+<section class="detail-hero">
   <div class="container">
     <p class="breadcrumb">
       <a href="{{ '/volunteer' if kind == 'volunteer' else '/jobs' }}">{{ t('nav.volunteer') if kind == 'volunteer' else t('nav.jobs') }}</a>
@@ -9,7 +11,7 @@
       <bdi>{{ listing.company }}</bdi>
     </p>
     <div class="detail-head">
-      <img class="detail-logo" src="{{ card.logo }}" alt="" width="64" height="64" decoding="async">
+      <img class="detail-logo" src="{{ card.logo }}" alt="" width="76" height="76" decoding="async">
       <div class="detail-title">
         <h1><bdi>{{ listing.title }}</bdi></h1>
         <p class="muted"><bdi>{{ listing.company }}</bdi>
@@ -54,7 +56,12 @@
 
 <section class="section-tight">
   <div class="container detail-layout">
-    <article class="detail-main">
+    <article class="detail-main" data-reading-source>
+      <div class="role-head">
+        <p class="eyebrow">{{ t('detail.role') }}</p>
+        {% if reading_minutes %}<span class="reading-time">{{ t('detail.reading_time', count=reading_minutes|lnumber) }}</span>{% endif %}
+      </div>
+
       {% if kind == 'job' and (listing.salary_min or listing.salary_max) %}
       <p class="salary-line">
         <strong>
@@ -66,8 +73,51 @@
       </p>
       {% endif %}
 
-      <div class="prose">
-        {{ description_html|safe }}
+      <div class="at-a-glance" aria-label="{{ t('detail.at_a_glance') }}">
+        {% if listing.city or listing.country or listing.country_code %}
+        <div class="glance-item">
+          <span>{{ t('jobs.country') }}</span>
+          <strong>{{ listing.city }}{% if listing.city and (listing.country or listing.country_code) %} · {% endif %}{{ listing.country or (listing.country_code|lcountry) }}</strong>
+        </div>
+        {% endif %}
+        {% if listing.work_mode %}
+        <div class="glance-item">
+          <span>{{ t('jobs.work_mode') }}</span>
+          <strong>{{ t('mode.' ~ listing.work_mode) }}</strong>
+        </div>
+        {% endif %}
+        {% if listing.employment_type %}
+        <div class="glance-item">
+          <span>{{ t('jobs.employment') }}</span>
+          <strong>{{ t('employment.' ~ listing.employment_type) }}</strong>
+        </div>
+        {% endif %}
+        {% if listing.category %}
+        <div class="glance-item">
+          <span>{{ t('jobs.category') }}</span>
+          <strong>{{ t('category.' ~ listing.category) }}</strong>
+        </div>
+        {% endif %}
+        {% if listing.seniority %}
+        <div class="glance-item">
+          <span>{{ t('jobs.seniority') }}</span>
+          <strong>{{ t('seniority.' ~ listing.seniority) }}</strong>
+        </div>
+        {% endif %}
+        {% if listing.source_name %}
+        <div class="glance-item">
+          <span>{{ t('jobs.source') }}</span>
+          <strong>{{ listing.source_name }}</strong>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="prose detail-prose">
+        {% if description_html %}
+          {{ description_html|safe }}
+        {% else %}
+          <p class="muted">{{ t('detail.description_missing') }}</p>
+        {% endif %}
       </div>
 
       <section class="visa-box" aria-labelledby="visa-box-title">
@@ -117,9 +167,30 @@
         <p class="legal-note">{{ t('volunteer.legal') }}</p>
       </section>
       {% endif %}
+
+      <a class="back-to-top" href="#main">{{ t('detail.back_to_top') }}</a>
     </article>
 
     <aside class="detail-side">
+      <section class="apply-card" aria-labelledby="apply-title">
+        <h2 id="apply-title">{{ t('detail.apply_heading') }}</h2>
+        <p class="apply-copy">{{ t('detail.apply_copy') }}</p>
+        <a class="btn btn-primary btn-lg btn-block" href="{{ card.apply_url }}" rel="nofollow noopener" target="_blank">{{ t('common.apply_now') }}</a>
+        <ul class="apply-meta">
+          {% if listing.posted_at %}
+          <li><span>{{ t('jobs.posted') }}</span><strong>{{ listing.posted_at|ldate }}</strong></li>
+          {% endif %}
+          {% if listing.source_name %}
+          <li><span>{{ t('jobs.source') }}</span><strong>{{ listing.source_name }}</strong></li>
+          {% endif %}
+          <li>
+            <span>{{ t('jobs.visa_tier') }}</span>
+            <strong>{{ t('visa.verified_sponsor') if listing.visa_tier == 1 else t('visa.sponsorship_mentioned') }}</strong>
+          </li>
+        </ul>
+        <p class="legal-note">{{ t('visa.confirm') }}</p>
+      </section>
+
       <section class="side-card" aria-labelledby="ai-title">
         <h2 id="ai-title">{{ t('docgen.cv_and_letter') }}</h2>
         {% if not ai_enabled %}
@@ -194,16 +265,22 @@
       <section class="side-card">
         <h2>{{ t('nav.volunteer') if kind == 'job' else t('nav.jobs') }}</h2>
         <p class="muted">{{ t('volunteer.subtitle') if kind == 'job' else t('jobs.subtitle') }}</p>
-        <a class="link link-arrow" href="{{ '/volunteer' if kind == 'job' else '/jobs' }}">{{ t('switch.volunteer') if kind == 'job' else t('switch.jobs') }} <span aria-hidden="true">›</span></a>
+        <a class="link link-arrow" href="{{ '/volunteer' if kind == 'job' else '/jobs' }}">{{ t('switch.volunteer') if kind == 'job' else t('switch.jobs') }}</a>
       </section>
     </aside>
   </div>
 </section>
 
 {% if similar %}
-<section class="section" aria-labelledby="similar-title">
+<section class="section similar-section" aria-labelledby="similar-title">
   <div class="container">
-    <h2 id="similar-title">{{ t('errors.similar') }}</h2>
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ t('nav.jobs') if kind == 'job' else t('nav.volunteer') }}</p>
+        <h2 id="similar-title" class="h2">{{ t('errors.similar') }}</h2>
+      </div>
+      <a class="link link-arrow" href="{{ '/jobs' if kind == 'job' else '/volunteer' }}">{{ t('common.show_more') }}</a>
+    </div>
     <div class="card-grid card-grid-4">
       {% for card in similar %}{% include "_card.html" %}{% endfor %}
     </div>

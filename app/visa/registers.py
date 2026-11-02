@@ -66,7 +66,7 @@ def refresh_uk_register_if_stale(max_age_days: int = 7) -> dict:
 
     REGISTER_DIR.mkdir(parents=True, exist_ok=True)
     timeout = httpx.Timeout(30.0, connect=10.0)
-    with httpx.Client(timeout=timeout, follow_redirects=True, headers={"User-Agent": "EuroJobsPro/2.0 (official register refresh)"}) as client:
+    with httpx.Client(timeout=timeout, follow_redirects=True, headers={"User-Agent": "WorkAtlasPro/2.0 (official register refresh)"}) as client:
         page = client.get(UK_REGISTER_PAGE)
         page.raise_for_status()
         links = _DownloadLinks()

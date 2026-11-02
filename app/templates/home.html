@@ -1,48 +1,121 @@
 {% extends "base.html" %}
 {% block title %}{{ t('app.name') }} — {{ t('app.tagline') }}{% endblock %}
 {% block content %}
-<section class="hero hero-compact">
+<section class="hero hero-home" aria-labelledby="hero-title">
   <div class="container hero-inner">
-    <p class="eyebrow">{{ t('hero.eyebrow') }}</p>
-    <h1>{{ t('hero.title_a') }}<br><span class="soft">{{ t('hero.title_b') }}</span></h1>
-    <p class="hero-copy">{{ t('hero.copy') }}</p>
+    <p class="eyebrow hero-eyebrow" data-reveal>{{ t('hero.eyebrow') }}</p>
+    <h1 id="hero-title" data-reveal data-reveal-delay="1">{{ t('hero.title_a') }}<br><span class="soft">{{ t('hero.title_b') }}</span></h1>
+    <p class="hero-copy" data-reveal data-reveal-delay="2">{{ t('hero.copy') }}</p>
 
-    <form class="hero-search" method="get" action="/jobs" role="search">
+    <form class="hero-search" method="get" action="/jobs" role="search" data-reveal data-reveal-delay="3">
       <label class="sr-only" for="home-q">{{ t('jobs.search_label') }}</label>
       <input id="home-q" name="q" type="search" placeholder="{{ t('common.search_placeholder') }}" autocomplete="off">
       <button class="btn btn-primary" type="submit">{{ t('common.search') }}</button>
     </form>
 
-    <div class="hero-actions">
+    <div class="hero-actions" data-reveal data-reveal-delay="4">
       <a class="btn btn-primary btn-lg" href="/jobs">{{ t('hero.cta') }}</a>
       <a class="btn btn-ghost btn-lg" href="/volunteer">{{ t('switch.volunteer') }}</a>
     </div>
-    <p class="hero-note">{{ t('hero.note') }}</p>
+    <p class="hero-note" data-reveal data-reveal-delay="5">{{ t('hero.note') }}</p>
+  </div>
+
+  <div class="hero-stage" aria-hidden="true" data-tilt>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <svg class="orbit" viewBox="0 0 600 600" focusable="false">
+      <circle class="orbit-ring" cx="300" cy="300" r="296"/>
+      <circle class="orbit-ring" cx="300" cy="300" r="252"/>
+      <circle class="orbit-ring" cx="300" cy="300" r="206"/>
+      <g class="star">
+        <circle cx="300" cy="4" r="2.5"/><circle cx="448" cy="46" r="2.5"/>
+        <circle cx="554" cy="152" r="2.5"/><circle cx="596" cy="300" r="2.5"/>
+        <circle cx="554" cy="448" r="2.5"/><circle cx="448" cy="554" r="2.5"/>
+        <circle cx="300" cy="596" r="2.5"/><circle cx="152" cy="554" r="2.5"/>
+        <circle cx="46" cy="448" r="2.5"/><circle cx="4" cy="300" r="2.5"/>
+        <circle cx="46" cy="152" r="2.5"/><circle cx="152" cy="46" r="2.5"/>
+      </g>
+    </svg>
+
+    <div class="passport">
+      <div class="passport-head">
+        <div>
+          <p class="passport-kicker">{{ t('hero.passport_kicker') }}</p>
+          <p class="passport-name">{{ t('hero.passport_name') }}</p>
+          <p class="passport-role">{{ t('hero.passport_role') }}</p>
+        </div>
+        <svg class="passport-emblem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5"/>
+          <path d="M3.5 12h17M12 3.5c2.2 2.2 3.4 5.2 3.4 8.5s-1.2 6.3-3.4 8.5c-2.2-2.2-3.4-5.2-3.4-8.5S9.8 5.7 12 3.5Z"/>
+        </svg>
+      </div>
+      <div class="passport-grid">
+        <div><span>{{ t('hero.passport_route') }}</span><strong>{{ t('visa.verified_sponsor') }}</strong></div>
+        <div><span>{{ t('hero.passport_status') }}</span><strong class="ok">{{ t('hero.passport_confirmed') }}</strong></div>
+        <div><span>{{ t('home.stats_jobs') }}</span><strong>{{ job_counts.count|lnumber }}</strong></div>
+        <div><span>{{ t('home.stats_countries') }}</span><strong>{{ (country_count or job_counts.countries)|lnumber }}</strong></div>
+      </div>
+      <div class="passport-foot">
+        <span>{{ t('hero.passport_issued') }}</span>
+        <span>{{ t('hero.passport_access') }}</span>
+      </div>
+    </div>
+
+    <div class="float-card float-job">
+      <span class="mini-label">{{ t('hero.float_match') }}</span>
+      <strong>{{ t('hero.float_role') }}</strong>
+      <span class="mini-sub">{{ t('hero.float_company') }}</span>
+      <span class="mini-pill">{{ t('visa.verified_sponsor') }}</span>
+    </div>
+    <div class="float-card float-interview">
+      <span class="mini-label">{{ t('hero.float_interview') }}</span>
+      <strong>{{ t('hero.float_interview_sub') }}</strong>
+    </div>
+    <div class="float-card float-approve">
+      <span class="check">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </span>
+      <div>
+        <strong>{{ t('hero.float_verified') }}</strong>
+        <span class="mini-sub">{{ t('hero.float_verified_sub') }}</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section-tight" aria-labelledby="stats-title">
+<section class="home-stats" aria-labelledby="stats-title">
   <div class="container">
     <h2 id="stats-title" class="sr-only">{{ t('home.stats_jobs') }}</h2>
-    <dl class="stat-row">
-      <div class="stat"><dt>{{ t('home.stats_jobs') }}</dt><dd>{{ job_counts.count|lnumber }}</dd></div>
-      <div class="stat"><dt>{{ t('home.stats_countries') }}</dt><dd>{{ (country_count or job_counts.countries)|lnumber }}</dd></div>
-      <div class="stat"><dt>{{ t('home.stats_volunteer') }}</dt><dd>{{ volunteer_counts.count|lnumber }}</dd></div>
+    <dl class="stats-panel stats-panel-3">
+      <div class="stat">
+        <dt class="stat-label">{{ t('home.stats_jobs') }}</dt>
+        <dd class="stat-number">{{ job_counts.count|lnumber }}</dd>
+      </div>
+      <div class="stat">
+        <dt class="stat-label">{{ t('home.stats_countries') }}</dt>
+        <dd class="stat-number">{{ (country_count or job_counts.countries)|lnumber }}</dd>
+      </div>
+      <div class="stat">
+        <dt class="stat-label">{{ t('home.stats_volunteer') }}</dt>
+        <dd class="stat-number">{{ volunteer_counts.count|lnumber }}</dd>
+      </div>
     </dl>
   </div>
 </section>
 
-<section class="section" aria-labelledby="latest-title">
+<section class="section home-latest" aria-labelledby="latest-title">
   <div class="container">
     <div class="section-head">
       <div>
-        <h2 id="latest-title">{{ t('home.latest') }}</h2>
-        <p class="muted">{{ t('home.latest_copy') }}</p>
+        <p class="eyebrow">{{ t('jobs.eyebrow') }}</p>
+        <h2 id="latest-title" class="h2">{{ t('home.latest') }}</h2>
+        <p class="section-sub">{{ t('home.latest_copy') }}</p>
       </div>
-      <a class="link link-arrow" href="/jobs">{{ t('common.show_more') }} <span aria-hidden="true">›</span></a>
+      <a class="link link-arrow" href="/jobs">{{ t('common.show_more') }}</a>
     </div>
-    <div class="card-grid">
-      {% for card in jobs %}{% include "_card.html" %}{% endfor %}
+    <div class="card-grid card-grid-3">
+      {% for card in jobs[:6] %}{% include "_card.html" %}{% endfor %}
       {% if not jobs %}
         <div class="empty-state">
           <p class="empty-title">{{ t('common.no_results') }}</p>
@@ -53,17 +126,101 @@
   </div>
 </section>
 
-<section class="section volunteer-teaser" aria-labelledby="volunteer-title">
+<section class="section home-channels" aria-labelledby="channels-title">
   <div class="container">
     <div class="section-head">
       <div>
-        <h2 id="volunteer-title">{{ t('volunteer.title') }}</h2>
-        <p class="muted">{{ t('home.volunteer_copy') }}</p>
+        <p class="eyebrow">{{ t('hero.eyebrow') }}</p>
+        <h2 id="channels-title" class="h2">{{ t('home.how_title') }}</h2>
+        <p class="section-sub">{{ t('home.how_copy') }}</p>
       </div>
-      <a class="link link-arrow" href="/volunteer">{{ t('switch.volunteer') }} <span aria-hidden="true">›</span></a>
+    </div>
+
+    <div class="tiles">
+      <article class="tile tile-light">
+        <div class="tile-copy">
+          <p class="eyebrow">{{ t('jobs.eyebrow') }}</p>
+          <h2>{{ t('jobs.title') }}</h2>
+          <p>{{ t('home.jobs_tile_copy') }}</p>
+          <div class="tile-actions">
+            <a class="btn btn-primary" href="/jobs">{{ t('home.explore_jobs') }}</a>
+            <a class="link link-arrow" href="/visa">{{ t('visa.title') }}</a>
+          </div>
+        </div>
+        <div class="tile-visual">
+          <div class="job-stack">
+            {% for job in jobs[:3] %}
+            <div class="mini-job">
+              <div class="mini-job-top">
+                <img class="mini-logo" src="{{ job.logo }}" alt="" width="34" height="34" loading="lazy">
+                <div>
+                  <p class="mini-job-title">{{ job.title }}</p>
+                  <p class="mini-company">{{ job.company }}</p>
+                </div>
+              </div>
+              <span class="mini-chip">{{ t('visa.verified_sponsor') if job.visa_tier == 1 else t('visa.sponsorship_mentioned') }}</span>
+              <div class="mini-meta">
+                <span>{{ job.city or job.country or t('region.worldwide') }}</span>
+                <strong>{{ t('mode.' ~ job.work_mode) if job.work_mode else t('region.worldwide') }}</strong>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </article>
+
+      <article class="tile tile-dark">
+        <div class="tile-copy">
+          <p class="eyebrow">{{ t('volunteer.eyebrow') }}</p>
+          <h2>{{ t('volunteer.title') }}</h2>
+          <p>{{ t('home.volunteer_tile_copy') }}</p>
+          <div class="tile-actions">
+            <a class="btn btn-light" href="/volunteer">{{ t('home.explore_volunteer') }}</a>
+            <a class="link link-arrow" href="/visa">{{ t('volunteer.legal') }}</a>
+          </div>
+        </div>
+        <div class="tile-visual">
+          <div class="route-card">
+            <div class="route-top">
+              <div>
+                <p class="route-title">{{ t('volunteer.title') }}</p>
+                <p class="route-name">{{ t('home.volunteer_teaser') }}</p>
+              </div>
+              <span class="route-badge">{{ t('visa.verified_sponsor') }}</span>
+            </div>
+            <div class="route-steps">
+              <div class="route-step done">
+                <span class="route-dot">1</span>
+                <div><strong>{{ t('visa.verified_sponsor') }}</strong><span>{{ t('visa.verified_explain') }}</span></div>
+              </div>
+              <div class="route-step done">
+                <span class="route-dot">2</span>
+                <div><strong>{{ t('volunteer.support_confirmed') }}</strong><span>{{ t('volunteer.legal') }}</span></div>
+              </div>
+              <div class="route-step">
+                <span class="route-dot">3</span>
+                <div><strong>{{ t('volunteer.title') }}</strong><span>{{ t('volunteer.subtitle') }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-mist volunteer-teaser" aria-labelledby="volunteer-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ t('volunteer.eyebrow') }}</p>
+        <h2 id="volunteer-title" class="h2">{{ t('volunteer.title') }}</h2>
+        <p class="section-sub">{{ t('home.volunteer_copy') }}</p>
+      </div>
+      <a class="link link-arrow" href="/volunteer">{{ t('home.explore_volunteer') }}</a>
     </div>
     <div class="card-grid card-grid-3">
-      {% for card in volunteers %}{% include "_card.html" %}{% endfor %}
+      {% for card in volunteers[:3] %}{% include "_card.html" %}{% endfor %}
       {% if not volunteers %}
         <div class="empty-state">
           <p class="empty-title">{{ t('volunteer.no_results') }}</p>
@@ -75,17 +232,113 @@
   </div>
 </section>
 
-<section class="section" id="why" aria-labelledby="trust-title">
-  <div class="container trust-grid">
-    <div>
-      <h2 id="trust-title">{{ t('home.trust_title') }}</h2>
-      <p class="muted">{{ t('home.trust_copy') }}</p>
+{% if top_countries %}
+<section class="section home-countries" aria-labelledby="countries-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ t('countries.eyebrow') }}</p>
+        <h2 id="countries-title" class="h2">{{ t('home.explore') }}</h2>
+        <p class="section-sub">{{ t('home.explore_copy') }}</p>
+      </div>
+      <a class="link link-arrow" href="/visa">{{ t('home.explore_link') }}</a>
     </div>
-    <ul class="trust-list">
-      <li><strong>{{ t('visa.verified_sponsor') }}</strong><span>{{ t('visa.verified_explain') }}</span></li>
-      <li><strong>{{ t('visa.sponsorship_mentioned') }}</strong><span>{{ t('visa.mentioned_explain') }}</span></li>
-      <li><strong>{{ t('home.tools_title') }}</strong><span>{{ t('home.tools_copy') }}</span></li>
-    </ul>
+    <div class="carousel">
+      {% for c in top_countries %}
+      <a class="country-card" href="/jobs?country={{ c.code }}">
+        <img class="country-flag" src="{{ c.code|flag }}" alt="" width="36" height="26" loading="lazy">
+        <h3>{{ c.code|lcountry }}</h3>
+        <p class="portal-name">{{ c.count|lnumber }} {{ t('home.stats_jobs') }}</p>
+        <span class="route-pill">{{ t('visa.title') }}</span>
+        <span class="link link-arrow">{{ t('common.show_more') }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section home-steps" aria-labelledby="steps-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ t('home.tools_eyebrow') }}</p>
+        <h2 id="steps-title" class="h2">{{ t('home.how_title') }}</h2>
+        <p class="section-sub">{{ t('home.how_copy') }}</p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <p class="step-num">01</p>
+        <h3>{{ t('home.step1_title') }}</h3>
+        <p>{{ t('home.step1_copy') }}</p>
+      </div>
+      <div class="step">
+        <p class="step-num">02</p>
+        <h3>{{ t('home.step2_title') }}</h3>
+        <p>{{ t('home.step2_copy') }}</p>
+      </div>
+      <div class="step">
+        <p class="step-num">03</p>
+        <h3>{{ t('home.step3_title') }}</h3>
+        <p>{{ t('home.step3_copy') }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section home-trust" id="why" aria-labelledby="trust-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ t('nav.why') }}</p>
+        <h2 id="trust-title" class="h2">{{ t('home.trust_title') }}</h2>
+        <p class="section-sub">{{ t('home.trust_copy') }}</p>
+      </div>
+    </div>
+    <div class="mini-tiles">
+      <article class="mini-tile">
+        <span class="tile-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.9 7.9 7 10 4.1-2.1 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <h3>{{ t('visa.verified_sponsor') }}</h3>
+        <p>{{ t('visa.verified_explain') }}</p>
+        <a class="link link-arrow" href="/visa">{{ t('visa.title') }}</a>
+      </article>
+      <article class="mini-tile">
+        <span class="tile-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6M12 3c2.5 2.45 3.9 5.6 3.9 9S14.5 18.55 12 21c-2.5-2.45-3.9-5.6-3.9-9S9.5 5.45 12 3Z"/></svg>
+        </span>
+        <h3>{{ t('visa.sponsorship_mentioned') }}</h3>
+        <p>{{ t('visa.mentioned_explain') }}</p>
+        <a class="link link-arrow" href="/jobs">{{ t('common.show_more') }}</a>
+      </article>
+      <article class="mini-tile">
+        <span class="tile-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4.5h14v11H9l-4 3.5v-14.5Z"/><path d="M8.5 8h7M8.5 11.5h4.5"/></svg>
+        </span>
+        <h3>{{ t('home.tools_title') }}</h3>
+        <p>{{ t('home.tools_copy') }}</p>
+        <a class="link link-arrow" href="/tools">{{ t('nav.tools') }}</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto" aria-labelledby="manifesto-title">
+  <svg class="orbit" viewBox="0 0 600 600" focusable="false" aria-hidden="true">
+    <circle class="orbit-ring" cx="300" cy="300" r="296"/>
+    <circle class="orbit-ring" cx="300" cy="300" r="252"/>
+    <circle class="orbit-ring" cx="300" cy="300" r="206"/>
+  </svg>
+  <div class="container manifesto-inner">
+    <p class="eyebrow">{{ t('hero.eyebrow') }}</p>
+    <h2 id="manifesto-title">{{ t('hero.title_a') }}<br>{{ t('hero.title_b') }}</h2>
+    <p>{{ t('hero.copy') }}</p>
+    <div class="manifesto-actions">
+      <a class="btn btn-light btn-lg" href="/jobs">{{ t('hero.cta') }}</a>
+      <a class="link link-arrow" href="/visa">{{ t('visa.title') }}</a>
+    </div>
   </div>
 </section>
 {% endblock %}

@@ -1,4 +1,4 @@
-/* EuroJobs Pro — native iOS bridge.
+/* WorkAtlas — native iOS bridge.
    Enhances the server-rendered site when it runs inside the Capacitor shell.
    The file is inert in a normal browser, so it is safe to ship to the web. */
 (function () {
@@ -142,8 +142,8 @@
   function handleAppUrl(raw) {
     if (!raw) return;
     var url = String(raw);
-    if (url.indexOf("eurojobspro://") === 0) {
-      url = appBase() + "/" + url.slice("eurojobspro://".length).replace(/^\/+/, "");
+    if (url.indexOf("workatlas://") === 0) {
+      url = appBase() + "/" + url.slice("workatlas://".length).replace(/^\/+/, "");
     }
     try {
       var target = new URL(url, location.href);
@@ -197,7 +197,7 @@
     var name = match ? decodeURIComponent(match[1].replace(/"/g, "").trim()) : "";
     if (!name) {
       var path = url.split("?")[0].split("/");
-      name = "eurojobs-" + (path[path.length - 2] || "document") + "." + (path[path.length - 1] || "pdf").split(".").pop();
+      name = "workatlas-" + (path[path.length - 2] || "document") + "." + (path[path.length - 1] || "pdf").split(".").pop();
     }
     return name.replace(/[^\w.\-]+/g, "-").slice(0, 120);
   }
@@ -294,7 +294,7 @@
     var bio = plugin("BiometricAuth");
     if (!bio || !bio.authenticate) return Promise.reject(new Error("unavailable"));
     return bio.authenticate({
-      reason: t("native.biometric_prompt", "Unlock EuroJobs Pro to protect your CV and saved jobs."),
+      reason: t("native.biometric_prompt", "Unlock WorkAtlas to protect your CV and saved jobs."),
       cancelTitle: t("native.biometric_cancel", "Cancel"),
       iosFallbackTitle: t("native.unlock", "Unlock"),
       allowDeviceCredential: true
@@ -327,7 +327,7 @@
       "<h2></h2><p></p>" +
       '<button class="btn btn-primary" type="button"></button>' +
       "</div>";
-    lockEl.querySelector("h2").textContent = t("native.lock_title", "EuroJobs Pro is locked");
+    lockEl.querySelector("h2").textContent = t("native.lock_title", "WorkAtlas is locked");
     lockEl.querySelector("p").textContent = t(
       "native.lock_body",
       "Use Face ID or your passcode to continue."

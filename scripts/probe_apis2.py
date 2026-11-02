@@ -13,10 +13,10 @@ item = a.json()["data"][0]
 print("ARBEITNOW KEYS", list(item.keys()))
 print({k: item[k] for k in item if k != "description"})
 
-for ua in ("EuroJobsPro/2.0 (+contact@example.com)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"):
+for ua in ("WorkAtlasPro/2.0 (+contact@example.com)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"):
     m = httpx.get("https://www.themuse.com/api/public/jobs?page=1", timeout=25,
                   headers={"User-Agent": ua, "Accept": "application/json"})
     print("MUSE", m.status_code, m.text[:150])
 
-r = httpx.get("https://api.reliefweb.int/v1/jobs?appname=eurojobspro&profile=list&limit=1", timeout=25)
+r = httpx.get("https://api.reliefweb.int/v1/jobs?appname=workatlas&profile=list&limit=1", timeout=25)
 print("RW", r.status_code, r.text[:300])

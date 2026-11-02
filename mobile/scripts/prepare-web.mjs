@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
 const www = join(root, "www");
-const appUrl = (process.env.EJP_APP_URL || "https://app.eurojobs.pro").replace(/\/+$/, "");
+const appUrl = (process.env.EJP_APP_URL || "https://app.workatlas.pro").replace(/\/+$/, "");
 const host = new URL(appUrl).hostname;
 
 await mkdir(www, { recursive: true });

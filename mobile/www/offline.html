@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark light">
-  <title>EuroJobs Pro — Offline</title>
+  <title>WorkAtlas — Offline</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -63,14 +63,14 @@
       <path d="M38 48h20M38 40h14M38 56h14" stroke="#f5f5f7" stroke-width="4" stroke-linecap="round"/>
     </svg>
     <h1>You are offline</h1>
-    <p>EuroJobs Pro needs a connection to load verified listings. Reconnect, then try again.</p>
+    <p>WorkAtlas needs a connection to load verified listings. Reconnect, then try again.</p>
     <button class="retry" type="button" id="retry">Try again</button>
     <p class="hint">Your account and saved jobs stay on the server and will be here when you return.</p>
   </main>
   <script src="config.js"></script>
   <script>
     (function () {
-      var target = (window.EJP_APP_URL || "https://app.eurojobs.pro").replace(/\/+$/, "");
+      var target = (window.EJP_APP_URL || "https://app.workatlas.pro").replace(/\/+$/, "");
       document.getElementById("retry").addEventListener("click", function () {
         location.replace(target + "/");
       });

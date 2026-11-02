@@ -1,8 +1,8 @@
 /**
- * Captures App Store screenshots from a running EuroJobs Pro deployment.
+ * Captures App Store screenshots from a running WorkAtlas deployment.
  *
  *   npm run screenshots                        # http://127.0.0.1:8000
- *   EJP_SCREENSHOT_URL=https://app.eurojobs.pro npm run screenshots
+ *   EJP_SCREENSHOT_URL=https://app.workatlas.pro npm run screenshots
  *
  * Requires Playwright with WebKit:
  *   npm install

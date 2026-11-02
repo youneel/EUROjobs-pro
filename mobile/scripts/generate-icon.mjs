@@ -73,7 +73,7 @@ const splash = `<svg xmlns="http://www.w3.org/2000/svg" width="2732" height="273
       <path d="M430 572h118"/>
     </g>
   </g>
-  <text x="1366" y="2020" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="128" font-weight="700" fill="#f5f5f7" letter-spacing="-2">EuroJobs Pro</text>
+  <text x="1366" y="2020" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="128" font-weight="700" fill="#f5f5f7" letter-spacing="-2">WorkAtlas</text>
   <text x="1366" y="2150" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="64" fill="#a1a1a6">Visa-sponsoring jobs, worldwide</text>
 </svg>`;
 

@@ -1,6 +1,6 @@
-# EuroJobs Pro
+# WorkAtlas
 
-EuroJobs Pro is a FastAPI job and volunteer board focused on listings with evidence of visa support. It includes separate search areas, Arabic/French/English UI, light/dark/system themes, user profiles, saved listings, CV and letter generation, and an optional Gemini assistant. It ships with an iOS application (Capacitor) that loads the hosted deployment and adds native Face ID lock, share, document export, offline handling and deep links.
+WorkAtlas is a FastAPI job and volunteer board focused on listings with evidence of visa support. It includes separate search areas, Arabic/French/English UI, light/dark/system themes, user profiles, saved listings, CV and letter generation, and an optional Gemini assistant. It ships with an iOS application (Capacitor) that loads the hosted deployment and adds native Face ID lock, share, document export, offline handling and deep links.
 
 ## Run locally on Windows
 
@@ -21,7 +21,7 @@ Open <http://127.0.0.1:8000>. The `--reload` option is for local development. Wi
 
 Open this folder in VS Code and install the **Python** extension. The included `.vscode/settings.json` points at `C:\Python315\python.exe` (change it if your Python lives elsewhere). Then either:
 
-- Press **F5** and pick **EuroJobs Pro (uvicorn)** for a normal debug session, or **EuroJobs Pro (uvicorn --reload)** while editing templates and Python.
+- Press **F5** and pick **WorkAtlas (uvicorn)** for a normal debug session, or **WorkAtlas (uvicorn --reload)** while editing templates and Python.
 - Or open **Terminal > New Terminal** and run `python manage.py serve --reload`.
 
 The debug configurations load `.env` automatically, enable Jinja template debugging, and serve the same site at <http://127.0.0.1:8000>. Stop any other server on port 8000 first. `Ctrl+C` in the terminal stops it.
@@ -54,7 +54,7 @@ python scripts/check_i18n.py
 python -m pytest
 ```
 
-The default database is `data/eurojobs.db` (SQLite). Set `DATABASE_URL` to a PostgreSQL SQLAlchemy URL for a PostgreSQL deployment. Back up the database and `static/logos/` if you need to preserve local data and cached logos.
+The default database is `data/workatlas.db` (SQLite). Set `DATABASE_URL` to a PostgreSQL SQLAlchemy URL for a PostgreSQL deployment. Back up the database and `static/logos/` if you need to preserve local data and cached logos.
 
 ## Deploy the web backend
 
@@ -63,15 +63,15 @@ The iPhone app loads the FastAPI deployment over HTTPS; Python cannot run on the
 ### Docker
 
 ```powershell
-docker build -t eurojobs-pro .
-docker run -d --name eurojobs-pro -p 8000:8000 `
+docker build -t workatlas .
+docker run -d --name workatlas -p 8000:8000 `
   -e SECRET_KEY="replace-with-a-long-random-string" `
   -e PUBLIC_BASE_URL="https://jobs.example.com" `
   -e SUPPORT_EMAIL="support@example.com" `
   -e APPLE_TEAM_ID="ABCDE12345" `
-  -e DATABASE_URL="sqlite:////app/data/eurojobs.db" `
-  -v eurojobs-data:/app/data `
-  eurojobs-pro
+  -e DATABASE_URL="sqlite:////app/data/workatlas.db" `
+  -v workatlas-data:/app/data `
+  workatlas
 ```
 
 Terminate TLS in front of the container (Caddy, nginx, Render, Fly.io or Cloud Run) and keep `/support` and `/legal` reachable without signing in. Set `PUBLIC_BASE_URL` to the final `https://` origin, because App Store links, notification payloads and the AASA file use it. Set `APPLE_TEAM_ID` (10-character Apple Developer Team ID) so `/.well-known/apple-app-site-association` is served for universal links. The container runs uvicorn with `--proxy-headers`, and session cookies switch to `Secure` when `X-Forwarded-Proto: https` is present.
@@ -90,7 +90,7 @@ Terminate TLS in front of the container (Caddy, nginx, Render, Fly.io or Cloud R
 - Offline screen with retry when the backend is unreachable.
 - Native status bar, keyboard handling and safe-area insets.
 - APNs registration hooks (the notification card stays hidden until server APNs settings exist).
-- `eurojobspro://` deep links and universal links for jobs, volunteer placements and documents.
+- `workatlas://` deep links and universal links for jobs, volunteer placements and documents.
 
 The shell contains no server secrets. AI and source keys stay in the backend environment.
 
@@ -115,7 +115,7 @@ On macOS use `export EJP_APP_URL=https://jobs.example.com` instead. `npm run syn
 
 In Xcode select the **App** target, then:
 
-1. **Signing & Capabilities**: choose your team, keep bundle identifier `com.eurojobspro.app` (or change it consistently here, in `capacitor.config.ts`, `render.yaml`, `IOS_BUNDLE_ID` and the workflow), and enable automatic signing.
+1. **Signing & Capabilities**: choose your team, keep bundle identifier `com.workatlas.app` (or change it consistently here, in `capacitor.config.ts`, `render.yaml`, `IOS_BUNDLE_ID` and the workflow), and enable automatic signing.
 2. Confirm **Associated Domains** contains the `applinks:` and `webcredentials:` entries for your host.
 3. Set `MARKETING_VERSION` (for example `1.0.0`) and a unique `CURRENT_PROJECT_VERSION`.
 4. Build on a device or simulator to verify Face ID, share, export and the offline screen.
@@ -131,7 +131,7 @@ Repository **variables**:
 | Name | Value |
 | --- | --- |
 | `EJP_APP_URL` | Public HTTPS backend origin, for example `https://jobs.example.com` |
-| `IOS_BUNDLE_ID` | Optional, defaults to `com.eurojobspro.app` |
+| `IOS_BUNDLE_ID` | Optional, defaults to `com.workatlas.app` |
 
 Repository **secrets**:
 
@@ -148,7 +148,7 @@ The workflow always uploads the IPA as an artifact and uploads to TestFlight whe
 
 ### App Store Connect checklist
 
-1. **App record**: bundle ID `com.eurojobspro.app`, primary language English (U.S.), category Business, secondary category Productivity.
+1. **App record**: bundle ID `com.workatlas.app`, primary language English (U.S.), category Business, secondary category Productivity.
 2. **Metadata**: paste the values from `mobile/appstore/metadata/en-US.json`, `fr-FR.json` and `ar-SA.json`. Field lengths are within Apple's limits.
 3. **Screenshots**: `mobile/appstore/screenshots/iphone-6.9` are 1320x2868 and `iphone-6.5` are 1284x2778. Regenerate them against the production deployment:
    ```powershell
@@ -163,7 +163,7 @@ The workflow always uploads the IPA as an artifact and uploads to TestFlight whe
 6. **Support and privacy URLs**: `https://<host>/support` and `https://<host>/legal` must open without signing in. The marketing URL is the site root.
 7. **App Review Information**: use `mobile/appstore/review-notes.md`. Create a dedicated reviewer account with a filled profile and put its password only in App Store Connect.
 8. **Guideline 4.2**: the review notes list the native features. Verify in the submitted build that Face ID lock, share, export and the offline screen work, so the app is not treated as a repackaged website.
-9. **Placeholders**: replace `app.eurojobs.pro` with the real host everywhere (`EJP_APP_URL`, `PUBLIC_BASE_URL`, metadata URLs, entitlements). Re-run `npm run sync` after changing the host.
+9. **Placeholders**: replace `app.workatlas.pro` with the real host everywhere (`EJP_APP_URL`, `PUBLIC_BASE_URL`, metadata URLs, entitlements). Re-run `npm run sync` after changing the host.
 
 ## How listing verification works
 

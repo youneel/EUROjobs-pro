@@ -3,8 +3,8 @@ import json
 import httpx
 
 for url in [
-    "https://api.reliefweb.int/v2/jobs?appname=eurojobspro&profile=list&limit=2",
-    "https://api.reliefweb.int/v2/jobs?appname=eurojobspro&limit=2&query[value]=volunteer",
+    "https://api.reliefweb.int/v2/jobs?appname=workatlas&profile=list&limit=2",
+    "https://api.reliefweb.int/v2/jobs?appname=workatlas&limit=2&query[value]=volunteer",
 ]:
     try:
         r = httpx.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})

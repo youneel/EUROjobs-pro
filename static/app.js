@@ -1,4 +1,4 @@
-/* EuroJobs Pro — client behaviour
+/* WorkAtlas — client behaviour
    Theme switching, navigation, filters, saved listings, live results and the
    streaming assistant. No framework, no build step, no third-party requests. */
 (function () {
@@ -199,7 +199,13 @@
         return response.json();
       })
       .then(function (data) {
-        if (results && data.html) results.insertAdjacentHTML("beforeend", data.html);
+        if (results && data.html) {
+          results.insertAdjacentHTML("beforeend", data.html);
+          Array.prototype.forEach.call(
+            results.querySelectorAll("[data-reveal]:not(.in)"),
+            revealElement
+          );
+        }
         if (!data.has_more) {
           loadMore.parentNode.removeChild(loadMore);
           loadMore = null;
@@ -278,9 +284,109 @@
       '<div class="card-badges"><span class="badge ' + (tier ? "badge-verified" : "badge-mentioned") + '">' + escapeHtml(badge) + "</span></div>" +
       '<div class="card-actions">' +
       '<a class="btn btn-primary btn-sm" href="' + escapeHtml(card.apply_url || "/" + kind + "/" + card.id) + '" rel="nofollow noopener" target="_blank">' + escapeHtml(t("common.apply_now")) + "</a>" +
-      '<a class="link link-arrow" href="/' + kind + "/" + escapeHtml(card.id) + '">' + escapeHtml(t("common.details")) + " ›</a>" +
+      '<a class="link link-arrow" href="/' + kind + "/" + escapeHtml(card.id) + '">' + escapeHtml(t("common.details")) + "</a>" +
       "</div></article>"
     );
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Scroll reveal, nav state, hero tilt and reading progress           */
+  /* ------------------------------------------------------------------ */
+
+  var reducedMotion = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+
+  var nav = doc.querySelector(".nav");
+  function updateNavState() {
+    if (nav) nav.classList.toggle("is-scrolled", (window.scrollY || window.pageYOffset || 0) > 8);
+  }
+  on(window, "scroll", updateNavState, { passive: true });
+  updateNavState();
+
+  var revealItems = Array.prototype.slice.call(doc.querySelectorAll("[data-reveal]"));
+
+  function revealElement(element) {
+    var delay = Number(element.getAttribute("data-reveal-delay") || 0);
+    if (delay) element.style.transitionDelay = delay * 70 + "ms";
+    element.classList.add("in");
+  }
+
+  function revealAll() {
+    revealItems.forEach(revealElement);
+  }
+
+  if (revealItems.length) {
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealAll();
+    } else {
+      var revealObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            revealElement(entry.target);
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { rootMargin: "0px 0px -6% 0px", threshold: 0.06 }
+      );
+      var viewportHeight = window.innerHeight || doc.documentElement.clientHeight || 0;
+      revealItems.forEach(function (element) {
+        var rect = element.getBoundingClientRect();
+        // Reveal above-the-fold copy immediately, even when the browser
+        // throttles IntersectionObserver in a background tab.
+        if (rect.top < viewportHeight * 0.96 && rect.bottom > 0) {
+          revealElement(element);
+        } else {
+          revealObserver.observe(element);
+        }
+      });
+      // Safety net: content must never stay invisible if observation is
+      // throttled or interrupted while the tab is hidden.
+      window.setTimeout(function () {
+        revealAll();
+        revealObserver.disconnect();
+      }, 2600);
+    }
+  }
+
+  var tilt = doc.querySelector("[data-tilt]");
+  var finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+  if (tilt && !reducedMotion && finePointer) {
+    var tiltFrame = null;
+    on(tilt, "pointermove", function (event) {
+      if (tiltFrame) return;
+      tiltFrame = window.requestAnimationFrame(function () {
+        tiltFrame = null;
+        var rect = tilt.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        var px = (event.clientX - rect.left) / rect.width - 0.5;
+        var py = (event.clientY - rect.top) / rect.height - 0.5;
+        tilt.style.setProperty("--tilt-x", (-py * 3.2).toFixed(2) + "deg");
+        tilt.style.setProperty("--tilt-y", (px * 4.2).toFixed(2) + "deg");
+      });
+    });
+    on(tilt, "pointerleave", function () {
+      tilt.style.setProperty("--tilt-x", "0deg");
+      tilt.style.setProperty("--tilt-y", "0deg");
+    });
+  }
+
+  var progressBar = doc.querySelector("[data-reading-progress]");
+  var readingSource = doc.querySelector("[data-reading-source]");
+  if (progressBar && readingSource) {
+    var updateProgress = function () {
+      var rect = readingSource.getBoundingClientRect();
+      var start = rect.top + (window.scrollY || window.pageYOffset || 0);
+      var viewport = window.innerHeight || 1;
+      var track = Math.max(1, readingSource.offsetHeight - viewport * 0.35);
+      var value = ((window.scrollY || window.pageYOffset || 0) - start + viewport * 0.35) / track;
+      value = Math.max(0, Math.min(1, value));
+      progressBar.style.width = (value * 100).toFixed(2) + "%";
+    };
+    on(window, "scroll", updateProgress, { passive: true });
+    on(window, "resize", updateProgress);
+    updateProgress();
   }
 
   /* ------------------------------------------------------------------ */

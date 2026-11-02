@@ -272,7 +272,7 @@
         <p>
           Applications are handled by <strong>${esc(country.portal)}</strong>, the official public
           employment service for ${esc(country.name)}. The button below opens their site in a new tab.
-          EuroJobs Pro never charges candidates and never asks for payment details.
+          WorkAtlas never charges candidates and never asks for payment details.
         </p>
         <p style="margin-top:12px">
           <a class="link link-arrow" href="tools.html?${letterParams.toString()}#letter">Draft a cover letter for this role</a>

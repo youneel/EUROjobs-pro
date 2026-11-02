@@ -1,6 +1,6 @@
 {
-  "name": "EuroJobs Pro",
-  "short_name": "EuroJobs",
+  "name": "WorkAtlas",
+  "short_name": "WorkAtlas",
   "description": "Visa-sponsoring jobs and volunteer placements, worldwide.",
   "start_url": "/",
   "scope": "/",

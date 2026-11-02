@@ -1,5 +1,5 @@
 /* ==========================================================================
-   EuroJobs Pro — application layer
+   WorkAtlas — application layer
    Extends assets/styles.css with the server-rendered UI: dark theme tokens,
    filter panels, detail pages, dashboards, documents and the assistant.
    All spacing uses logical properties so Arabic (RTL) needs no overrides.

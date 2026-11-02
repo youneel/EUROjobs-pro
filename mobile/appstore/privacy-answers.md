@@ -62,7 +62,7 @@ browsing history, gameplay content.
 ## Account deletion
 
 - In-app path: **Profile → Delete my data** (available without contacting support).
-- Public explanation: https://app.eurojobs.pro/support
+- Public explanation: https://app.workatlas.pro/support
 
 ## Age rating
 

@@ -1,8 +1,8 @@
 {
-  "name": "eurojobs-pro-mobile",
+  "name": "workatlas-mobile",
   "version": "1.0.0",
   "private": true,
-  "description": "EuroJobs Pro iOS shell (Capacitor) for App Store distribution.",
+  "description": "WorkAtlas iOS shell (Capacitor) for App Store distribution.",
   "type": "module",
   "scripts": {
     "prepare:web": "node scripts/prepare-web.mjs",

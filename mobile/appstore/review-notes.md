@@ -1,11 +1,11 @@
-# App Review notes — EuroJobs Pro 1.0
+# App Review notes — WorkAtlas 1.0
 
 Paste the relevant parts into **App Store Connect → App Review Information → Notes**.
 Do not commit a real password to this repository.
 
 ## What the app is
 
-EuroJobs Pro is a job board for roles and volunteer placements that show evidence of
+WorkAtlas is a job board for roles and volunteer placements that show evidence of
 visa sponsorship. Listings are ingested from official job APIs and public employer
 career pages; the app never scrapes LinkedIn, Indeed or Glassdoor. Each listing is
 classified into Tier 1 (employer matched an official government sponsor register) or
@@ -29,7 +29,7 @@ It adds functionality that the mobile website cannot provide:
 5. **Native lifecycle.** Status bar and keyboard are managed by the shell, safe-area
    insets are respected, and an offline screen with a retry action is shown when the
    backend cannot be reached.
-6. **Deep links.** `eurojobspro://` and universal links open the matching job,
+6. **Deep links.** `workatlas://` and universal links open the matching job,
    volunteer or document page inside the app.
 
 The shell points at a hosted HTTPS deployment because the Python/FastAPI backend cannot
@@ -74,13 +74,13 @@ before submitting.
 
 ## Contact
 
-Support: support@eurojobs.pro
-Privacy: https://app.eurojobs.pro/legal
-Support page: https://app.eurojobs.pro/support
+Support: support@workatlas.pro
+Privacy: https://app.workatlas.pro/legal
+Support page: https://app.workatlas.pro/support
 
 ## Before you submit
 
-- Replace `app.eurojobs.pro` with the real deployment hostname everywhere
+- Replace `app.workatlas.pro` with the real deployment hostname everywhere
   (`EJP_APP_URL`, `PUBLIC_BASE_URL`, entitlements, metadata URLs).
 - Configure at least one listing source and run ingestion so the board is not empty.
 - Configure `GEMINI_API_KEY` if the listing mentions AI features.

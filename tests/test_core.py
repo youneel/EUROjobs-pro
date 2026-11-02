@@ -11,7 +11,7 @@ from app.db import Base
 from app.i18n import is_rtl, load_catalog, western_digits
 from app.models import Listing, VolunteerDetails
 from app.search import SearchFilters, search_listings
-from app.utils import sanitize_html
+from app.utils import html_to_text, prepare_description, repair_text_encoding, sanitize_html
 from app.visa.classifier import classify_job
 
 
@@ -46,6 +46,35 @@ def add_listing(db, *, kind: str, title: str, fee: bool = False) -> Listing:
     if kind == "volunteer":
         db.add(VolunteerDetails(listing_id=row.id, fee_required=fee, scam_flags=[]))
     return row
+
+
+def test_description_text_keeps_words_apart_across_block_tags():
+    html = "<h2>About us</h2><p>We build tools.</p><ul><li>Remote first</li><li>Global</li></ul>"
+    text = html_to_text(html)
+    assert "About us We build tools." in text
+    assert "tools. Remote first" in text
+    assert "first Global" in text
+
+
+def test_double_escaped_employer_html_is_decoded():
+    escaped = "&lt;h2&gt;About&lt;/h2&gt;&lt;p&gt;We build things.&lt;/p&gt;"
+    assert html_to_text(escaped) == "About We build things."
+    assert prepare_description(escaped) == "<h2>About</h2><p>We build things.</p>"
+
+
+def test_plain_text_descriptions_become_readable_paragraphs():
+    html = prepare_description("First paragraph.\n\nSecond paragraph.\nSame block.")
+    assert html == "<p>First paragraph.</p><p>Second paragraph.<br>Same block.</p>"
+
+
+def test_double_encoded_punctuation_is_repaired_without_touching_real_accents():
+    assert repair_text_encoding("Requirements â\x80\x94 apply") == "Requirements — apply"
+    assert repair_text_encoding("Brandsâ\x84¢ and more") == "Brands™ and more"
+    assert repair_text_encoding("bonuses.Â&nbsp;Compensation") == "bonuses. Compensation"
+    assert repair_text_encoding("Neuchâtel, café — déjà") == "Neuchâtel, café — déjà"
+    cleaned = sanitize_html("<p>bonuses.Â&nbsp;Compensation</p>")
+    assert "Â" not in cleaned
+    assert "Compensation" in cleaned
 
 
 def test_jobs_and_volunteers_are_separate_and_fee_programmes_hidden(db_session):

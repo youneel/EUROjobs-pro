@@ -1,8 +1,8 @@
 {
-  "name": "eurojobs-pro",
+  "name": "workatlas",
   "version": "1.0.0",
   "private": true,
-  "description": "Apple-inspired European jobs and visa mobility platform demo.",
+  "description": "WorkAtlas — visa-sponsoring jobs and volunteer placements worldwide.",
   "scripts": {
     "start": "python -m http.server 4173 --bind 127.0.0.1"
   }

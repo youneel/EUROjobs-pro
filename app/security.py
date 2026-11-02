@@ -99,7 +99,7 @@ async def safe_fetch(
     Redirects are followed manually so every hop is re-validated.
     """
     current = url
-    request_headers = {"User-Agent": "EuroJobsPro/2.0 (link validation)"}
+    request_headers = {"User-Agent": "WorkAtlasPro/2.0 (link validation)"}
     if headers:
         request_headers.update(headers)
     async with httpx.AsyncClient(timeout=timeout, follow_redirects=False) as client:

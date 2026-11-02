@@ -100,8 +100,12 @@ def _persist_one(db: Session, item: NormalizedListing) -> bool:
         return False
 
     listing_type = item.listing_type
+    # Only promote a job-board posting to a volunteer placement when the title
+    # itself says so. A passing mention of "volunteer" in a long job advert
+    # (company volunteering days, CSR copy) must not move the listing into the
+    # volunteer board.
     if listing_type != "volunteer" and is_volunteer_posting(
-        item.title, item.description_text, item.employment_type
+        item.title, None, item.employment_type
     ):
         listing_type = "volunteer"
 

@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>EuroJobs Pro</string>
+        <string>WorkAtlas</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
@@ -33,15 +33,15 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Unlock EuroJobs Pro and protect your saved jobs, CV and generated letters.</string>
+	<string>Unlock WorkAtlas and protect your saved jobs, CV and generated letters.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.eurojobspro.app</string>
+			<string>com.workatlas.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>eurojobspro</string>
+				<string>workatlas</string>
 			</array>
 		</dict>
 	</array>

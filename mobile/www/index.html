@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark light">
-  <title>EuroJobs Pro</title>
+  <title>WorkAtlas</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -78,7 +78,7 @@
       </g>
       <path d="M38 48h20M38 40h14M38 56h14" stroke="#f5f5f7" stroke-width="4" stroke-linecap="round"/>
     </svg>
-    <h1>EuroJobs Pro</h1>
+    <h1>WorkAtlas</h1>
     <p>Connecting to your job board…</p>
     <a class="retry" href="#" id="retry">Open app</a>
     <p class="hint">If this screen stays visible, check your connection.</p>
@@ -86,7 +86,7 @@
   <script src="config.js"></script>
   <script>
     (function () {
-      var target = (window.EJP_APP_URL || "https://app.eurojobs.pro").replace(/\/+$/, "");
+      var target = (window.EJP_APP_URL || "https://app.workatlas.pro").replace(/\/+$/, "");
       var button = document.getElementById("retry");
       button.href = target;
       if (location.protocol === "http:" || location.protocol === "https:") {

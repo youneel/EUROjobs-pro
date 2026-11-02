@@ -8,7 +8,7 @@ urls = {
     "remoteok": "https://remoteok.com/api",
     "himalayas": "https://himalayas.app/jobs/api?limit=2",
     "themuse": "https://www.themuse.com/api/public/jobs?page=1",
-    "reliefweb": "https://api.reliefweb.int/v1/jobs?appname=eurojobspro-test&profile=list&limit=2",
+    "reliefweb": "https://api.reliefweb.int/v1/jobs?appname=workatlas-test&profile=list&limit=2",
 }
 for name, url in urls.items():
     try:
